@@ -1,13 +1,17 @@
 import "./App.css";
 
 import React, { Fragment } from "react";
+import AuthProvider from "./Context/AuthProvider";
+import AppProvider from "./Context/AppProvider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
+import Home from "./pages/Home/Home";
+import Login from "./components/Login";
 function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
+        {/* <Routes>
           {publicRoutes.map((publicRoute, index) => {
             const Layout =
               publicRoute.layout === null ? Fragment : publicRoute.layout;
@@ -25,7 +29,18 @@ function App() {
               />
             );
           })}
-        </Routes>
+        </Routes> */}
+        <AuthProvider>
+          <AppProvider>
+            {" "}
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </AppProvider>
+        </AuthProvider>
       </div>
     </Router>
   );

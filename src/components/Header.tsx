@@ -3,7 +3,14 @@ import dataComponents from "../data/dataComponents";
 import { ControlOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import { auth } from "../firebase/config";
+import { AuthContext } from "../Context/AuthProvider";
+import { AppContext } from "../Context/AppProvider";
 const Header = () => {
+  const {
+    user: { displayName, photoURL },
+  } = React.useContext(AuthContext);
+  const { clearState } = React.useContext(AppContext);
   return (
     <div className="fixed top-0 left-0 z-10 w-full h-12 bg-black">
       <div className="h-full w-full flex justify-between items-center	">
@@ -41,7 +48,16 @@ const Header = () => {
 
         <div className="flex items-center mr-2">
           <ControlOutlined className="text-lg text-white" />
-          <img src={logo} alt="" className="w-10 h-10 rounded-full ml-4" />
+          <img
+            src={photoURL}
+            alt=""
+            className="w-10 h-10 rounded-full ml-4"
+            onClick={() => {
+              // clear state in App Provider when logout
+              clearState();
+              auth.signOut();
+            }}
+          />
         </div>
       </div>
     </div>
