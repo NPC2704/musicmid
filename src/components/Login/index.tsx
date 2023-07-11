@@ -10,17 +10,17 @@ const fbProvider = new firebase.auth.FacebookAuthProvider();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export default function Login() {
-  const handleLogin = async (provider) => {
+  const handleLogin = async (provider: firebase.auth.AuthProvider) => {
     const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
 
     if (additionalUserInfo?.isNewUser) {
       addDocument("users", {
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        uid: user.uid,
+        displayName: user?.displayName,
+        email: user?.email,
+        photoURL: user?.photoURL,
+        uid: user?.uid,
         providerId: additionalUserInfo.providerId,
-        keywords: generateKeywords(user.displayName?.toLowerCase()),
+        keywords: generateKeywords(user?.displayName?.toLowerCase()),
       });
     }
   };

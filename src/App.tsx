@@ -6,6 +6,7 @@ import AppProvider from "./Context/AppProvider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import Home from "./pages/Home/Home";
+import Khampha from "./pages/Khampha/Khampha";
 import Login from "./components/Login";
 function App() {
   return (
@@ -32,9 +33,11 @@ function App() {
         </Routes> */}
         <AuthProvider>
           <AppProvider>
-            {" "}
             <Routes>
               <Route path="/" element={<Home />} />
+            </Routes>
+            <Routes>
+              <Route path="/kham-pha" element={<Khampha />} />
             </Routes>
             <Routes>
               <Route path="/login" element={<Login />} />
