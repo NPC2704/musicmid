@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.jpg";
 import axios from "axios";
-const BodySlide2 = () => {
+const BodySlide3 = () => {
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const fetchData = async () => {
@@ -9,8 +9,10 @@ const BodySlide2 = () => {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[12]?.items || []);
-      setDatatitle(response.data?.data?.data?.items?.[12]?.title);
+      setData(response.data?.data?.data?.items?.[3]?.items || []);
+      console.log(response.data?.data?.data?.items?.[3]?.items);
+      console.log(response.data?.data?.data?.items?.[3]?.title);
+      setDatatitle(response.data?.data?.data?.items?.[3]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -26,13 +28,15 @@ const BodySlide2 = () => {
       <div className="w-full h-90">
         <div className="flex flex-col flex-wrap  w-full h-80">
           {data1.map((item: any, index) => (
-            <div className="h-16 w-80  mr-4 mt-2 flex items-center">
+            <div className="h-16 w-100  mr-4 mt-2 flex items-center ">
               <img src={item.thumbnail} alt="" className="h-12 w-12" />
               <div className="ml-4">
                 <div className="flex justify-start">
-                  <p className="text-white text-lg">{item.title}</p>{" "}
+                  {" "}
+                  <p className="text-white text-lg">{item.title}</p>
                 </div>
                 <div className="flex justify-start">
+                  {" "}
                   <p className="text-[#b4b4b4] text-lg">{item.artistsNames}</p>
                 </div>
               </div>
@@ -44,4 +48,4 @@ const BodySlide2 = () => {
   );
 };
 
-export default BodySlide2;
+export default BodySlide3;

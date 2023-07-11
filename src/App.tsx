@@ -8,6 +8,7 @@ import { publicRoutes } from "./routes";
 import Home from "./pages/Home/Home";
 import Khampha from "./pages/Khampha/Khampha";
 import Login from "./components/Login";
+import PlayMusic from "./pages/PlayMusic/PlayMusic";
 function App() {
   return (
     <Router>
@@ -41,6 +42,9 @@ function App() {
             </Routes>
             <Routes>
               <Route path="/login" element={<Login />} />
+            </Routes>
+            <Routes>
+              <Route path="/play/:paramName" element={<PlayMusic />} />
             </Routes>
           </AppProvider>
         </AuthProvider>

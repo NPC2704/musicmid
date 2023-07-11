@@ -115,7 +115,7 @@ const BodySlide = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 6,
+    slidesToShow: 5,
     slidesToScroll: 1,
     responsive: [
       {
@@ -156,10 +156,15 @@ const BodySlide = () => {
             >
               <img src={item?.thumbnailM} alt="" className="rounded-lg" />
               <div className="flex justify-start my-1 mx-2">
-                <p className="text-white">{item?.title}</p>
+                <div className="flex justify-start">
+                  <p className="text-white">{item?.title}</p>{" "}
+                </div>
               </div>
               <div className="flex justify-start my-1 mx-2">
-                <p className="text-white">{item?.artistsNames}</p>
+                <div className="flex justify-start">
+                  {" "}
+                  <p className="text-white">{item?.artistsNames}</p>
+                </div>
               </div>
             </div>
           ))}

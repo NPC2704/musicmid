@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
 import Slides from "../../components/Slide/Slides";
 import Slides2 from "../../components/Slide2/Slides2";
+import Slides3 from "../../components/Slide3/Slides3";
 interface IProps {}
 
 const Home: React.FC<IProps> = () => {
@@ -9,6 +10,7 @@ const Home: React.FC<IProps> = () => {
       <Header />
       <Slides />
       <Slides2 />
+      <Slides3 />
     </div>
   );
 };

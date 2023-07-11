@@ -45,6 +45,7 @@
 //     </AuthContext.Provider>
 //   );
 // }
+
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
@@ -69,12 +70,15 @@ export default function AuthProvider({ children }) {
           photoURL,
         });
         setIsLoading(false);
-        if (isMountedRef.current) {
+        if (isMountedRef.current == true) {
           setTimeout(() => {
             navigate("/", { replace: true });
             navigate("/kham-pha", { replace: true });
+            navigate("/play/:paramName", { replace: true });
           }, 0);
+          navigate("/login", { replace: true });
         }
+
         return;
       }
 
