@@ -44,7 +44,7 @@ function App() {
               <Route path="/login" element={<Login />} />
             </Routes>
             <Routes>
-              <Route path="/play/:paramName" element={<PlayMusic />} />
+              <Route path="/play/:id" element={<PlayMusic />} />
             </Routes>
           </AppProvider>
         </AuthProvider>

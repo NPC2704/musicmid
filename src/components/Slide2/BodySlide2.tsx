@@ -9,8 +9,8 @@ const BodySlide2 = () => {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[12]?.items || []);
-      setDatatitle(response.data?.data?.data?.items?.[12]?.title);
+      setData(response.data?.data?.data?.items?.[2]?.items || []);
+      setDatatitle(response.data?.data?.data?.items?.[2]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -23,7 +23,7 @@ const BodySlide2 = () => {
       <div className="w-full h-20 flex items-center justify-start">
         <h1 className="text-white text-4xl font-bold">{datatitle}</h1>
       </div>
-      <div className="w-full h-90">
+      {/* <div className="w-full h-90">
         <div className="flex flex-col flex-wrap  w-full h-80">
           {data1.map((item: any, index) => (
             <div className="h-16 w-80  mr-4 mt-2 flex items-center">
@@ -38,8 +38,8 @@ const BodySlide2 = () => {
               </div>
             </div>
           ))}
-        </div>
-      </div>
+        </div> 
+      </div>*/}
     </div>
   );
 };

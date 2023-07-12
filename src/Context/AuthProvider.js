@@ -74,7 +74,7 @@ export default function AuthProvider({ children }) {
           setTimeout(() => {
             navigate("/", { replace: true });
             navigate("/kham-pha", { replace: true });
-            navigate("/play/:paramName", { replace: true });
+            navigate("/play/:id", { replace: true });
           }, 0);
           navigate("/login", { replace: true });
         }
