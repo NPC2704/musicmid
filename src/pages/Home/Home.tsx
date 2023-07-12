@@ -9,8 +9,8 @@ const Home: React.FC<IProps> = () => {
     <div className="w-full h-full">
       <Header />
       <Slides />
-      <Slides2 />
       <Slides3 />
+      <Slides2 />
     </div>
   );
 };

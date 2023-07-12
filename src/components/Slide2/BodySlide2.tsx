@@ -9,7 +9,8 @@ const BodySlide2 = () => {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[2]?.items || []);
+      setData(response.data?.data?.data?.items?.[2] || []);
+      console.log(response.data?.data?.data?.items?.[2]?.items);
       setDatatitle(response.data?.data?.data?.items?.[2]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -23,23 +24,31 @@ const BodySlide2 = () => {
       <div className="w-full h-20 flex items-center justify-start">
         <h1 className="text-white text-4xl font-bold">{datatitle}</h1>
       </div>
-      {/* <div className="w-full h-90">
-        <div className="flex flex-col flex-wrap  w-full h-80">
-          {data1.map((item: any, index) => (
-            <div className="h-16 w-80  mr-4 mt-2 flex items-center">
-              <img src={item.thumbnail} alt="" className="h-12 w-12" />
-              <div className="ml-4">
-                <div className="flex justify-start">
-                  <p className="text-white text-lg">{item.title}</p>{" "}
-                </div>
-                <div className="flex justify-start">
-                  <p className="text-[#b4b4b4] text-lg">{item.artistsNames}</p>
-                </div>
+      <div className="w-full h-90 ">
+        <div className="flex justify-around w-full h-80 ">
+          <div className="h-12 w-60  mr-4 mt-2 flex items-center border-4  border-${#fff} border-solid rounded">
+            <div className="ml-4 ">
+              <div className="flex justify-start">
+                <p className="text-white text-lg">All</p>
               </div>
             </div>
-          ))}
-        </div> 
-      </div>*/}
+          </div>
+          <div className="h-12 w-60  mr-4 mt-2 flex items-center border-4  border-${#fff} border-solid rounded">
+            <div className="ml-4 ">
+              <div className="flex justify-start">
+                <p className="text-white text-lg">Others</p>
+              </div>
+            </div>
+          </div>
+          <div className="h-12 w-60  mr-4 mt-2 flex items-center border-4  border-${#fff} border-solid rounded">
+            <div className="ml-4 ">
+              <div className="flex justify-start">
+                <p className="text-white text-lg">vPops</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

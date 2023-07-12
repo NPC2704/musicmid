@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.jpg";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { updateNumber } from "../../redux/toggleSlice";
+import { updateNumber1 } from "../../redux/toggleSlice1";
+import { Link } from "react-router-dom";
 const BodySlide3 = () => {
+  const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
+
+  const [dataChild, setDataChild] = useState(0);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -17,6 +24,10 @@ const BodySlide3 = () => {
       console.error("Error fetching data:", error);
     }
   };
+  const toggle = () => {
+    dispatch(updateNumber(3));
+    dispatch(updateNumber1(dataChild));
+  };
   useEffect(() => {
     fetchData();
   }, []);
@@ -28,8 +39,13 @@ const BodySlide3 = () => {
       <div className="w-full h-90">
         <div className="flex flex-col flex-wrap  w-full h-80">
           {data1.map((item: any, index) => (
-            <div className="h-16 w-100  mr-4 mt-2 flex items-center ">
-              <img src={item.thumbnail} alt="" className="h-12 w-12" />
+            <div
+              className="h-16 w-100  mr-4 mt-2 flex items-center "
+              onMouseOver={() => setDataChild(index)}
+            >
+              <Link to={`/play/${item?.encodeId}`} onClick={toggle}>
+                <img src={item.thumbnail} alt="" className="h-12 w-12" />
+              </Link>
               <div className="ml-4">
                 <div className="flex justify-start">
                   {" "}
