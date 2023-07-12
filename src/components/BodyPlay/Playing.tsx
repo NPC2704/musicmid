@@ -4,7 +4,9 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import Logo from "../../assets/logo.jpg";
 import { useParams } from "react-router-dom";
+import { AppContext } from "../../Context/AppContext";
 export default function Playing() {
+  const { link1 } = useContext(AppContext);
   const handleClickNext = () => {};
   const handleClickPre = () => {};
   const [data1, setData] = useState<any[]>([]);
@@ -13,16 +15,24 @@ export default function Playing() {
   const [datalink, setDatalink] = useState("");
   const params = useParams();
   const userId = params.id;
+  console.log(link1);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[3]?.items?.[7]?.artists || []);
+      setData(
+        response.data?.data?.data?.items?.[link1]?.items?.[7]?.artists || []
+      );
       console.log(response.data?.data?.data?.items);
-      console.log(response.data?.data?.data?.items?.[3]?.items?.[7]?.title);
-      setDatatitle(response.data?.data?.data?.items?.[3]?.items?.[7]?.title);
-      setDataImg(response.data?.data?.data?.items?.[3]?.items?.[0]?.thumbnail);
+      console.log(response.data?.data?.data?.items?.[link1]?.items?.[7]?.title);
+      setDatatitle(
+        response.data?.data?.data?.items?.[link1]?.items?.[7]?.title
+      );
+      setDataImg(
+        response.data?.data?.data?.items?.[link1]?.items?.[7]?.thumbnail
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }

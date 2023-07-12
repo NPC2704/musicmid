@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   CaretLeftOutlined,
   CaretRightOutlined,
@@ -8,12 +8,14 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Playing from "../BodyPlay/Playing";
 import { Link } from "react-router-dom";
+import { AppProvider2, AppContext } from "../../Context/AppContext";
 const BodySlide = () => {
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const { link1, setLink } = useContext(AppContext);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -25,7 +27,10 @@ const BodySlide = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  const toggle = () => {
+    setLink(7);
+  };
+  console.log(link1);
   useEffect(() => {
     fetchData();
   }, []);
@@ -34,8 +39,7 @@ const BodySlide = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
+    slidesToShow: data1.length >= 6 ? 5 : 5,
     responsive: [
       {
         breakpoint: 1024,
@@ -87,14 +91,22 @@ const BodySlide = () => {
                   <div className="flex justify-start my-1 mx-2">
                     <div className="flex justify-start">
                       {" "}
-                      <p className="text-white">{item?.artistsNames}</p>
+                      <p className="text-white" onClick={toggle}>
+                        {item?.artistsNames}
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div>
                   <Link to={`/play/${item?.encodeId}`}>
                     <div className="w-10 h-10 bg-white absolute z-20">
-                      <PlayCircleOutlined />
+                      <PlayCircleOutlined />{" "}
+                      {/* <AppProvider2>
+                        {" "}
+                        <div className="hidden">
+                          <Playing />
+                        </div>
+                      </AppProvider2> */}
                     </div>
                   </Link>
                 </div>
