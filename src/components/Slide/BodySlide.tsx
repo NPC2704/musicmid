@@ -11,25 +11,34 @@ import "slick-carousel/slick/slick-theme.css";
 import Playing from "../BodyPlay/Playing";
 import { Link } from "react-router-dom";
 import { AppProvider2, AppContext } from "../../Context/AppContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updateNumber } from "../../redux/toggleSlice";
+import { updateNumber1 } from "../../redux/toggleSlice1";
 const BodySlide = () => {
+  const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const { link1, setLink } = useContext(AppContext);
+  const [dataChild, setDataChild] = useState(0);
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[7]?.items || []);
-      setDatatitle(response.data?.data?.data?.items?.[7]?.title);
+      setData(response.data?.data?.data?.items?.[11]?.items || []);
+      setDatatitle(response.data?.data?.data?.items?.[11]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
   const toggle = () => {
     setLink(7);
+    dispatch(updateNumber(11));
+    dispatch(updateNumber1(dataChild));
   };
+  console.log(dataChild);
   console.log(link1);
   useEffect(() => {
     fetchData();
@@ -39,7 +48,8 @@ const BodySlide = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: data1.length >= 6 ? 5 : 5,
+    //  slidesToShow: data1.length >= 6 ? 5 : 5,
+    slidesToShow: 5,
     responsive: [
       {
         breakpoint: 1024,
@@ -74,40 +84,40 @@ const BodySlide = () => {
         <Slider {...settings} className="w-full h-85 space-x-1">
           {data1.map((item: any, index) => (
             <div
+              onMouseOver={() => setDataChild(index)}
               className="w-52 h-80 bg-black rounded-lg mx-10 gap-1 space-x-1"
               key={index}
             >
-              <img src={item?.thumbnailM} alt="" className="rounded-lg" />
-
-              <div className="flex items-center">
+              <div className="flex justify-center">
                 {" "}
-                <div>
+                <img src={item?.thumbnail} alt="" className="rounded-lg" />
+              </div>
+
+              <div className="flex justify-center h-14 mb-5">
+                {" "}
+                <div className="flex items-center">
                   {" "}
-                  <div className="flex justify-start my-1 mx-2">
-                    <div className="flex justify-start">
-                      <p className="text-white">{item?.title}</p>{" "}
+                  <div>
+                    {" "}
+                    <div className="flex justify-start my-1 mx-2">
+                      <div className="flex justify-start">
+                        <p className="text-white">{item?.title}</p>{" "}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-start my-1 mx-2">
+                    {/* <div className="flex justify-start my-1 mx-2">
                     <div className="flex justify-start">
                       {" "}
-                      <p className="text-white" onClick={toggle}>
-                        {item?.artistsNames}
-                      </p>
+                      <p className="text-white">{item?.artistsNames} s</p>
                     </div>
+                  </div> */}
                   </div>
-                </div>
-                <div>
-                  <Link to={`/play/${item?.encodeId}`}>
-                    <div className="w-10 h-10 bg-white absolute z-20">
-                      <PlayCircleOutlined />{" "}
-                      {/* <AppProvider2>
-                        {" "}
-                        <div className="hidden">
-                          <Playing />
-                        </div>
-                      </AppProvider2> */}
-                    </div>
+                </div>{" "}
+              </div>
+              <div className="flex justify-center items-center">
+                {" "}
+                <div className="bg-transparent w-52">
+                  <Link to={`/play/${item?.encodeId}`} onClick={toggle}>
+                    <PlayCircleOutlined className="text-white font-medium text-3xl	" />{" "}
                   </Link>
                 </div>
               </div>

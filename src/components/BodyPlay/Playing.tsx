@@ -5,8 +5,15 @@ import "react-h5-audio-player/lib/styles.css";
 import Logo from "../../assets/logo.jpg";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 export default function Playing() {
   const { link1 } = useContext(AppContext);
+  // const mode = useSelector((state) => state.theme.mode);
+  const number = useSelector((state: RootState) => state.toggle.number);
+  const number1 = useSelector((state: RootState) => state.toggle1.number1);
+  console.log(number);
+  console.log(number1);
   const handleClickNext = () => {};
   const handleClickPre = () => {};
   const [data1, setData] = useState<any[]>([]);
@@ -23,15 +30,18 @@ export default function Playing() {
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
       setData(
-        response.data?.data?.data?.items?.[link1]?.items?.[7]?.artists || []
+        response.data?.data?.data?.items?.[number]?.items?.[number1]?.artists ||
+          []
       );
       console.log(response.data?.data?.data?.items);
-      console.log(response.data?.data?.data?.items?.[link1]?.items?.[7]?.title);
+      console.log(
+        response.data?.data?.data?.items?.[number]?.items?.[number1]?.title
+      );
       setDatatitle(
-        response.data?.data?.data?.items?.[link1]?.items?.[7]?.title
+        response.data?.data?.data?.items?.[number]?.items?.[number1]?.title
       );
       setDataImg(
-        response.data?.data?.data?.items?.[link1]?.items?.[7]?.thumbnail
+        response.data?.data?.data?.items?.[number]?.items?.[number1]?.thumbnail
       );
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -49,7 +59,7 @@ export default function Playing() {
     }
   };
   console.log(userId);
-  console.log(datalink);
+  console.log(dataImg);
   useEffect(() => {
     fetchData();
     fetchData1();
