@@ -3,8 +3,8 @@
 @tailwind utilities;
 .App {
   text-align: center;
-  /* background-color: #cccccc; */
-  &::before {
+  background-color: black;
+  /* &::before {
     content: "";
     display: block;
     position: fixed;
@@ -16,7 +16,7 @@
     background-color: #f6c90e;
     z-index: -2;
     animation: waveAnimation 10s ease-in-out infinite;
-  }
+  } */
 }
 @keyframes waveAnimation {
   0% {

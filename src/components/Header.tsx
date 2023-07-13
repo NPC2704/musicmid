@@ -10,12 +10,22 @@ import logo from "../assets/logo.jpg";
 import { auth } from "../firebase/config";
 import { AuthContext } from "../Context/AuthProvider";
 import { AppContext } from "../Context/AppProvider";
+import { useTranslation } from "react-i18next"; // Import hook useTranslation
+import i18n from "../i18n"; // Import i18n configuration
+import logoVN from "../assets/vi.png";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Tooltip, Space } from "antd";
 const Header = () => {
   const {
     user: { displayName, photoURL },
   } = React.useContext(AuthContext);
   const { clearState } = React.useContext(AppContext);
-  console.log(typeof photoURL);
+  const { t, i18n } = useTranslation();
+
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <div className="fixed top-0 left-0 z-10 w-full h-12 bg-black">
       <div className="h-full w-full flex justify-between items-center	">
@@ -27,34 +37,58 @@ const Header = () => {
             />
           </div>
         </Link>
-        <div>
-          {dataComponents.map((item) => {
-            if (item.id === 1) {
-              return (
-                <Link
-                  to={item.link}
-                  key={item.id}
-                  className="text-white mx-6 font-semibold text-2xl"
-                >
-                  {item.title}
-                </Link>
-              );
-            } else {
-              return (
-                <Link
-                  to={item.link}
-                  key={item.id}
-                  className="text-[rgba(255,255,255,0.5)] mx-6 font-semibold text-2xl hover:text-white"
-                >
-                  {item.title}
-                </Link>
-              );
-            }
-          })}
+        <div className="ml-52">
+          <Link to="/" className="text-white mx-5 font-semibold text-xl">
+            {t("header.home")}
+          </Link>
+          <Link
+            to="/kham-pha"
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            {t("header.discover")}
+          </Link>
+          <Link
+            to="/thu-vien"
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            {t("header.library")}
+          </Link>
+          <Link
+            to=""
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            {t("header.advance")}
+          </Link>
+
+          {/* {t("header.search")} */}
         </div>
 
         <div className="flex items-center mr-2 w-30 ">
-          <ControlOutlined className="text-lg text-white" />
+          {/* <ControlOutlined className="text-lg text-white" /> */}
+          <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit">
+            <input
+              type="text"
+              placeholder={t("header.search")}
+              className="py-1 px-4 bg-transparent text-white focus:outline-none focus:outline focus:outline-offset-2 focus:outline-1 flex-grow"
+            />
+            <button className="bg-black hover:bg-[#171810] text-white py-1 px-4">
+              <SearchOutlined />
+            </button>
+          </div>
+          <div className="ml-2 ">
+            <select
+              className="text-white bg-transparent cursor-pointer outline-0"
+              onChange={(e) => handleLanguageChange(e.target.value)}
+            >
+              <option value="en" className="bg-[#171810] cursor-pointer">
+                English
+              </option>
+              <option value="vi" className="bg-[#171810] cursor-pointer">
+                Việt Nam
+                <img src={logoVN} alt="" className="text-white" />
+              </option>
+            </select>
+          </div>
           {photoURL == undefined ? (
             <UserOutlined className="w-10 h-4 text-white" />
           ) : (
@@ -66,7 +100,7 @@ const Header = () => {
           )}
           {photoURL == undefined ? (
             <Link to="/login" className="w-10 h-4 text-white">
-              Login
+              {t("header.login")}
             </Link>
           ) : (
             <LogoutOutlined
