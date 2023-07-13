@@ -24,9 +24,10 @@ export default function AuthProvider({ children }) {
         setIsLoading(false);
         if (isMountedRef.current == true) {
           setTimeout(() => {
-            navigate("/", { replace: true });
             navigate("/kham-pha", { replace: true });
             navigate("/play/:id", { replace: true });
+            navigate("/playlist/:id", { replace: true });
+            navigate("/", { replace: true });
           }, 0);
           navigate("/login", { replace: true });
         }

@@ -116,7 +116,7 @@ const BodySlide = () => {
               <div className="flex justify-center items-center">
                 {" "}
                 <div className="bg-transparent w-52">
-                  <Link to={`/play/${item?.encodeId}`} onClick={toggle}>
+                  <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
                     <PlayCircleOutlined className="text-white font-medium text-3xl	" />{" "}
                   </Link>
                 </div>
