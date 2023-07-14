@@ -4,13 +4,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
+import { updateNumber2 } from "../../redux/toggleSlice2";
 import { Link } from "react-router-dom";
 const BodySlide2 = () => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [title, setTitle] = useState("all");
-  const [dataChild, setDataChild] = useState(0);
+  const [dataChild, setDataChild] = useState(1);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -25,10 +26,15 @@ const BodySlide2 = () => {
       console.error("Error fetching data:", error);
     }
   };
+  console.log(dataChild);
   const toggle = () => {
     dispatch(updateNumber(2));
+    dispatch(updateNumber2(title));
     dispatch(updateNumber1(dataChild));
   };
+  useEffect(() => {
+    fetchData();
+  }, [dataChild]);
   useEffect(() => {
     fetchData();
   }, [title]);
@@ -78,8 +84,17 @@ const BodySlide2 = () => {
       </div>
       <div className="h-101 w-90  flex flex-col flex-wrap">
         {data1.map((item, index) => (
-          <div className="h-16 w-60 mb-4 ml-16 flex items-center" key={index}>
-            <Link to={`/play/${item?.encodeId}`} onClick={toggle}>
+          <div
+            className="h-16 w-60 mb-4 ml-16 flex items-center"
+            key={index}
+            onMouseOver={() => setDataChild(index)}
+          >
+            <Link
+              to={`/play/${item?.encodeId}`}
+              onClick={() => {
+                toggle();
+              }}
+            >
               {" "}
               <img
                 src={item.thumbnail}
@@ -89,7 +104,9 @@ const BodySlide2 = () => {
             </Link>
             <div className="flex justify-center items-center ml-4">
               {" "}
-              <p className="text-white">{item.title} </p>
+              <p className="text-white" onMouseOver={() => setDataChild(index)}>
+                {item.title}{" "}
+              </p>
             </div>
           </div>
         ))}

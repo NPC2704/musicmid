@@ -11,8 +11,10 @@ export default function Playing() {
   // const mode = useSelector((state) => state.theme.mode);
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
+  const number2 = useSelector((state: RootState) => state.toggle2.number2);
   console.log(number);
   console.log(number1);
+  console.log(number2);
   const handleClickNext = () => {};
   const handleClickPre = () => {};
   const [data1, setData] = useState<any[]>([]);
@@ -29,18 +31,21 @@ export default function Playing() {
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
       setData(
-        response.data?.data?.data?.items?.[number]?.items?.[number1]?.artists ||
-          []
+        response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
+          ?.artists || []
       );
       console.log(response.data?.data?.data?.items);
       console.log(
-        response.data?.data?.data?.items?.[number]?.items?.[number1]?.title
+        response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
+          ?.title
       );
       setDatatitle(
-        response.data?.data?.data?.items?.[number]?.items?.[number1]?.title
+        response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
+          ?.title
       );
       setDataImg(
-        response.data?.data?.data?.items?.[number]?.items?.[number1]?.thumbnail
+        response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
+          ?.thumbnail
       );
     } catch (error) {
       console.error("Error fetching data:", error);

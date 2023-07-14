@@ -31,7 +31,7 @@ export default function PlayingList() {
     if (nextIndex < data1.length) {
       setCurrentTrackIndex(nextIndex);
       setIdMusic(data1[nextIndex]?.encodeId);
-      setImgMusic(data1?.[nextIndex]?.thumbnail);
+      setImgMusic(data1?.[nextIndex]?.thumbnailM);
       setTitleMusic(data1?.[nextIndex]?.title);
       setArtistsNames(data1?.[nextIndex]?.artistsNames);
     }
@@ -42,7 +42,7 @@ export default function PlayingList() {
     if (previousIndex >= 0) {
       setCurrentTrackIndex(previousIndex);
       setIdMusic(data1[previousIndex]?.encodeId);
-      setImgMusic(data1?.[previousIndex]?.thumbnail);
+      setImgMusic(data1?.[previousIndex]?.thumbnailM);
       setTitleMusic(data1?.[previousIndex]?.title);
       setArtistsNames(data1?.[previousIndex]?.artistsNames);
     }
@@ -55,6 +55,7 @@ export default function PlayingList() {
       );
       setData(response?.data?.data?.data?.song?.items);
       setDatatitle(response?.data?.data?.data?.title);
+      setDataImg(response?.data?.data?.data?.thumbnail);
       setDataImg(response?.data?.data?.data?.thumbnail);
     } catch (error) {
       console.error("Error fetching data:", error);

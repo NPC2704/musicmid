@@ -104,12 +104,6 @@ const BodySlide = () => {
                         <p className="text-white">{item?.title}</p>{" "}
                       </div>
                     </div>
-                    {/* <div className="flex justify-start my-1 mx-2">
-                    <div className="flex justify-start">
-                      {" "}
-                      <p className="text-white">{item?.artistsNames} s</p>
-                    </div>
-                  </div> */}
                   </div>
                 </div>{" "}
               </div>
