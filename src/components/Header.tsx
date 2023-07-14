@@ -4,6 +4,10 @@ import {
   ControlOutlined,
   LogoutOutlined,
   UserOutlined,
+  HomeOutlined,
+  CompassOutlined,
+  AudioOutlined,
+  PauseCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
@@ -37,7 +41,7 @@ const Header = () => {
             />
           </div>
         </Link>
-        <div className="ml-52">
+        <div className="ml-52 hidden sm:block">
           <Link to="/" className="text-white mx-5 font-semibold text-xl">
             {t("header.home")}
           </Link>
@@ -62,10 +66,34 @@ const Header = () => {
 
           {/* {t("header.search")} */}
         </div>
+        <div className="ml-52 block sm:hidden">
+          <Link to="/" className="text-white mx-5 font-semibold text-xl">
+            <HomeOutlined />
+          </Link>
+          <Link
+            to="/kham-pha"
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            <CompassOutlined />
+          </Link>
+          <Link
+            to="/thu-vien"
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            <AudioOutlined />
+          </Link>
+          <Link
+            to=""
+            className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
+          >
+            <PauseCircleOutlined />
+          </Link>
 
+          {/* {t("header.search")} */}
+        </div>
         <div className="flex items-center mr-2 w-30 ">
           {/* <ControlOutlined className="text-lg text-white" /> */}
-          <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit">
+          <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit hidden sm:flex">
             <input
               type="text"
               placeholder={t("header.search")}
@@ -74,6 +102,9 @@ const Header = () => {
             <button className="bg-black hover:bg-[white] hover:text-black text-white py-1 px-4 flex justify-center items-center ">
               <SearchOutlined />
             </button>
+          </div>
+          <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit block sm:hidden">
+            <SearchOutlined className="text-white" />
           </div>
           <div className="ml-2 ">
             <select

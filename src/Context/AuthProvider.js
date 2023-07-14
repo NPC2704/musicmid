@@ -27,6 +27,7 @@ export default function AuthProvider({ children }) {
             navigate("/kham-pha", { replace: true });
             navigate("/play/:id", { replace: true });
             navigate("/playlist/:id", { replace: true });
+            navigate("/playlist1/:id", { replace: true });
             navigate("/", { replace: true });
           }, 0);
           navigate("/login", { replace: true });

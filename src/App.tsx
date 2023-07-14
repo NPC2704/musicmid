@@ -10,6 +10,7 @@ import Khampha from "./pages/Khampha/Khampha";
 import Login from "./components/Login";
 import PlayMusic from "./pages/PlayMusic/PlayMusic";
 import PlayPlaylistMusic from "./pages/PlayPlaylistMusic/PlayPlaylistMusic";
+import PlayPlaylistMusic1 from "./pages/PlayListMusic1.tsx/PlayPlaylistMusic";
 function App() {
   return (
     <Router>
@@ -49,6 +50,9 @@ function App() {
             </Routes>
             <Routes>
               <Route path="/playlist/:id" element={<PlayPlaylistMusic />} />
+            </Routes>
+            <Routes>
+              <Route path="/playlist1/:id" element={<PlayPlaylistMusic1 />} />
             </Routes>
           </AppProvider>
         </AuthProvider>

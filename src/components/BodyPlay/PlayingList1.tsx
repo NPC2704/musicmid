@@ -8,8 +8,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { updateLink } from "../../redux/toggleLink";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "./Play.css";
-export default function PlayingList() {
+export default function PlayingList1() {
   const dispatch = useDispatch();
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
@@ -57,8 +58,8 @@ export default function PlayingList() {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/api/get/playlist/info?id=${userId}`
       );
-      setData(response?.data?.data?.data?.song?.items);
-      //  setData(response?.data?.data?.data?.sections?.[0]?.items);
+      //setData(response?.data?.data?.data?.song?.items);
+      setData(response?.data?.data?.data?.sections?.[0]?.items);
       setDatatitle(response?.data?.data?.data?.title);
       setDataImg(response?.data?.data?.data?.thumbnail);
       setDataImg(response?.data?.data?.data?.thumbnail);
@@ -91,7 +92,23 @@ export default function PlayingList() {
   useEffect(() => {
     fetchData1();
   }, [idMusic]);
+  console.log(typeof datalink);
+  const handleDownload = () => {
+    const fileUrl = datalink;
+    const fileName = "file.mp3";
 
+    fetch(fileUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  };
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
@@ -143,6 +160,11 @@ export default function PlayingList() {
                   </td>
                   <td className="w-1/10">{data1?.[index]?.title}</td>
                   <td className="w-1/10 text-center">
+                    <button onClick={handleDownload}>
+                      <CloudDownloadOutlined className="hover:text-blue-500" />
+                    </button>
+                  </td>
+                  {/* <td className="w-1/10 text-center">
                     <a
                       href={datalink}
                       download="song.mp3"
@@ -150,7 +172,7 @@ export default function PlayingList() {
                     >
                       <CloudDownloadOutlined />
                     </a>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
