@@ -6,12 +6,15 @@ import { useParams } from "react-router-dom";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { updateLink } from "../../redux/toggleLink";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "./Play.css";
 export default function PlayingList() {
+  const dispatch = useDispatch();
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
-
+  const link = useSelector((state: RootState) => state.toggleLink.link);
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [dataImg, setDataImg] = useState("");
@@ -25,7 +28,9 @@ export default function PlayingList() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0); // Thêm state để lưu index của bài hát hiện tại
   const params = useParams();
   const userId = params.id;
-
+  const toggle = () => {
+    dispatch(updateLink(datalink));
+  };
   const handleClickNext = () => {
     const nextIndex = currentTrackIndex + 1;
     if (nextIndex < data1.length) {
@@ -115,12 +120,13 @@ export default function PlayingList() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody onMouseOver={toggle}>
               {data1.map((item, index) => (
                 <tr
                   className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
                   key={index}
                   onClick={() => {
+                    toggle();
                     setCurrentTrackIndex(index);
                     setIdMusic(data1?.[index]?.encodeId);
                     setImgMusic(data1?.[index]?.thumbnail);

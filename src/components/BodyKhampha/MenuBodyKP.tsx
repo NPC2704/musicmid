@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { updateNumber } from "../../redux/toggleSlice";
+import { updateNumber1 } from "../../redux/toggleSlice1";
+import { Link } from "react-router-dom";
 const MenuBodyKP = () => {
+  const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+  const [dataChild, setDataChild] = useState(0);
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData(response.data?.data?.data?.items?.[2]?.items.all || []);
-      console.log(response.data?.data?.data?.items?.[2]?.items);
-      setDatatitle(response.data?.data?.data?.items?.[2]?.title);
+      setData(response.data?.data?.data?.items?.[13]?.items || []);
+      console.log(response.data?.data?.data?.items);
+      setDatatitle(response.data?.data?.data?.items?.[13]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+  const toggle = () => {
+    dispatch(updateNumber(13));
+    dispatch(updateNumber1(dataChild));
   };
   useEffect(() => {
     fetchData();
@@ -39,34 +49,26 @@ const MenuBodyKP = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col flex-wrap  w-full h-60">
+        <div className="flex flex-col flex-wrap  w-full h-80">
           {data1.map((item: any, index) => (
-            <div
-              className={`h-10 w-60  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121]  cursor-pointer`}
+            <Link
+              to={`/playlist/${item?.encodeId}`}
+              onClick={() => {
+                toggle();
+                setDataChild(index);
+              }}
             >
-              <div className="ml-4 ">
-                <p className="text-white text-sm">{data1?.[index].title}</p>
+              {" "}
+              <div
+                className={`h-16 w-66  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121]  cursor-pointer`}
+                onMouseOver={() => setDataChild(index)}
+              >
+                <div className="ml-4 ">
+                  <p className="text-white text-sm">{data1?.[index].title}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
-          {/* {data1.map((item: any, index) => (
-            <div
-              className={`h-10 w-60  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121] cursor-pointer`}
-            >
-              <div className="ml-4 ">
-                <p className="text-white text-sm">{item.title}</p>
-              </div>
-            </div>
-          ))}
-          {data1.map((item: any, index) => (
-            <div
-              className={`h-10 w-60  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121]  cursor-pointer`}
-            >
-              <div className="ml-4 ">
-                <p className="text-white text-sm">{item.title}</p>
-              </div>
-            </div>
-          ))} */}
         </div>
       </div>
     </div>

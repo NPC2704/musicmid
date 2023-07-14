@@ -36,7 +36,7 @@ const BodySlide3 = () => {
       <div className="w-full h-20 flex items-center justify-start">
         <h1 className="text-white text-4xl font-bold">{datatitle}</h1>
       </div>
-      <div className="w-full h-90">
+      <div className="w-full h-90 flex justify-center">
         <div className="flex flex-col flex-wrap  w-full h-80">
           {data1.map((item: any, index) => (
             <div
