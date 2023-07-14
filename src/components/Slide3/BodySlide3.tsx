@@ -32,7 +32,7 @@ const BodySlide3 = () => {
     fetchData();
   }, []);
   return (
-    <div className="w-full h-100">
+    <div className="w-full h-90">
       <div className="w-full h-20 flex items-center justify-start">
         <h1 className="text-white text-4xl font-bold">{datatitle}</h1>
       </div>

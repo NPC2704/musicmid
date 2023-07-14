@@ -71,7 +71,7 @@ const Header = () => {
               placeholder={t("header.search")}
               className="py-1 px-4 bg-transparent text-white focus:outline-none focus:outline focus:outline-offset-2 focus:outline-1 flex-grow"
             />
-            <button className="bg-black hover:bg-[#171810] text-white py-1 px-4">
+            <button className="bg-black hover:bg-[white] hover:text-black text-white py-1 px-4 flex justify-center items-center ">
               <SearchOutlined />
             </button>
           </div>
