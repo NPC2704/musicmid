@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import PlayMusic from "./pages/PlayMusic/PlayMusic";
 import PlayPlaylistMusic from "./pages/PlayPlaylistMusic/PlayPlaylistMusic";
 import PlayPlaylistMusic1 from "./pages/PlayListMusic1.tsx/PlayPlaylistMusic";
+import MusicChart from "./pages/MusicChart/MusicChart";
 function App() {
   return (
     <Router>
@@ -53,6 +54,9 @@ function App() {
             </Routes>
             <Routes>
               <Route path="/playlist1/:id" element={<PlayPlaylistMusic1 />} />
+            </Routes>
+            <Routes>
+              <Route path="/musicchart" element={<MusicChart />} />
             </Routes>
           </AppProvider>
         </AuthProvider>

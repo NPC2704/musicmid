@@ -25,7 +25,7 @@ const Home: React.FC<IProps> = () => {
       <Slide4 />
       <Slide5 />
       <Slides2 />
-      {/* <ChartLine /> */}
+      <ChartLine />
       {/* <AudioPlayer
         className="player-music fixed bottom-0 left-0 z-50"
         layout="stacked-reverse"

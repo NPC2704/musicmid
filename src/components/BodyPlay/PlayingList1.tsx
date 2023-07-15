@@ -16,6 +16,7 @@ export default function PlayingList1() {
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const link = useSelector((state: RootState) => state.toggleLink.link);
   const [data1, setData] = useState<any[]>([]);
+  const [data2, setData2] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [dataImg, setDataImg] = useState("");
   const [datalink, setDatalink] = useState("");
@@ -60,6 +61,7 @@ export default function PlayingList1() {
       );
       //setData(response?.data?.data?.data?.song?.items);
       setData(response?.data?.data?.data?.sections?.[0]?.items);
+      setData2(response?.data?.data?.data?.song?.items);
       setDatatitle(response?.data?.data?.data?.title);
       setDataImg(response?.data?.data?.data?.thumbnail);
       setDataImg(response?.data?.data?.data?.thumbnail);
@@ -138,6 +140,43 @@ export default function PlayingList1() {
               </tr>
             </thead>
             <tbody onMouseOver={toggle}>
+              {data2.map((item, index) => (
+                <tr
+                  className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
+                  key={index}
+                  onClick={() => {
+                    toggle();
+                    setCurrentTrackIndex(index);
+                    setIdMusic(data2?.[index]?.encodeId);
+                    setImgMusic(data2?.[index]?.thumbnail);
+                    setTitleMusic(data2?.[index]?.title);
+                    setArtistsNames(data2?.[index]?.artistsNames);
+                  }}
+                >
+                  <td className="w-1/10 text-center ">
+                    <img
+                      src={data2?.[index]?.thumbnail}
+                      alt=""
+                      className="h-8 w-8 ml-2"
+                    />
+                  </td>
+                  <td className="w-1/10">{data2?.[index]?.title}</td>
+                  <td className="w-1/10 text-center">
+                    <button onClick={handleDownload}>
+                      <CloudDownloadOutlined className="hover:text-blue-500" />
+                    </button>
+                  </td>
+                  {/* <td className="w-1/10 text-center">
+                    <a
+                      href={datalink}
+                      download="song.mp3"
+                      className="text-blue-500"
+                    >
+                      <CloudDownloadOutlined />
+                    </a>
+                  </td> */}
+                </tr>
+              ))}
               {data1.map((item, index) => (
                 <tr
                   className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"

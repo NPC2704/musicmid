@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./ChartLine.css";
 const chartStyle = {
-  width: "800px",
+  width: "1000px",
   height: "400px",
 };
 const paragraphStyle = {
@@ -16,7 +16,11 @@ const paragraphStyle = {
   fontSize: "3rem",
   fontWeight: "bold",
 };
-const ChartLine: React.FC = () => {
+const ChartPage: React.FC = () => {
+  const [showCount, setShowCount] = useState(3);
+  const handleShowMore = () => {
+    setShowCount((prevCount) => prevCount + 10);
+  };
   const [data0, setData0] = useState<any[]>([]);
   const [data1, setData1] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
@@ -30,7 +34,11 @@ const ChartLine: React.FC = () => {
       const response = await axios.get(
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
-      setData0(response.data?.data?.data?.items?.[9]?.items || []);
+      const response1 = await axios.get(
+        "https://apisolfive.app.tranviet.site/api/get/charthome"
+      );
+
+      setData0(response1?.data?.data?.data?.RTChart?.items || []);
       setData1(response.data?.data?.data?.items?.[9]?.chart?.times || []);
       setData2(
         response.data?.data?.data?.items?.[9]?.chart?.items?.Z6AABFU6 || []
@@ -40,6 +48,9 @@ const ChartLine: React.FC = () => {
       );
       setData4(
         response.data?.data?.data?.items?.[9]?.chart?.items?.Z6BADFAZ || []
+      );
+      console.log(
+        response.data?.data?.data?.items?.[9]?.chart?.items?.values[0]
       );
       setTitleMusic1(response.data?.data?.data?.items?.[9]?.items?.[0]?.title);
       setTitleMusic2(response.data?.data?.data?.items?.[9]?.items?.[1]?.title);
@@ -52,12 +63,17 @@ const ChartLine: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const labels1 = data2.map((item, index) => ` ${data2?.[index]?.counter}`);
-  console.log(labels1);
+
   const options = {
     responsive: true,
     // Các tùy chọn khác của biểu đồ
+    scales: {
+      y: {
+        display: false, // Ẩn thanh Y
+      },
+    },
   };
+
   const data = {
     labels: data1.map((item, index) => ` ${item.hour}`),
 
@@ -85,60 +101,57 @@ const ChartLine: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-110 flex justify-normal items-center ">
-      <div className="w-120 h-100 bg-[#221a2d] mx-auto rounded-md px-3">
-        {" "}
-        <div className="w-full h-4 ">
-          <p style={paragraphStyle}>#Music Chart</p>
+    <div className="w-full h-auto bg-[#221a2d] mx-auto rounded-md px-3 pt-9">
+      {" "}
+      <div className="w-full h-4 ">
+        <p style={paragraphStyle}>#Music Chart</p>
+      </div>
+      <div className="w-full h-auto  mt-5 block mt-24">
+        <div className="chart-container mx-auto" style={chartStyle}>
+          <Line data={data} />
         </div>
-        <div className="w-full h-100 flex justify-center items-center mt-5">
-          <div className=" w-100 h-80 block ">
-            {data0.map((item, index) => {
-              if (index <= 2) {
-                return (
-                  <div
-                    className="bg-[#745887] w-80 h-20 mb-3 mx-auto flex rounded-md"
-                    key={index}
-                  >
-                    <div className="h-full w-10 flex justify-center items-center">
-                      <p className="text-3xl font-medium text-[#4bc0c0]">
-                        {index + 1}
-                      </p>
-                    </div>
-                    <div className="h-full w-10 flex justify-center items-center">
-                      <img
-                        src={data0?.[index]?.thumbnail}
-                        alt=""
-                        className="rounded h-14 w-12"
-                      />
-                    </div>
-                    <div className="flex items-center justify-center ml-3">
-                      <div className="block text-white font-normal">
-                        <div className="flex justify-start">
-                          <p>{data0?.[index]?.title}</p>
-                        </div>
-                        <div className="flex justify-start">
-                          <p>{data0?.[index]?.artistsNames}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-            })}
-            <Link to="/musicchart">
-              <div className="mx-auto h-8 w-32 border-solid border-2 flex justify-center items-center rounded-full text-white cursor-pointer hover:bg-[#b366da]">
-                <p>Xem thêm</p>
+        <div className=" w-100 h-auto block mt-10">
+          {data0.slice(0, showCount).map((item, index) => (
+            <div
+              className="bg-[#745887] w-80 h-20 mb-3 mx-auto flex rounded-md"
+              key={index}
+            >
+              <div className="h-full w-10 flex justify-center items-center">
+                <p className="text-3xl font-medium text-[#4bc0c0]">
+                  {index + 1}
+                </p>
               </div>
-            </Link>
-          </div>
-          <div className="chart-container" style={chartStyle}>
-            <Line data={data} />
-          </div>
+              <div className="h-full w-10 flex justify-center items-center">
+                <img
+                  src={data0?.[index]?.thumbnail}
+                  alt=""
+                  className="rounded h-14 w-12"
+                />
+              </div>
+              <div className="flex items-center justify-center ml-3">
+                <div className="block text-white font-normal">
+                  <div className="flex justify-start">
+                    <p>{data0?.[index]?.title}</p>
+                  </div>
+                  <div className="flex justify-start">
+                    <p>{data0?.[index]?.artistsNames}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {showCount < data0.length && (
+            <div
+              className="mx-auto h-8 w-32 border-solid border-2 flex justify-center items-center rounded-full text-white cursor-pointer hover:bg-[#b366da]"
+              onClick={handleShowMore}
+            >
+              <p>Xem top 100</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default ChartLine;
+export default ChartPage;

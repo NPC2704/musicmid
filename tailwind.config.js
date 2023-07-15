@@ -20,6 +20,7 @@ module.exports = {
       width: {
         100: "30rem",
         110: "40rem",
+        120: "70rem",
       },
       screens: {
         tablet: "640px",
