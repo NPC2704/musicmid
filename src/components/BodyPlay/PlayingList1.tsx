@@ -30,6 +30,8 @@ export default function PlayingList1() {
   const [dataImg, setDataImg] = useState("");
   const [datalink, setDatalink] = useState("");
   const [idMusic, setIdMusic] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const [imgMusic, setImgMusic] = useState(
     "https://yt3.googleusercontent.com/nOwpUI4-9dJLMVZjxUbsghJ-8qBRsGZWthz4cXSSNjuSsBFLw7Zq4iH2awp-Hk3m4milTxAQng=s900-c-k-c0x00ffffff-no-rj"
   );
@@ -103,14 +105,15 @@ export default function PlayingList1() {
       // dispatch(updatedata1Redux(dataRedux));
     }
   }, [currentTrackIndexRedux, dataRedux]);
-  const toggle = async () => {
-    dispatch(updateLink(datalink));
-
-    dispatch(updatedata1Redux(data1));
+  const toggle = () => {
+    setIsPlaying(true);
   };
   useEffect(() => {
-    toggle();
-  }, [datalink]);
+    if (isPlaying) {
+      dispatch(updateLink(datalink));
+    }
+  }, [isPlaying, datalink]);
+
   console.log(typeof datalink);
   const handleDownload = () => {
     const fileUrl = datalink;
@@ -165,10 +168,10 @@ export default function PlayingList1() {
                     toggle();
                     dispatch(updatecurrentTrackIndex(index));
                     setCurrentTrackIndex(index);
-                    setIdMusic(data2?.[index]?.encodeId);
-                    setImgMusic(data2?.[index]?.thumbnail);
-                    setTitleMusic(data2?.[index]?.title);
-                    setArtistsNames(data2?.[index]?.artistsNames);
+                    setIdMusic(data1?.[index]?.encodeId);
+                    setImgMusic(data1?.[index]?.thumbnail);
+                    setTitleMusic(data1?.[index]?.title);
+                    setArtistsNames(data1?.[index]?.artistsNames);
                   }}
                 >
                   <td className="w-1/10 text-center ">
