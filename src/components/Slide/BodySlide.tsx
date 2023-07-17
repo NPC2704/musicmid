@@ -14,6 +14,7 @@ import { AppProvider2, AppContext } from "../../Context/AppContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
+import "./SlidePaner.css";
 const BodySlide = () => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
@@ -88,11 +89,24 @@ const BodySlide = () => {
               className="w-52 h-80 bg-black rounded-lg mx-10 gap-1 space-x-1"
               key={index}
             >
-              <div className="flex justify-center">
+              {/* <div className="flex justify-center relative group">
                 {" "}
-                <img src={item?.thumbnail} alt="" className="rounded-lg" />
+                <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
+                <div className="bg-black opacity-50 absolute w-44 h-41 z-10  justify-center items-center hidden group-hover:flex">
+                  <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
+                    <PlayCircleOutlined className="text-[#e9ebec] font-medium text-3xl	" />{" "}
+                  </Link>
+                </div>
+              </div> */}
+              <div className="flex justify-center relative group cursor-pointer">
+                {" "}
+                <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
+                <div className="bg-transparent absolute bottom-3 right-14 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
+                  <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
+                    <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-black transition-all" />{" "}
+                  </Link>
+                </div>
               </div>
-
               <div className="flex justify-center h-14 mb-5">
                 {" "}
                 <div className="flex items-center">
@@ -106,14 +120,6 @@ const BodySlide = () => {
                     </div>
                   </div>
                 </div>{" "}
-              </div>
-              <div className="flex justify-center items-center">
-                {" "}
-                <div className="bg-transparent w-52">
-                  <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
-                    <PlayCircleOutlined className="text-white font-medium text-3xl	" />{" "}
-                  </Link>
-                </div>
               </div>
             </div>
           ))}

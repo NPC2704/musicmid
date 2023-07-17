@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateLink } from "../redux/toggleLink";
 import { updatecurrentTrackIndex } from "../redux/togglecurrentTrackIndex";
-
+import "./public.css";
 const Public = () => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const Public = () => {
     // Cập nhật link nhạc trong Redux khi nó thay đổi
     dispatch(updateLink(link));
   }, [link, dispatch]);
+  console.log(link);
   // Các biến state từ component "PlayingList"
   const currentTrackIndex = useSelector(
     (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
@@ -51,20 +52,18 @@ const Public = () => {
         showJumpControls={false}
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPre}
-        //  onPlay={handleAudioClick}
-        customAdditionalControls={[
-          <div
-            className="flex items-center justify-center w-62 absolute top-0 left-0"
-            key="music-controls"
-          >
-            {/* <img src={imgMusic} alt="Music Cover" className="h-8 w-8" />
-            <p className="ml-4 text-white text-lg font-bold w-60">
-              {titleMusic} <br /> (
-              <span className="text-sm font-medium">{artistsNames}</span>)
-            </p> */}
-            <p onClick={handleAudioClick}>R</p>
-          </div>,
-        ]}
+        // customAdditionalControls={[
+        //         //   <div
+        //         //     className="flex items-center justify-center w-62"
+        //         //     key="music-controls"
+        //         //   >
+        //         //     <img src={imgMusic} alt="Music Cover" className="h-8 w-8" />
+        //         //     <p className="ml-4 text-white text-lg font-bold w-60">
+        //         //       {titleMusic} <br /> (
+        //         //       <span className="text-sm font-medium">{artistsNames}</span>)
+        //         //     </p>
+        //         //   </div>,
+        //         // ]}
       >
         <div className="rhap_main-controls" />
       </AudioPlayer>

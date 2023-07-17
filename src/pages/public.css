@@ -1,0 +1,44 @@
+.rhap_stacked-reverse {
+  flex-direction: row-reverse;
+}
+.rhap_additional-controls {
+  display: none;
+}
+.rhap_main rhap_stacked-reverse {
+  display: flex;
+  align-items: center;
+}
+.rhap_volume-controls {
+  justify-content: flex-start;
+  width: 1px;
+  margin-left: 10px;
+  flex: 1 0;
+}
+.rhap_main-controls {
+}
+.rhap_progress-container {
+}
+
+.rhap_progress-bar {
+  height: 3px;
+}
+.rhap_volume-container button:hover + .rhap_volume-bar-area {
+  display: flex;
+}
+
+.rhap_volume-container:hover .rhap_volume-bar-area {
+  display: flex;
+}
+
+.rhap_volume-bar-area {
+  display: none;
+}
+.rhap_main-controls-button {
+  color: white;
+}
+.rhap_volume-button {
+  color: white;
+}
+.rhap_volume-bar-area {
+  width: 60px;
+}

@@ -1,3 +1,36 @@
-.slider-item {
-  transition: transform 0.9s ease-in-out;
+.slick-slider {
+  padding-top: 40px;
+}
+.slick-arrow::before {
+  font-size: 35px;
+  background-color: transparent;
+}
+.slick-next:before {
+  background-color: transparent;
+  /* border: 1px solid white;
+  border-radius: 50%; */
+}
+.slick-prev:before {
+  background-color: transparent;
+  /* border: 1px solid white;
+  border-radius: 50%; */
+}
+.slick-prev:before,
+.slick-next:before {
+  color: white;
+}
+.slick-next {
+  padding: 10px;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+
+  right: 25px;
+}
+.slick-prev {
+  padding: 10px;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  left: 1190px;
 }
