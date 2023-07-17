@@ -5,13 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { updateNumber2 } from "../../redux/toggleSlice2";
+import { RootState } from "../../redux/store";
+import { updateLink } from "../../redux/toggleLink";
 import { Link } from "react-router-dom";
 const BodySlide2 = () => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
+  const [datalink, setDatalink] = useState("");
   const [title, setTitle] = useState("all");
   const [dataChild, setDataChild] = useState(1);
+  const link = useSelector((state: RootState) => state.toggleLink.link);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(

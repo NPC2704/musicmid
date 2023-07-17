@@ -85,7 +85,7 @@ const ChartLine: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-110 flex justify-normal items-center ">
+    <div className="w-full h-110 flex justify-normal items-center mb-10">
       <div className="w-120 h-100 bg-[#221a2d] mx-auto rounded-md px-3">
         {" "}
         <div className="w-full h-4 ">

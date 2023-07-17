@@ -6,12 +6,14 @@ import { useParams } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateLink } from "../../redux/toggleLink";
+import { useDispatch } from "react-redux";
 export default function Playing() {
   const { link1 } = useContext(AppContext);
-  // const mode = useSelector((state) => state.theme.mode);
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const number2 = useSelector((state: RootState) => state.toggle2.number2);
+  const link = useSelector((state: RootState) => state.toggleLink.link);
   console.log(number);
   console.log(number1);
   console.log(number2);
@@ -34,11 +36,7 @@ export default function Playing() {
         response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
           ?.artists || []
       );
-      console.log(response.data?.data?.data?.items);
-      console.log(
-        response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
-          ?.title
-      );
+
       setDatatitle(
         response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
           ?.title
@@ -62,12 +60,18 @@ export default function Playing() {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(userId);
-  console.log(dataImg);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchData();
     fetchData1();
   }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  useEffect(() => {
+    dispatch(updateLink(datalink));
+    console.log(datalink);
+  }, [datalink]);
   return (
     <div className=" w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
@@ -112,16 +116,6 @@ export default function Playing() {
           </table>
         </div>
       </div>
-
-      <AudioPlayer
-        className="player-music absolute bottom-0 left-0 z-50 bg-[#475569]"
-        src={datalink}
-        layout="stacked-reverse"
-        showSkipControls={true}
-        showJumpControls={false}
-        onClickNext={handleClickNext}
-        onClickPrevious={handleClickPre}
-      />
     </div>
   );
 }

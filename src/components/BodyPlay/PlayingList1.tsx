@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { updateLink } from "../../redux/toggleLink";
+import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
+import { updatedata1Redux } from "../../redux/toggleData1";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "./Play.css";
 export default function PlayingList1() {
@@ -15,6 +17,13 @@ export default function PlayingList1() {
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const link = useSelector((state: RootState) => state.toggleLink.link);
+  const currentTrackIndexRedux = useSelector(
+    (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
+  );
+
+  const dataRedux = useSelector(
+    (state: RootState) => state.toggleData1.data1Redux
+  );
   const [data1, setData] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
@@ -29,9 +38,7 @@ export default function PlayingList1() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0); // Thêm state để lưu index của bài hát hiện tại
   const params = useParams();
   const userId = params.id;
-  const toggle = () => {
-    dispatch(updateLink(datalink));
-  };
+
   const handleClickNext = () => {
     const nextIndex = currentTrackIndex + 1;
     if (nextIndex < data1.length) {
@@ -82,18 +89,28 @@ export default function PlayingList1() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (data1.length > 0) {
-      setIdMusic(data1[currentTrackIndex]?.encodeId);
-    }
-  }, [currentTrackIndex, data1]);
-
-  useEffect(() => {
     fetchData1();
   }, [idMusic]);
+
+  useEffect(() => {
+    fetchData();
+  }, [userId]);
+
+  useEffect(() => {
+    if (dataRedux.length > 0) {
+      setIdMusic(dataRedux[currentTrackIndexRedux]?.encodeId);
+      // dispatch(updatecurrentTrackIndex(currentTrackIndexRedux));
+      // dispatch(updatedata1Redux(dataRedux));
+    }
+  }, [currentTrackIndexRedux, dataRedux]);
+  const toggle = async () => {
+    dispatch(updateLink(datalink));
+
+    dispatch(updatedata1Redux(data1));
+  };
+  useEffect(() => {
+    toggle();
+  }, [datalink]);
   console.log(typeof datalink);
   const handleDownload = () => {
     const fileUrl = datalink;
@@ -146,6 +163,7 @@ export default function PlayingList1() {
                   key={index}
                   onClick={() => {
                     toggle();
+                    dispatch(updatecurrentTrackIndex(index));
                     setCurrentTrackIndex(index);
                     setIdMusic(data2?.[index]?.encodeId);
                     setImgMusic(data2?.[index]?.thumbnail);
@@ -219,7 +237,7 @@ export default function PlayingList1() {
         </div>
       </div>
 
-      <AudioPlayer
+      {/* <AudioPlayer
         className="player-music absolute bottom-0 left-0 z-50"
         src={datalink}
         layout="stacked-reverse"
@@ -241,7 +259,7 @@ export default function PlayingList1() {
         ]}
       >
         <div className="rhap_main-controls" />
-      </AudioPlayer>
+      </AudioPlayer> */}
     </div>
   );
 }

@@ -8,12 +8,24 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { updateLink } from "../../redux/toggleLink";
+import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
+import { updatedata1Redux } from "../../redux/toggleData1";
 import "./Play.css";
 export default function PlayingList() {
   const dispatch = useDispatch();
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const link = useSelector((state: RootState) => state.toggleLink.link);
+  const currentTrackIndexRedux = useSelector(
+    (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
+  );
+
+  const dataRedux = useSelector(
+    (state: RootState) => state.toggleData1.data1Redux
+  );
+  console.log(currentTrackIndexRedux);
+  console.log(dataRedux);
+
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [dataImg, setDataImg] = useState("");
@@ -27,30 +39,6 @@ export default function PlayingList() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0); // Thêm state để lưu index của bài hát hiện tại
   const params = useParams();
   const userId = params.id;
-  const toggle = () => {
-    dispatch(updateLink(datalink));
-  };
-  const handleClickNext = () => {
-    const nextIndex = currentTrackIndex + 1;
-    if (nextIndex < data1.length) {
-      setCurrentTrackIndex(nextIndex);
-      setIdMusic(data1[nextIndex]?.encodeId);
-      setImgMusic(data1?.[nextIndex]?.thumbnailM);
-      setTitleMusic(data1?.[nextIndex]?.title);
-      setArtistsNames(data1?.[nextIndex]?.artistsNames);
-    }
-  };
-
-  const handleClickPre = () => {
-    const previousIndex = currentTrackIndex - 1;
-    if (previousIndex >= 0) {
-      setCurrentTrackIndex(previousIndex);
-      setIdMusic(data1[previousIndex]?.encodeId);
-      setImgMusic(data1?.[previousIndex]?.thumbnailM);
-      setTitleMusic(data1?.[previousIndex]?.title);
-      setArtistsNames(data1?.[previousIndex]?.artistsNames);
-    }
-  };
 
   const fetchData = async () => {
     try {
@@ -91,7 +79,14 @@ export default function PlayingList() {
   useEffect(() => {
     fetchData1();
   }, [idMusic]);
+  const toggle = async () => {
+    dispatch(updateLink(datalink));
 
+    dispatch(updatedata1Redux(data1));
+  };
+  useEffect(() => {
+    toggle();
+  }, [datalink]);
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
@@ -120,7 +115,7 @@ export default function PlayingList() {
                 </th>
               </tr>
             </thead>
-            <tbody onMouseOver={toggle}>
+            <tbody>
               {data1.map((item, index) => (
                 <tr
                   className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
@@ -157,30 +152,6 @@ export default function PlayingList() {
           </table>
         </div>
       </div>
-
-      <AudioPlayer
-        className="player-music absolute bottom-0 left-0 z-50"
-        src={datalink}
-        layout="stacked-reverse"
-        showSkipControls={true}
-        showJumpControls={false}
-        onClickNext={handleClickNext}
-        onClickPrevious={handleClickPre}
-        customAdditionalControls={[
-          <div
-            className="flex items-center justify-center w-62"
-            key="music-controls"
-          >
-            <img src={imgMusic} alt="Music Cover" className="h-8 w-8" />
-            <p className="ml-4 text-white text-lg font-bold w-60">
-              {titleMusic} <br /> (
-              <span className="text-sm font-medium">{artistsNames}</span>)
-            </p>
-          </div>,
-        ]}
-      >
-        <div className="rhap_main-controls" />
-      </AudioPlayer>
     </div>
   );
 }
