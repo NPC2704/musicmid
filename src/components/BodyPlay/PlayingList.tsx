@@ -31,6 +31,7 @@ export default function PlayingList() {
   const [dataImg, setDataImg] = useState("");
   const [datalink, setDatalink] = useState("");
   const [idMusic, setIdMusic] = useState("");
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [imgMusic, setImgMusic] = useState(
     "https://yt3.googleusercontent.com/nOwpUI4-9dJLMVZjxUbsghJ-8qBRsGZWthz4cXSSNjuSsBFLw7Zq4iH2awp-Hk3m4milTxAQng=s900-c-k-c0x00ffffff-no-rj"
   );
@@ -39,6 +40,28 @@ export default function PlayingList() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0); // Thêm state để lưu index của bài hát hiện tại
   const params = useParams();
   const userId = params.id;
+
+  const handleClickNext = () => {
+    const nextIndex = currentTrackIndex + 1;
+    if (nextIndex < data1.length) {
+      setCurrentTrackIndex(nextIndex);
+      setIdMusic(data1[nextIndex]?.encodeId);
+      setImgMusic(data1?.[nextIndex]?.thumbnailM);
+      setTitleMusic(data1?.[nextIndex]?.title);
+      setArtistsNames(data1?.[nextIndex]?.artistsNames);
+    }
+  };
+
+  const handleClickPre = () => {
+    const previousIndex = currentTrackIndex - 1;
+    if (previousIndex >= 0) {
+      setCurrentTrackIndex(previousIndex);
+      setIdMusic(data1[previousIndex]?.encodeId);
+      setImgMusic(data1?.[previousIndex]?.thumbnailM);
+      setTitleMusic(data1?.[previousIndex]?.title);
+      setArtistsNames(data1?.[previousIndex]?.artistsNames);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -50,11 +73,11 @@ export default function PlayingList() {
       setDatatitle(response?.data?.data?.data?.title);
       setDataImg(response?.data?.data?.data?.thumbnail);
       setDataImg(response?.data?.data?.data?.thumbnail);
+      setIsDataLoaded(true);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
   const fetchData1 = async () => {
     try {
       const response = await axios.get(
@@ -67,26 +90,25 @@ export default function PlayingList() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (data1.length > 0) {
-      setIdMusic(data1[currentTrackIndex]?.encodeId);
+    if (!isDataLoaded) {
+      fetchData();
     }
-  }, [currentTrackIndex, data1]);
-
+  }, [isDataLoaded]);
   useEffect(() => {
     fetchData1();
   }, [idMusic]);
-  const toggle = async () => {
-    dispatch(updateLink(datalink));
 
-    dispatch(updatedata1Redux(data1));
-  };
   useEffect(() => {
-    toggle();
-  }, [datalink]);
+    if (dataRedux.length > 0) {
+      setIdMusic(dataRedux[currentTrackIndexRedux]?.encodeId);
+    }
+  }, [currentTrackIndexRedux, dataRedux]);
+  const toggle = () => {
+    dispatch(updateLink(datalink));
+  };
+  // useEffect(() => {
+  //   dispatch(updateLink(datalink));
+  // }, [datalink]);
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
@@ -122,6 +144,7 @@ export default function PlayingList() {
                   key={index}
                   onClick={() => {
                     toggle();
+                    dispatch(updatecurrentTrackIndex(index));
                     setCurrentTrackIndex(index);
                     setIdMusic(data1?.[index]?.encodeId);
                     setImgMusic(data1?.[index]?.thumbnail);
