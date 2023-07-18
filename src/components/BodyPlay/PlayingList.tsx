@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { useParams } from "react-router-dom";
+import { useParams, Outlet, Link } from "react-router-dom";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -27,9 +27,8 @@ export default function PlayingList() {
   const dataRedux = useSelector(
     (state: RootState) => state.toggleData1.data1Redux
   );
-  console.log(currentTrackIndexRedux);
-  console.log(dataRedux);
-  dispatch(updatepathLink(window.location.pathname));
+
+  // dispatch(updatepathLink(window.location.pathname));
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [dataImg, setDataImg] = useState("");
@@ -61,25 +60,25 @@ export default function PlayingList() {
       console.error("Error fetching data:", error);
     }
   };
-  const fetchData1 = async () => {
-    try {
-      const response = await axios.get(
-        `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${idMusic}`
-      );
-      setDatalink(response?.data?.data?.data?.[128]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const fetchData1 = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${idMusic}`
+  //     );
+  //     setDatalink(response?.data?.data?.data?.[128]);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     if (!isDataLoaded) {
       fetchData();
     }
   }, [isDataLoaded]);
-  useEffect(() => {
-    fetchData1();
-  }, [idMusic]);
+  // useEffect(() => {
+  //   fetchData1();
+  // }, [idMusic]);
 
   useEffect(() => {
     if (dataRedux.length > 0) {
@@ -89,17 +88,18 @@ export default function PlayingList() {
   const toggle = () => {
     setIsPlaying(true);
   };
-  useEffect(() => {
-    if (isPlaying) {
-      dispatch(updateLink(datalink));
-      dispatch(updatedata1Redux(data1));
-    }
-  }, [isPlaying, datalink]);
+  // console.log(datalink);
+  // useEffect(() => {
+  //   if (isPlaying) {
+  //     dispatch(updateLink(datalink));
+  //     dispatch(updatedata1Redux(data1));
+  //   }
+  // }, [isPlaying, datalink]);
 
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
-        <div className="w-100 h-110 ">
+        {/* <div className="w-100 h-110 ">
           <h1 className="text-white font-semibold text-2xl">
             Title: {datatitle}
           </h1>
@@ -110,8 +110,8 @@ export default function PlayingList() {
               className="w-80 h-80 rotating-image rounded-full"
             />
           </div>
-        </div>
-
+        </div> */}
+        <Outlet />
         <div className="w-110 h-110 bg-transparent overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md">
           <table className="table-auto w-full  mb-1">
             <thead className="bg-transparent h-12 text-gray-500 hover:bg-slate-600 bg-slate-600 text-white">
@@ -139,22 +139,41 @@ export default function PlayingList() {
                     setArtistsNames(data1?.[index]?.artistsNames);
                   }}
                 >
-                  <td className="w-1/10 text-center ">
-                    <img
-                      src={data1?.[index]?.thumbnail}
-                      alt=""
-                      className="h-8 w-8 ml-2"
-                    />
-                  </td>
-                  <td className="w-1/10">{data1?.[index]?.title}</td>
                   <td className="w-1/10 text-center">
-                    <a
-                      href={datalink}
-                      download="song.mp3"
-                      className="text-blue-500"
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      className="link"
                     >
-                      <CloudDownloadOutlined />
-                    </a>
+                      {" "}
+                      <img
+                        src={data1?.[index]?.thumbnail}
+                        alt=""
+                        className="h-8 w-8 ml-2"
+                      />
+                    </Link>
+                  </td>
+                  <td className="w-1/10">
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      className="link"
+                    >
+                      {data1?.[index]?.title}
+                    </Link>
+                  </td>
+                  <td className="w-1/10 text-center">
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      className="link"
+                    >
+                      {" "}
+                      <a
+                        href={datalink}
+                        download="song.mp3"
+                        className="text-blue-500"
+                      >
+                        <CloudDownloadOutlined />
+                      </a>
+                    </Link>
                   </td>
                 </tr>
               ))}

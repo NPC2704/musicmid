@@ -89,15 +89,6 @@ const BodySlide = () => {
               className="w-52 h-80 bg-black rounded-lg mx-10 gap-1 space-x-1"
               key={index}
             >
-              {/* <div className="flex justify-center relative group">
-                {" "}
-                <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
-                <div className="bg-black opacity-50 absolute w-44 h-41 z-10  justify-center items-center hidden group-hover:flex">
-                  <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
-                    <PlayCircleOutlined className="text-[#e9ebec] font-medium text-3xl	" />{" "}
-                  </Link>
-                </div>
-              </div> */}
               <div className="flex justify-center relative group cursor-pointer">
                 {" "}
                 <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
