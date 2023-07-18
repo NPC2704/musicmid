@@ -20,10 +20,10 @@ import logoVN from "../assets/vi.png";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, Space } from "antd";
 const Header = () => {
-  const {
-    user: { displayName, photoURL },
-  } = React.useContext(AuthContext);
-  const { clearState } = React.useContext(AppContext);
+  // const {
+  //   user: { displayName, photoURL },
+  // } = React.useContext(AuthContext);
+  // const { clearState } = React.useContext(AppContext);
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (lang: string) => {
@@ -52,7 +52,7 @@ const Header = () => {
             {t("header.discover")}
           </Link>
           <Link
-            to="/thu-vien"
+            to=""
             className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
           >
             {t("header.library")}
@@ -120,7 +120,7 @@ const Header = () => {
               </option>
             </select>
           </div>
-          {photoURL == undefined ? (
+          {/* {photoURL == undefined ? (
             <UserOutlined className="w-10 h-4 text-white" />
           ) : (
             <img
@@ -142,7 +142,7 @@ const Header = () => {
                 auth.signOut();
               }}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>

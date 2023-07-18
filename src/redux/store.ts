@@ -6,6 +6,9 @@ import toggleLink from "./toggleLink";
 import toggleData1 from "./toggleData1";
 import togglecurrentTrackIndex from "./togglecurrentTrackIndex";
 import toggleidLink from "./toggleidLink";
+import togglePathLink from "./togglePathLink";
+import togglePathLink2 from "./togglePathLink2";
+import togglePathLinkNumber from "./togglePathLinkNumber";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -15,6 +18,9 @@ const store = configureStore({
     toggleData1: toggleData1,
     togglecurrentTrackIndex: togglecurrentTrackIndex,
     toggleidLink: toggleidLink,
+    togglePathLink: togglePathLink,
+    togglePathLink2: togglePathLink2,
+    togglePathLinkNumber: togglePathLinkNumber,
   },
 });
 

@@ -4,7 +4,7 @@ import { AppProvider2 } from "../../Context/AppContext";
 const PlayMusic = () => {
   return (
     <div className="bg-black h-full">
-      <Header />
+      {/* <Header /> */}
       <AppProvider2>
         <Playing />{" "}
       </AppProvider2>

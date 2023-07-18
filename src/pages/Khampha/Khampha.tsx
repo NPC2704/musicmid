@@ -4,7 +4,7 @@ import BodyKP from "../../components/BodyKhampha/BodyKP";
 const Khampha = () => {
   return (
     <div className="bg-black h-full">
-      <Header />
+      {/* <Header /> */}
       <BodyKP />
     </div>
   );

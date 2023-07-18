@@ -4,7 +4,7 @@ import PlayingList from "../../components/BodyPlay/PlayingList";
 const PlayPlaylistMusic = () => {
   return (
     <div className="bg-black h-full">
-      <Header />
+      {/* <Header /> */}
       <PlayingList />
     </div>
   );

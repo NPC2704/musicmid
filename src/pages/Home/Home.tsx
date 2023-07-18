@@ -17,7 +17,7 @@ const Home: React.FC<IProps> = () => {
 
   return (
     <div className="w-full h-full">
-      <Header />
+      {/* <Header /> */}
 
       <Slides />
 

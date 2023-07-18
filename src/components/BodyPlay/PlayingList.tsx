@@ -10,12 +10,16 @@ import { useDispatch } from "react-redux";
 import { updateLink } from "../../redux/toggleLink";
 import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
 import { updatedata1Redux } from "../../redux/toggleData1";
+import { updatepathLink } from "../../redux/togglePathLink";
 import "./Play.css";
 export default function PlayingList() {
   const dispatch = useDispatch();
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const link = useSelector((state: RootState) => state.toggleLink.link);
+  const pathlink = useSelector(
+    (state: RootState) => state.togglePathLink.pathLink
+  );
   const currentTrackIndexRedux = useSelector(
     (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
   );
@@ -25,7 +29,7 @@ export default function PlayingList() {
   );
   console.log(currentTrackIndexRedux);
   console.log(dataRedux);
-
+  dispatch(updatepathLink(window.location.pathname));
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [dataImg, setDataImg] = useState("");

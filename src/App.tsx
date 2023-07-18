@@ -17,22 +17,22 @@ function App() {
   return (
     <>
       <div className="">
-        <AuthProvider>
-          <AppProvider>
-            <Routes>
-              <Route path="/" element={<Public />}>
-                <Route path="" element={<Home />} />
-                <Route path="/kham-pha" element={<Khampha />} />
+        {/* <AuthProvider>
+          <AppProvider> */}
+        <Routes>
+          <Route path="/" element={<Public />}>
+            <Route path="" element={<Home />} />
+            <Route path="/kham-pha" element={<Khampha />} />
 
-                <Route path="/play/:id" element={<PlayMusic />} />
-                <Route path="/playlist/:id" element={<PlayPlaylistMusic />} />
-                <Route path="/playlist1/:id" element={<PlayPlaylistMusic1 />} />
-                <Route path="/musicchart" element={<MusicChart />} />
-              </Route>{" "}
-              <Route path="/login" element={<Login />} />
-            </Routes>
-          </AppProvider>
-        </AuthProvider>
+            <Route path="/play/:id" element={<PlayMusic />} />
+            <Route path="/playlist/:id" element={<PlayPlaylistMusic />} />
+            <Route path="/playlist1/:id" element={<PlayPlaylistMusic1 />} />
+            <Route path="/musicchart" element={<MusicChart />} />
+          </Route>{" "}
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        {/* </AppProvider>
+        </AuthProvider> */}
       </div>
     </>
   );

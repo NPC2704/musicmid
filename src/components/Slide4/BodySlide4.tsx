@@ -93,7 +93,7 @@ const BodySlide = () => {
                 <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
                 <div className="bg-transparent absolute bottom-3 right-16 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
                   <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
-                    <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-black transition-all" />{" "}
+                    <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-white transition-all" />{" "}
                   </Link>
                 </div>
               </div>
