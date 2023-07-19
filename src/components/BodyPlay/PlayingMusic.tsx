@@ -139,16 +139,17 @@
 // };
 
 // export default PlayingMusic;
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Logo from "../../assets/logo.jpg";
 import { useLocation } from "react-router-dom";
 import { updatepathLink2 } from "../../redux/togglePathLink2";
-
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { updatesendLink } from "../../redux/toggleSendLink";
+import { updatepathLinknumber } from "../../redux/togglePathLinkNumber";
 const PlayingMusic = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -167,13 +168,26 @@ const PlayingMusic = () => {
   const storedLinkHistory = localStorage.getItem("linkHistory");
   const linkHistory = storedLinkHistory ? JSON.parse(storedLinkHistory) : [];
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-
+  const [dataFetched, setDataFetched] = useState(false);
+  const [previousPathname, setPreviousPathname] = useState("");
+  const [numberLink, setNumberLink] = useState(1);
+  const pathlink2 = useSelector(
+    (state: RootState) => state.togglePathLink2.pathLink2
+  );
+  const sendLink = useSelector(
+    (state: RootState) => state.toggleSendLink.sendLink
+  );
+  const pathLinkNumber = useSelector(
+    (state: RootState) => state.togglePathLinkNumber.pathLinknumber
+  );
   useEffect(() => {
     linkHistory.push(location.pathname);
     localStorage.setItem("linkHistory", JSON.stringify(linkHistory));
+    setPreviousPathname(location.pathname);
     console.log(linkHistory); // In ra lịch sử link đã lưu
+    console.log("Bi Reload 4");
   }, [location]);
-
+  console.log(pathLinkNumber);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -182,14 +196,14 @@ const PlayingMusic = () => {
       setTitleMusic(response?.data?.data?.data?.title);
       setImgMusic(response?.data?.data?.data?.thumbnail);
       console.log(response?.data?.data?.data?.title);
-      setIsDataLoaded(true);
+      setDataFetched(true);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    const fetchData1 = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
           `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${idmusic}`
@@ -198,25 +212,37 @@ const PlayingMusic = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+      console.log("Bi Reload 1");
     };
     if (window.location.pathname.split("/")[1] === "playlist") {
       dispatch(updatepathLink2(window.location.pathname));
     }
-    fetchData1();
+    fetchData();
   }, [idmusic]);
 
   useEffect(() => {
-    dispatch(updateLink(datalink));
-  }, [datalink]);
+    if (pathLinkNumber === 0) {
+      if (datalink && pathlink2) {
+        dispatch(updateLink(datalink));
+        console.log("Đã truyền 1");
+        dispatch(updatepathLinknumber(1));
+        console.log(pathLinkNumber);
+      }
+    } else {
+      if (sendLink) {
+        dispatch(updateLink(datalink));
+        console.log("Đã truyền 2");
+        dispatch(updatesendLink(false));
+      }
+    }
+  }, [numberLink, datalink, pathlink2, sendLink]);
 
   useEffect(() => {
-    if (
-      !isDataLoaded &&
-      location.pathname !== linkHistory[linkHistory.length - 2]
-    ) {
+    if (!dataFetched && location.pathname !== previousPathname) {
       fetchData();
+      console.log("Bi Reload 3");
     }
-  }, [isDataLoaded, location.pathname]);
+  }, [dataFetched, location.pathname, previousPathname]);
 
   return (
     <div className="w-100 h-110 ">

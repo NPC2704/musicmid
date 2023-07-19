@@ -22,6 +22,7 @@ const BodySlide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { link1, setLink } = useContext(AppContext);
   const [dataChild, setDataChild] = useState(0);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(

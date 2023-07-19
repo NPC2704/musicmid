@@ -102,6 +102,7 @@ import { updatepathLink2 } from "../redux/togglePathLink2";
 import Header from "../components/Header";
 const Public = () => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
+  console.log("Bi load lai roi");
   const pathlink = useSelector(
     (state: RootState) => state.togglePathLink.pathLink
   );
@@ -111,9 +112,6 @@ const Public = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   console.log(pathlink);
-  useEffect(() => {
-    dispatch(updateLink(link));
-  }, [link, dispatch]);
 
   const currentTrackIndex = useSelector(
     (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
@@ -161,7 +159,9 @@ const Public = () => {
       <Outlet />
       <AudioPlayer
         className={`${
-          link === "" ? "hidden" : "player-music fixed bottom-0 left-0 z-50"
+          link === ""
+            ? "player-music hidden"
+            : "player-music fixed bottom-0 left-0 z-50"
         }`}
         src={link}
         layout="stacked-reverse"

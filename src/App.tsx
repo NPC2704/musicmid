@@ -21,6 +21,7 @@ function App() {
       <div className="">
         {/* <AuthProvider>
           <AppProvider> */}
+
         <Routes>
           <Route path="/" element={<Public />}>
             <Route path="" element={<Home />} />
