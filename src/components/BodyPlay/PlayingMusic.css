@@ -1,0 +1,17 @@
+/* PlayingMusic.css */
+
+.playing-music-container {
+  transition: transform 0.9s ease-in-out;
+}
+
+.playing-music-container.slide-up {
+  transform: translateY(100%);
+}
+
+.playing-music-container.slide-down {
+  transform: translateY(-100%);
+}
+.disappear {
+  opacity: 0;
+  transition: opacity 300ms;
+}

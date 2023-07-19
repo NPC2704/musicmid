@@ -10,6 +10,8 @@ import togglePathLink from "./togglePathLink";
 import togglePathLink2 from "./togglePathLink2";
 import togglePathLinkNumber from "./togglePathLinkNumber";
 import toggleSendLink from "./toggleSendLink";
+import toggleImg from "./toggleImg";
+import toggleTitle from "./toggleTitle";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -23,6 +25,8 @@ const store = configureStore({
     togglePathLink2: togglePathLink2,
     togglePathLinkNumber: togglePathLinkNumber,
     toggleSendLink: toggleSendLink,
+    toggleImg: toggleImg,
+    toggleTitle: toggleTitle,
   },
 });
 

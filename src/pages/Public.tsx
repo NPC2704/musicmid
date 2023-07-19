@@ -102,7 +102,7 @@ import { updatepathLink2 } from "../redux/togglePathLink2";
 import Header from "../components/Header";
 const Public = () => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
-  console.log("Bi load lai roi");
+  console.log("Link ", link);
   const pathlink = useSelector(
     (state: RootState) => state.togglePathLink.pathLink
   );
