@@ -89,7 +89,7 @@
 
 // export default Public;
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -102,7 +102,6 @@ import { updatepathLink2 } from "../redux/togglePathLink2";
 import Header from "../components/Header";
 const Public = () => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
-  console.log("Link ", link);
   const pathlink = useSelector(
     (state: RootState) => state.togglePathLink.pathLink
   );
@@ -111,7 +110,6 @@ const Public = () => {
   );
   const dispatch = useDispatch();
   const history = useNavigate();
-  console.log(pathlink);
 
   const currentTrackIndex = useSelector(
     (state: RootState) => state.togglecurrentTrackIndex.currentTrackIndexRedux
@@ -149,15 +147,130 @@ const Public = () => {
     }
   };
 
-  // console.log(link);
-  console.log(pathlink2);
-  console.log(pathlink);
+  // Lấy thời gian hiện tại từ AudioPlayer
+  const audioPlayerRef = useRef<any>(null);
 
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(() => {
+    const audio = audioPlayerRef.current?.audio?.current;
+    if (audio) {
+      audio.addEventListener("timeupdate", handleTimeUpdate);
+    }
+    return () => {
+      if (audio) {
+        audio.removeEventListener("timeupdate", handleTimeUpdate);
+      }
+    };
+  }, []);
+
+  const handleTimeUpdate = () => {
+    const audio = audioPlayerRef.current?.audio?.current;
+    if (audio) {
+      const currentTimeInSeconds = Math.floor(audio.currentTime);
+      setCurrentTime(currentTimeInSeconds);
+    }
+  };
+  const a = [
+    {
+      words: [
+        {
+          startTime: 0,
+          endTime: 1000,
+          data: "Một",
+        },
+        {
+          startTime: 1000,
+          endTime: 1300,
+          data: "tình",
+        },
+        {
+          startTime: 1300,
+          endTime: 2000,
+          data: "yêu",
+        },
+      ],
+    },
+    {
+      words: [
+        {
+          startTime: 5630,
+          endTime: 6170,
+          data: "Chúng",
+        },
+        {
+          startTime: 6170,
+          endTime: 6690,
+          data: "ta",
+        },
+        {
+          startTime: 6690,
+          endTime: 7250,
+          data: "chẳng",
+        },
+        {
+          startTime: 7250,
+          endTime: 7250,
+          data: "thể",
+        },
+        {
+          startTime: 7250,
+          endTime: 8320,
+          data: "dừng",
+        },
+        {
+          startTime: 8320,
+          endTime: 8830,
+          data: "chẳng",
+        },
+        {
+          startTime: 8830,
+          endTime: 9360,
+          data: "thể",
+        },
+        {
+          startTime: 9360,
+          endTime: 12360,
+          data: "đến",
+        },
+      ],
+    },
+  ];
+  const convertMsToSeconds = (timeInMs: any) => {
+    return timeInMs / 1000;
+  };
+  const formatTime = (timeInSeconds: any) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+
+    for (let i = 0; i < a.length; i++) {
+      if (
+        timeInSeconds >= convertMsToSeconds(a[i]?.words?.[0]?.startTime) &&
+        timeInSeconds <=
+          convertMsToSeconds(a[i]?.words?.[a.length - 1]?.endTime)
+      ) {
+        const newArray = [];
+
+        const b = a[i]?.words.map((item, index) => {
+          // console.log(item);
+          return item.data;
+        });
+
+        newArray.push(b);
+
+        console.log(newArray.join(" "));
+        return newArray.join("");
+      }
+    }
+
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
   return (
     <div>
       <Header />
       <Outlet />
       <AudioPlayer
+        ref={audioPlayerRef}
         className={`${
           link === ""
             ? "player-music hidden"
@@ -182,6 +295,7 @@ const Public = () => {
             >
               Next
             </p>
+            <p>Current Time: {formatTime(currentTime)}</p>
           </div>,
         ]}
       >

@@ -85,7 +85,26 @@ export default function PlayingList() {
       console.error("Error fetching data:", error);
     }
   };
-
+  const [datalyric, setDataLyric] = useState<any[]>([]);
+  const fetchDataLyric = async () => {
+    try {
+      const response = await axios.get(
+        `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${idMusic}`
+      );
+      setDataLyric(response?.data?.data?.data?.sentences);
+      console.log(response?.data?.data?.data?.sentences);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchDataLyric();
+  }, [idMusic]);
+  useEffect(() => {
+    if (!isDataLoaded) {
+      fetchData();
+    }
+  }, [isDataLoaded]);
   useEffect(() => {
     if (!isDataLoaded) {
       fetchData();
@@ -195,9 +214,9 @@ export default function PlayingList() {
           ) : (
             <div className="w-full h-100 mb-1  flex justify-center">
               <div className=" w-100 h-100 mt-3">
-                <p className="text-white text-center">
-                  Cong cong cong cong cong cong
-                </p>
+                {datalyric.map((item, index) => (
+                  <p className="text-white text-center"></p>
+                ))}
               </div>
             </div>
           )}
