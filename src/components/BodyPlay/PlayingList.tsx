@@ -37,6 +37,10 @@ export default function PlayingList() {
   const currentTimeRedux = useSelector(
     (state: RootState) => state.toggleCurrentTime.currentTime
   );
+  const idMusic11 = useSelector(
+    (state: RootState) => state.toggelIDdMusic.iddMusic
+  );
+
   const history = useNavigate();
   const location = useLocation();
   const storedLinkHistory = localStorage.getItem("linkHistory");
@@ -91,24 +95,7 @@ export default function PlayingList() {
       console.error("Error fetching data:", error);
     }
   };
-  const [datalyric, setDataLyric] = useState<any[]>([]);
-  const fetchDataLyric = async () => {
-    try {
-      const response = await axios.get(
-        `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${idMusic}`
-      );
-      setDataLyric(response?.data?.data?.data?.sentences);
-      console.log(
-        response?.data?.data?.data?.sentences?.[0]?.words?.[0]?.startTime
-      );
-      //   console.log(response?.data?.data?.data?.sentences);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  useEffect(() => {
-    fetchDataLyric();
-  }, [idMusic]);
+
   useEffect(() => {
     if (!isDataLoaded) {
       fetchData();
@@ -128,6 +115,29 @@ export default function PlayingList() {
       setIdMusic(dataRedux[currentTrackIndexRedux]?.encodeId);
     }
   }, [currentTrackIndexRedux, dataRedux]);
+
+  const [datalyric, setDataLyric] = useState<any[]>([]);
+  const fetchDataLyric = async () => {
+    const storedIdmusic = localStorage.getItem("idmusic");
+    try {
+      console.log(idMusic11);
+      const response = await axios.get(
+        `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${storedIdmusic}`
+      );
+      setDataLyric(response?.data?.data?.data?.sentences);
+      console.log(response?.data?.data?.data?.sentences);
+      console.log(
+        response?.data?.data?.data?.sentences?.[0]?.words?.[0]?.startTime
+      );
+      //   console.log(response?.data?.data?.data?.sentences);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataLyric();
+  }, [idMusic]);
   const toggle = () => {
     setIsPlaying(true);
     dispatch(updatesendLink(true));
@@ -150,10 +160,10 @@ export default function PlayingList() {
   const formatTimeEarly = (timeInSeconds: any) => {
     // Tính thời gian hiện tại tính bằng mili-giây
     const timeInMs = timeInSeconds * 1000;
-
     // Kiểm tra từng câu lyric trong mảng datalyric
     for (let i = 0; i < datalyric.length; i++) {
       const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
+
       const endTimeInMs =
         datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
 
@@ -167,35 +177,50 @@ export default function PlayingList() {
 
     return "";
   };
+
+  const [lyricText, setLyricText] = useState("");
+  const [lyricText2, setLyricText2] = useState("");
   const formatTimeDelay = (timeInSeconds: any) => {
     const timeInMs = timeInSeconds * 1000;
+    let foundLyric = ""; // Biến để lưu trữ lyric nếu tìm thấy
+
     for (let i = 0; i < datalyric.length; i++) {
       const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
       const endTimeInMs =
         datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
       if (timeInMs + 2500 >= startTimeInMs && timeInMs + 2500 <= endTimeInMs) {
         const wordsArray = datalyric[i]?.words?.map((item: any) => item.data);
-        return wordsArray.join(" ");
+        foundLyric = wordsArray.join(" ");
+        break; // Tìm thấy lyric thích hợp, thoát khỏi vòng lặp
       }
     }
-    return "";
+
+    if (foundLyric !== "") {
+      setLyricText(foundLyric);
+    }
   };
+
   const formatTime = (timeInSeconds: any) => {
     const timeInMs = timeInSeconds * 1000;
+    let foundLyric = "";
     for (let i = 0; i < datalyric.length; i++) {
       const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
       const endTimeInMs =
         datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
       if (timeInMs >= startTimeInMs - 1000 && timeInMs <= endTimeInMs - 800) {
         const wordsArray = datalyric[i]?.words?.map((item: any) => item.data);
-
-        return wordsArray.join(" ");
+        foundLyric = wordsArray.join(" ");
+        break;
       }
     }
-    return "";
+    if (foundLyric !== "") {
+      setLyricText2(foundLyric);
+    }
   };
-
-  //
+  useEffect(() => {
+    formatTimeDelay(currentTimeRedux);
+    formatTime(currentTimeRedux);
+  }, [currentTimeRedux]);
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
@@ -280,7 +305,6 @@ export default function PlayingList() {
               <div className=" w-100 h-100 mt-3  flex justify-center items-center  border-2 border-solid border-2 rounded-md">
                 <div className="">
                   <div className="flex justify-center items-center">
-                    {" "}
                     <p
                       className={`text-[#d9d9db] text-center ${
                         showLyric
@@ -291,9 +315,16 @@ export default function PlayingList() {
                       {formatTimeEarly(currentTimeRedux)}
                     </p>
                   </div>
+
                   <div className="flex justify-center items-center">
-                    <p className="text-white text-center text-2xl opacity-100 transition-opacity transition-transform duration-900 ease-in-out">
-                      {formatTime(currentTimeRedux)}
+                    <p
+                      className={`text-[#d9d9db] text-center ${
+                        showLyric
+                          ? "opacity-0 translate-y-5"
+                          : "opacity-100 translate-y-0"
+                      } transition-opacity transition-transform text-2xl text-white duration-900 ease-in-out mb-5 pb-3`}
+                    >
+                      {lyricText2}
                     </p>
                   </div>
 
@@ -303,9 +334,9 @@ export default function PlayingList() {
                         showLyric
                           ? "opacity-0 translate-y-5"
                           : "opacity-100 translate-y-0"
-                      } transition-opacity transition-transform duration-900 ease-in-out mt-5 pt-3`}
+                      } transition-opacity transition-transform duration-900 ease-in-out mb-5 pb-3`}
                     >
-                      {formatTimeDelay(currentTimeRedux)}
+                      {lyricText}
                     </p>
                   </div>
                 </div>

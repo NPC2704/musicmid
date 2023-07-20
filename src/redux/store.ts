@@ -14,6 +14,7 @@ import toggleImg from "./toggleImg";
 import toggleTitle from "./toggleTitle";
 import toggleCurrentTime from "./toggleCurrentTime";
 import toggleArtis from "./toggleArtis";
+import toggelIDdMusic from "./toggelIDMusic";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -31,6 +32,7 @@ const store = configureStore({
     toggleCurrentTime: toggleCurrentTime,
     toggleTitle: toggleTitle,
     toggleArtis: toggleArtis,
+    toggelIDdMusic: toggelIDdMusic,
   },
 });
 
