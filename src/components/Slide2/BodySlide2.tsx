@@ -23,15 +23,15 @@ const BodySlide2 = () => {
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[2]?.items[title] || []);
-      console.log(response.data?.data?.data?.items?.[2]?.items[title]);
-      console.log(response.data?.data?.data?.items[2]?.items?.vPop);
-      console.log(response.data?.data?.data?.items[2]?.items?.others);
+      // console.log(response.data?.data?.data?.items?.[2]?.items[title]);
+      // console.log(response.data?.data?.data?.items[2]?.items?.vPop);
+      // console.log(response.data?.data?.data?.items[2]?.items?.others);
       setDatatitle(response.data?.data?.data?.items?.[2]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(dataChild);
+  //console.log(dataChild);
   const toggle = () => {
     dispatch(updateNumber(2));
     dispatch(updateNumber2(title));
@@ -43,7 +43,7 @@ const BodySlide2 = () => {
   useEffect(() => {
     fetchData();
   }, [title]);
-  console.log(title);
+  // console.log(title);
   return (
     <div className="w-full h-100">
       <div className="w-full h-20 flex items-center justify-start">

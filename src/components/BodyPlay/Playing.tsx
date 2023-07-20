@@ -14,9 +14,7 @@ export default function Playing() {
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const number2 = useSelector((state: RootState) => state.toggle2.number2);
   const link = useSelector((state: RootState) => state.toggleLink.link);
-  console.log(number);
-  console.log(number1);
-  console.log(number2);
+
   const handleClickNext = () => {};
   const handleClickPre = () => {};
   const [data1, setData] = useState<any[]>([]);
@@ -25,7 +23,6 @@ export default function Playing() {
   const [datalink, setDatalink] = useState("");
   const params = useParams();
   const userId = params.id;
-  console.log(link1);
 
   const fetchData = async () => {
     try {
@@ -55,7 +52,7 @@ export default function Playing() {
         `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${userId}`
       );
       setDatalink(response?.data?.data?.data?.[128]);
-      console.log(response?.data?.data?.data?.[128]);
+      // console.log(response?.data?.data?.data?.[128]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -70,7 +67,7 @@ export default function Playing() {
   }, []);
   useEffect(() => {
     dispatch(updateLink(datalink));
-    console.log(datalink);
+    // console.log(datalink);
   }, [datalink]);
   return (
     <div className=" w-full h-130 bg-transparent flex items-end">

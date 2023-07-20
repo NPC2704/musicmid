@@ -40,8 +40,8 @@ const BodySlide = () => {
     dispatch(updateNumber(11));
     dispatch(updateNumber1(dataChild));
   };
-  console.log(dataChild);
-  console.log(link1);
+  // console.log(dataChild);
+  // console.log(link1);
   useEffect(() => {
     fetchData();
   }, []);

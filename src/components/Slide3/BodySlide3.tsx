@@ -16,14 +16,14 @@ const BodySlide3 = () => {
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[3]?.items || []);
-      console.log(response.data?.data?.data?.items?.[3]?.items);
-      console.log(response.data?.data?.data?.items?.[3]?.title);
+      // console.log(response.data?.data?.data?.items?.[3]?.items);
+      // console.log(response.data?.data?.data?.items?.[3]?.title);
       setDatatitle(response.data?.data?.data?.items?.[3]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(dataChild);
+  // console.log(dataChild);
   const toggle = () => {
     dispatch(updateNumber(3));
     dispatch(updateNumber1(dataChild));

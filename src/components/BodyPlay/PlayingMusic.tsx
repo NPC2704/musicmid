@@ -50,10 +50,10 @@ const PlayingMusic = () => {
     linkHistory.push(location.pathname);
     localStorage.setItem("linkHistory", JSON.stringify(linkHistory));
     setPreviousPathname(location.pathname);
-    console.log(linkHistory); // In ra lịch sử link đã lưu
-    console.log("Bi Reload 4");
+    // console.log(linkHistory); // In ra lịch sử link đã lưu
+    // console.log("Bi Reload 4");
   }, [location]);
-  console.log(pathLinkNumber);
+  //console.log(pathLinkNumber);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -85,7 +85,7 @@ const PlayingMusic = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-      console.log("Bi Reload 1");
+      // console.log("Bi Reload 1");
     };
     if (window.location.pathname.split("/")[1] === "playlist") {
       dispatch(updatepathLink2(window.location.pathname));
@@ -98,16 +98,16 @@ const PlayingMusic = () => {
     if (pathLinkNumber === 0) {
       if (datalink && pathlink2) {
         dispatch(updateLink(datalink));
-        console.log(datalink);
-        console.log("Link 3");
+        // console.log(datalink);
+        // console.log("Link 3");
         dispatch(updatepathLinknumber(1));
-        console.log(pathLinkNumber);
+        //  console.log(pathLinkNumber);
       }
     } else {
       if (sendLink) {
         dispatch(updateLink(datalink));
-        console.log(datalink);
-        console.log("Link 2");
+        // console.log(datalink);
+        // console.log("Link 2");
         dispatch(updatesendLink(false));
       }
     }
