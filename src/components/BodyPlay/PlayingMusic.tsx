@@ -45,6 +45,7 @@ const PlayingMusic = () => {
   const titleMusicRedux = useSelector(
     (state: RootState) => state.toggleTitle.titleMusic
   );
+
   const imgMuic = useSelector((state: RootState) => state.toggleImg.imgMusic);
   useEffect(() => {
     linkHistory.push(location.pathname);
@@ -54,15 +55,16 @@ const PlayingMusic = () => {
     // console.log("Bi Reload 4");
   }, [location]);
   //console.log(pathLinkNumber);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/api/get/playlist/info?id=${userId}`
       );
       setTitleMusic(response?.data?.data?.data?.title);
+      // src={data1?.[index]?.thumbnail}
+      // setData(response?.data?.data?.data?.song?.items);
       setImgMusic(response?.data?.data?.data?.thumbnail);
-      dispatch(updateimgMusic(response?.data?.data?.data?.thumbnail));
-      dispatch(updatetitleMusic(response?.data?.data?.data?.title));
 
       setDataFetched(true);
     } catch (error) {
@@ -131,7 +133,8 @@ const PlayingMusic = () => {
       {isLoaded ? (
         <>
           <h1 className="text-white font-semibold text-2xl">
-            Title: {titleMusicRedux}
+            <span className="text-[#9ca3af]">Tên bài hát:</span>{" "}
+            {titleMusicRedux}
           </h1>
           <div className="flex justify-center items-center mt-10">
             <img
