@@ -69,18 +69,14 @@ const Public = () => {
       dispatch(updatepathLink2(window.location.pathname));
     } else {
       dispatch(updatepathLink(window.location.pathname));
-      //  console.log(window.location.pathname);
     }
   };
 
   // Lấy thời gian hiện tại từ AudioPlayer
   const audioPlayerRef = useRef<any>(null);
-
   const [currentTime, setCurrentTime] = useState(0);
-
   useEffect(() => {
     const audio = audioPlayerRef.current?.audio?.current;
-
     if (audio) {
       audio.addEventListener("timeupdate", handleTimeUpdate);
     }
@@ -90,24 +86,19 @@ const Public = () => {
       }
     };
   }, []);
-
   const handleTimeUpdate = () => {
     const audio = audioPlayerRef.current?.audio?.current;
-
     if (audio) {
       const currentTimeInSeconds = Math.floor(audio.currentTime);
       setCurrentTime(currentTimeInSeconds);
       dispatch(updatecurrentTime(currentTimeInSeconds));
     }
   };
-
   const [isShuffle, setIsShuffle] = useState(false);
-
   const handleReplayClick = () => {
     audioPlayerRef.current.audio.current.currentTime = 0;
     audioPlayerRef.current.audio.current.play();
   };
-
   const handleShuffleClick = () => {
     setIsShuffle((prev) => !prev);
   };

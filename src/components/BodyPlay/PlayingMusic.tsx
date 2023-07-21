@@ -127,10 +127,9 @@ const PlayingMusic = () => {
       console.log("Bi Reload 3");
     }
   }, [dataFetched, location.pathname, previousPathname]);
-  useEffect(() => {
-    dispatch(updateiddMusic("ZZE6EUBC"));
-    console.log(idMusic11);
-  }, [idmusic, idMusic11]);
+  // useEffect(() => {
+  //   dispatch(updateiddMusic("ZZE6EUBC"));
+  // }, [idmusic, idMusic11]);
   return (
     <motion.div
       initial={{ y: "100%" }}

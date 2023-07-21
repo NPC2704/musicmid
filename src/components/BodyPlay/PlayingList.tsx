@@ -121,15 +121,17 @@ export default function PlayingList() {
     const storedIdmusic = localStorage.getItem("idmusic");
     try {
       console.log(idMusic11);
-      const response = await axios.get(
-        `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${storedIdmusic}`
-      );
+      let response;
+      if (idMusic !== "") {
+        response = await axios.get(
+          `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${idMusic}`
+        );
+      } else {
+        response = await axios.get(
+          `https://apisolfive.app.tranviet.site/api/get/song/lyric?id=${storedIdmusic}`
+        );
+      }
       setDataLyric(response?.data?.data?.data?.sentences);
-      console.log(response?.data?.data?.data?.sentences);
-      console.log(
-        response?.data?.data?.data?.sentences?.[0]?.words?.[0]?.startTime
-      );
-      //   console.log(response?.data?.data?.data?.sentences);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
