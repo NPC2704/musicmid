@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { updateLink } from "../../redux/toggleLink";
 import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
 import { updatedata1Redux } from "../../redux/toggleData1";
-import { updatepathLink } from "../../redux/togglePathLink";
+import { updatepathLink } from "../../redux/togglePathlink/togglePathLink";
 import { useLocation } from "react-router-dom";
 import { useParams, useNavigate, Outlet, Link } from "react-router-dom";
 import { updatesendLink } from "../../redux/toggleSendLink";
@@ -16,6 +16,7 @@ import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
 import "./Play.css";
+
 export default function PlayingList() {
   const dispatch = useDispatch();
   const number = useSelector((state: RootState) => state.toggle.number);

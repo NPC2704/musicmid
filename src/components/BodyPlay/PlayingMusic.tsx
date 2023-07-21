@@ -4,7 +4,7 @@ import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.jpg";
 import { useLocation } from "react-router-dom";
-import { updatepathLink2 } from "../../redux/togglePathLink2";
+import { updatepathLink2 } from "../../redux/togglePathlink/togglePathLink2";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updatesendLink } from "../../redux/toggleSendLink";
@@ -13,7 +13,8 @@ import { motion } from "framer-motion";
 import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateiddMusic } from "../../redux/toggelIDMusic";
-const PlayingMusic = () => {
+import { updatepathLinkRender } from "../../redux/togglePathlink/togglePathLinkRender";
+const PlayingMusic = React.memo(() => {
   const dispatch = useDispatch();
   const params = useParams();
   const userId = params.id;
@@ -43,19 +44,25 @@ const PlayingMusic = () => {
   const pathLinkNumber = useSelector(
     (state: RootState) => state.togglePathLinkNumber.pathLinknumber
   );
+  const pathlinkRender = useSelector(
+    (state: RootState) => state.togglePathLinkRender.pathLinkRender
+  );
   const titleMusicRedux = useSelector(
     (state: RootState) => state.toggleTitle.titleMusic
   );
   const idMusic11 = useSelector(
     (state: RootState) => state.toggelIDdMusic.iddMusic
   );
-
+  const pathLinkRender = useSelector(
+    (state: RootState) => state.togglePathLinkRender.pathLinkRender
+  );
   const imgMuic = useSelector((state: RootState) => state.toggleImg.imgMusic);
   useEffect(() => {
     linkHistory.push(location.pathname);
     localStorage.setItem("linkHistory", JSON.stringify(linkHistory));
     setPreviousPathname(location.pathname);
   }, [location]);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -138,25 +145,20 @@ const PlayingMusic = () => {
       transition={{ duration: 0.8 }}
       className="w-100 h-110"
     >
-      {isLoaded ? (
-        <>
-          <h1 className="text-white font-semibold text-2xl">
-            <span className="text-[#9ca3af]">Tên bài hát:</span>{" "}
-            {titleMusicRedux}
-          </h1>
-          <div className="flex justify-center items-center mt-10">
-            <img
-              src={imgMuic}
-              alt=""
-              className="w-80 h-80 rotating-image rounded-full"
-            />
-          </div>
-        </>
-      ) : (
-        <div>Loading...</div>
-      )}
+      <>
+        <h1 className="text-white font-semibold text-2xl">
+          <span className="text-[#9ca3af]">Tên bài hát:</span> {titleMusicRedux}
+        </h1>
+        <div className="flex justify-center items-center mt-10">
+          <img
+            src={imgMuic}
+            alt=""
+            className="w-80 h-80 rotating-image rounded-full"
+          />
+        </div>
+      </>
     </motion.div>
   );
-};
+});
 
 export default PlayingMusic;

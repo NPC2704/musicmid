@@ -6,9 +6,15 @@ import ChartLine from "../../components/ChartLine/ChartLine";
 import Slide4 from "../../components/Slide4/Slides4";
 import Slide5 from "../../components/Slide5/Slides5";
 import { CSSTransition } from "react-transition-group";
+import PlayingList from "../../components/BodyPlay/PlayingList";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 interface IProps {}
-
 const Home: React.FC<IProps> = () => {
+  const pathLinkNumber = useSelector(
+    (state: RootState) => state.togglePathLinkNumber.pathLinknumber
+  );
+
   return (
     <div className="w-full h-full">
       <Slides />

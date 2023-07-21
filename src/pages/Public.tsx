@@ -12,10 +12,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateLink } from "../redux/toggleLink";
 import { updatecurrentTrackIndex } from "../redux/togglecurrentTrackIndex";
-import { updatepathLink } from "../redux/togglePathLink";
-import { updatepathLink2 } from "../redux/togglePathLink2";
+import { updatepathLink } from "../redux/togglePathlink/togglePathLink";
+import { updatepathLink2 } from "../redux/togglePathlink/togglePathLink2";
 import { updatecurrentTime } from "../redux/toggleCurrentTime";
+import { updatepathLinkRender } from "../redux/togglePathlink/togglePathLinkRender";
 import Header from "../components/Header";
+import PlayingList from "../components/BodyPlay/PlayingList";
 import "./public.css";
 const Public = () => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
@@ -24,6 +26,12 @@ const Public = () => {
   );
   const pathlink2 = useSelector(
     (state: RootState) => state.togglePathLink2.pathLink2
+  );
+  // const pathlinkHome = useSelector(
+  //   (state: RootState) => state.togglePathLinkRender.pathLinkHome
+  // );
+  const pathlinkRender = useSelector(
+    (state: RootState) => state.togglePathLinkRender.pathLinkRender
   );
   const currentTimeRedux = useSelector(
     (state: RootState) => state.toggleCurrentTime.currentTime
@@ -48,6 +56,10 @@ const Public = () => {
       dispatch(updatecurrentTrackIndex(nextIndex));
     }
   };
+  const pathLinkNumber = useSelector(
+    (state: RootState) => state.togglePathLinkNumber.pathLinknumber
+  );
+
   const handleClickPre = () => {
     const previousIndex = currentTrackIndex - 1;
     if (previousIndex >= 0) {
@@ -102,10 +114,12 @@ const Public = () => {
   const handleShuffleClick = () => {
     setIsShuffle((prev) => !prev);
   };
+
   return (
     <div>
       <Header />
       <Outlet />
+
       <AudioPlayer
         ref={audioPlayerRef}
         className={`${

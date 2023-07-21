@@ -6,8 +6,8 @@ import toggleLink from "./toggleLink";
 import toggleData1 from "./toggleData1";
 import togglecurrentTrackIndex from "./togglecurrentTrackIndex";
 import toggleidLink from "./toggleidLink";
-import togglePathLink from "./togglePathLink";
-import togglePathLink2 from "./togglePathLink2";
+import togglePathLink from "./togglePathlink/togglePathLink";
+import togglePathLink2 from "./togglePathlink/togglePathLink2";
 import togglePathLinkNumber from "./togglePathLinkNumber";
 import toggleSendLink from "./toggleSendLink";
 import toggleImg from "./toggleImg";
@@ -15,6 +15,7 @@ import toggleTitle from "./toggleTitle";
 import toggleCurrentTime from "./toggleCurrentTime";
 import toggleArtis from "./toggleArtis";
 import toggelIDdMusic from "./toggelIDMusic";
+import togglePathLinkRender from "./togglePathlink/togglePathLinkRender";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -33,6 +34,7 @@ const store = configureStore({
     toggleTitle: toggleTitle,
     toggleArtis: toggleArtis,
     toggelIDdMusic: toggelIDdMusic,
+    togglePathLinkRender: togglePathLinkRender,
   },
 });
 

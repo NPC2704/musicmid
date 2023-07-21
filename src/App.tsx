@@ -16,6 +16,7 @@ import PlayingMusic from "./components/BodyPlay/PlayingMusic";
 import PlayingMusic0 from "./components/BodyPlay/PlayingMusic0";
 import Public from "./pages/Public";
 function App() {
+  console.log(<Public />);
   return (
     <>
       <div className="">

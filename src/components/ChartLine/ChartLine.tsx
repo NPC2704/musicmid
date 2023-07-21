@@ -44,7 +44,6 @@ const ChartLine: React.FC = () => {
       setTitleMusic1(response.data?.data?.data?.items?.[9]?.items?.[0]?.title);
       setTitleMusic2(response.data?.data?.data?.items?.[9]?.items?.[1]?.title);
       setTitleMusic3(response.data?.data?.data?.items?.[9]?.items?.[2]?.title);
-      console.log(response.data?.data?.data?.items?.[9]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -53,7 +52,7 @@ const ChartLine: React.FC = () => {
     fetchData();
   }, []);
   const labels1 = data2.map((item, index) => ` ${data2?.[index]?.counter}`);
-  console.log(labels1);
+
   const options = {
     responsive: true,
     // Các tùy chọn khác của biểu đồ
