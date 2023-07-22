@@ -1,11 +1,17 @@
 interface IRoute {
   home: string;
-  login: string;
+  khampha: string;
+  library: string;
+  playlist: string;
+  player: string;
 }
 
 const routesConfig: IRoute = {
   home: "/",
-  login: "/login",
+  khampha: "/khampha",
+  library: "/library",
+  playlist: "/playlistmusic/:id",
+  player: "/playlist/:id/:idmusic",
 };
 
 export default routesConfig;

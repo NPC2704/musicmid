@@ -46,7 +46,7 @@ const Header = () => {
             {t("header.home")}
           </Link>
           <Link
-            to="/kham-pha"
+            to="/khampha"
             className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
           >
             {t("header.discover")}
@@ -71,7 +71,7 @@ const Header = () => {
             <HomeOutlined />
           </Link>
           <Link
-            to="/kham-pha"
+            to="/khampha"
             className="text-[rgba(255,255,255,0.5)] mx-5 font-semibold text-xl hover:text-white"
           >
             <CompassOutlined />

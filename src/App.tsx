@@ -73,8 +73,10 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import Home from "./pages/Home/Home";
-
+import { useAppSelector } from "./app/hooks";
+import routesConfig from "./configs/routes";
 function App() {
+  const currentPath = useAppSelector((state) => state.routes?.pay?.currentPath);
   return (
     <>
       <div className="">
@@ -84,12 +86,16 @@ function App() {
         <Routes>
           {publicRoutes.map((publicRoute, index) => {
             let Layout = publicRoute.layout;
-            let Pages;
+            let Page;
+            if (publicRoute.path == "/playlist/:id/:idmusic") {
+              // const pathName = currentPath.pathname;
 
-            if (publicRoute.path == "/") {
-              Pages = publicRoute.component || Home;
+              // const route = publicRoutes.find(
+              //   (route) => route.path == pathName
+              // );
+              Page = publicRoute.component || Home;
             } else {
-              Pages = publicRoute.component;
+              Page = publicRoute.component;
             }
             return (
               <Route>
@@ -98,7 +104,7 @@ function App() {
                   path={publicRoute.path}
                   element={
                     <Layout>
-                      <Pages />
+                      <Page />
                     </Layout>
                   }
                 />

@@ -1,7 +1,6 @@
 import routesConfig from "../configs/routes";
 
 //import Layout
-import DefaultLayout from "../layouts/DefaultLayout";
 
 //import Pages
 import Home from "../pages/Home/Home";
@@ -11,16 +10,17 @@ import Khampha from "../pages/Khampha/Khampha";
 import PlayPlaylistMusic from "../pages/PlayPlaylistMusic/PlayPlaylistMusic";
 import Public from "../pages/Public";
 import PlayingMusic from "../components/BodyPlay/PlayingMusic";
+import Player from "../pages/Player";
 // Vào được khi chưa đăng nhập
 const publicRoutes = [
   {
-    path: "",
+    path: "/",
     component: Home,
     layout: Public,
     sidebar: null,
   },
   {
-    path: "/kham-pha",
+    path: "/khampha",
     component: Khampha,
     layout: Public,
     sidebar: null,
@@ -34,12 +34,6 @@ const publicRoutes = [
   {
     path: "/playlist/:id/:idmusic",
     component: PlayingMusic,
-    layout: Public,
-    sidebar: null,
-  },
-  {
-    path: routesConfig.login,
-    component: Login,
     layout: Public,
     sidebar: null,
   },

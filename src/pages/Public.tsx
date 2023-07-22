@@ -21,6 +21,8 @@ import Home from "./Home/Home";
 import "./public.css";
 import PlayingMusic from "../components/BodyPlay/PlayingMusic";
 import Khampha from "./Khampha/Khampha";
+import { createPlayerHref } from "../utils/createHref";
+import { useAppSelector } from "../app/hooks";
 interface IProps {
   children: ReactNode;
 }
@@ -118,6 +120,20 @@ const Public: React.FC<IProps> = ({ children }) => {
       dispatch(updatepathLink(window.location.pathname));
     }
   };
+  const navigate = useNavigate();
+
+  // const route = useAppSelector((state) => state.routes.pay);
+  // const isShowInfo = useAppSelector((state) => state.player.isShoaInfo);
+  // const songId = useAppSelector((state) => state.player.songId);
+  // const handleToggleShowInfo = () => {
+  //   isShowInfo
+  //     ? navigate(
+  //         route?.currentPath?.pathname
+  //           ? `${route?.currentPath?.pathname}` + `${route.currentPath.search}`
+  //           : "/"
+  //       )
+  //     : navigate(createPlayerHref(songId));
+  // };
 
   return (
     <div>
@@ -158,6 +174,7 @@ const Public: React.FC<IProps> = ({ children }) => {
               onClick={() => {
                 toggle1();
                 handleAudioClick();
+                //  handleToggleShowInfo();
               }}
               className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
             >
