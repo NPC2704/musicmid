@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { Link } from "react-router-dom";
 const MenuBodyKP = () => {
   const dispatch = useDispatch();
+
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -17,7 +19,6 @@ const MenuBodyKP = () => {
         "https://apisolfive.app.tranviet.site/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[13]?.items || []);
-      console.log(response.data?.data?.data?.items);
       setDatatitle(response.data?.data?.data?.items?.[13]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);

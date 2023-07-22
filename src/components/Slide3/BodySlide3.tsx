@@ -43,7 +43,7 @@ const BodySlide3 = () => {
               className="h-16 w-100  mr-4 mt-2 flex items-center "
               onMouseOver={() => setDataChild(index)}
             >
-              <Link to={`/playlist/${item?.encodeId}`} onClick={toggle}>
+              <Link to={`/playlistmusic/${item?.encodeId}`} onClick={toggle}>
                 <img src={item.thumbnail} alt="" className="h-12 w-12" />
               </Link>
               <div className="ml-4">

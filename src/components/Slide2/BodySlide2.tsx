@@ -95,7 +95,7 @@ const BodySlide2 = () => {
             onMouseOver={() => setDataChild(index)}
           >
             <Link
-              to={`/play/${item?.encodeId}`}
+              to={`/playlistmusic/${item?.encodeId}`}
               onClick={() => {
                 toggle();
               }}

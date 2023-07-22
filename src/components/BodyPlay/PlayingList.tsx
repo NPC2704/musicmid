@@ -78,8 +78,9 @@ export default function PlayingList() {
       );
       setData(response?.data?.data?.data?.song?.items);
       //  setData(response?.data?.data?.data?.sections?.[0]?.items);
-      //  setDatatitle(response?.data?.data?.data?.title);
-
+      setDatatitle(response?.data?.data?.data?.title);
+      setImgMusic(response?.data?.data?.data?.thumbnail);
+      console.log(response?.data?.data?.data?.thumbnail);
       setIsDataLoaded(true);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -109,6 +110,7 @@ export default function PlayingList() {
   }, [isDataLoaded]);
   useEffect(() => {
     fetchData1();
+    console.log(currentTimeRedux);
   }, [idMusic]);
 
   useEffect(() => {
@@ -147,7 +149,7 @@ export default function PlayingList() {
   };
   useEffect(() => {
     if (isPlaying) {
-      dispatch(updateLink(datalink));
+      //  dispatch(updateLink(datalink));
       //  console.log("Link 1");
       dispatch(updatedata1Redux(data1));
       dispatch(updatesendLink(false));
@@ -227,7 +229,19 @@ export default function PlayingList() {
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  flex justify-around">
-        <Outlet />
+        <div>
+          {" "}
+          <h1 className="text-white font-semibold text-2xl">
+            <span className="text-[#9ca3af]">Tên bài hát:</span> {datatitle}
+          </h1>
+          <div className="flex justify-center items-center mt-10">
+            <img
+              src={imgMusic}
+              alt=""
+              className="w-80 h-80 rotating-image rounded-full"
+            />
+          </div>
+        </div>
         <div className="w-110 h-110 bg-transparent overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md">
           <div className="w-full h-8 bg-black flex justify-around">
             <p
@@ -260,13 +274,13 @@ export default function PlayingList() {
                   <tr
                     className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
                     key={index}
-                    onClick={() => {
+                    onMouseOver={() => {
                       toggle();
-                      dispatch(
-                        updateartisMusic(data1?.[index]?.artists?.[0]?.name)
-                      );
-                      dispatch(updateimgMusic(data1?.[index]?.thumbnail));
-                      dispatch(updatetitleMusic(data1?.[index]?.title));
+                      // dispatch(
+                      //   updateartisMusic(data1?.[index]?.artists?.[0]?.name)
+                      // );
+                      // dispatch(updateimgMusic(data1?.[index]?.thumbnail));
+                      // dispatch(updatetitleMusic(data1?.[index]?.title));
                       dispatch(updatecurrentTrackIndex(index));
                       setCurrentTrackIndex(index);
                       setIdMusic(data1?.[index]?.encodeId);

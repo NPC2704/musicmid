@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo, ReactNode } from "react";
 import {
   InteractionOutlined,
   CaretUpOutlined,
@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateLink } from "../redux/toggleLink";
@@ -15,11 +15,16 @@ import { updatecurrentTrackIndex } from "../redux/togglecurrentTrackIndex";
 import { updatepathLink } from "../redux/togglePathlink/togglePathLink";
 import { updatepathLink2 } from "../redux/togglePathlink/togglePathLink2";
 import { updatecurrentTime } from "../redux/toggleCurrentTime";
-import { updatepathLinkRender } from "../redux/togglePathlink/togglePathLinkRender";
 import Header from "../components/Header";
 import PlayingList from "../components/BodyPlay/PlayingList";
+import Home from "./Home/Home";
 import "./public.css";
-const Public = () => {
+import PlayingMusic from "../components/BodyPlay/PlayingMusic";
+import Khampha from "./Khampha/Khampha";
+interface IProps {
+  children: ReactNode;
+}
+const Public: React.FC<IProps> = ({ children }) => {
   const link = useSelector((state: RootState) => state.toggleLink.link);
   const pathlink = useSelector(
     (state: RootState) => state.togglePathLink.pathLink
@@ -30,9 +35,7 @@ const Public = () => {
   // const pathlinkHome = useSelector(
   //   (state: RootState) => state.togglePathLinkRender.pathLinkHome
   // );
-  const pathlinkRender = useSelector(
-    (state: RootState) => state.togglePathLinkRender.pathLinkRender
-  );
+
   const currentTimeRedux = useSelector(
     (state: RootState) => state.toggleCurrentTime.currentTime
   );
@@ -64,23 +67,6 @@ const Public = () => {
     const previousIndex = currentTrackIndex - 1;
     if (previousIndex >= 0) {
       dispatch(updatecurrentTrackIndex(previousIndex));
-    }
-  };
-  const handleAudioClick = () => {
-    if (window.location.pathname.split("/")[1] === "playlist") {
-      history(pathlink);
-    } else {
-      history(pathlink2);
-    }
-  };
-  //dispatch(updatepathLink(window.location.pathname));
-  const toggle1 = () => {
-    const firstPath = window.location.pathname.split("/")[1];
-
-    if (firstPath === "playlist") {
-      dispatch(updatepathLink2(window.location.pathname));
-    } else {
-      dispatch(updatepathLink(window.location.pathname));
     }
   };
 
@@ -115,17 +101,36 @@ const Public = () => {
     setIsShuffle((prev) => !prev);
   };
 
+  const handleAudioClick = () => {
+    if (window.location.pathname.split("/")[1] === "playlist") {
+      history(pathlink);
+    } else {
+      history(pathlink2);
+    }
+  };
+  //dispatch(updatepathLink(window.location.pathname));
+  const toggle1 = () => {
+    const firstPath = window.location.pathname.split("/")[1];
+
+    if (firstPath === "playlist") {
+      dispatch(updatepathLink2(window.location.pathname));
+    } else {
+      dispatch(updatepathLink(window.location.pathname));
+    }
+  };
+
   return (
     <div>
       <Header />
-      <Outlet />
 
+      {/* <Outlet /> */}
+      <>{children}</>
       <AudioPlayer
         ref={audioPlayerRef}
         className={`${
           link === ""
             ? "player-music hidden"
-            : "player-music fixed bottom-0 left-0 z-50"
+            : "player-music fixed bottom-0 left-0 z-50 hidden"
         }`}
         src={link}
         layout="stacked-reverse"
@@ -150,7 +155,10 @@ const Public = () => {
           </div>,
           <div className="flex absolute z-10">
             <button
-              onClick={handleReplayClick}
+              onClick={() => {
+                toggle1();
+                handleAudioClick();
+              }}
               className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
             >
               <InteractionTwoTone />
@@ -173,4 +181,4 @@ const Public = () => {
   );
 };
 
-export default Public;
+export default memo(Public);

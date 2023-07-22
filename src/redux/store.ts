@@ -16,6 +16,7 @@ import toggleCurrentTime from "./toggleCurrentTime";
 import toggleArtis from "./toggleArtis";
 import toggelIDdMusic from "./toggelIDMusic";
 import togglePathLinkRender from "./togglePathlink/togglePathLinkRender";
+import togglePathLinkHome from "./togglePathlink/togglePathLinkHome";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -35,6 +36,7 @@ const store = configureStore({
     toggleArtis: toggleArtis,
     toggelIDdMusic: toggelIDdMusic,
     togglePathLinkRender: togglePathLinkRender,
+    togglePathLinkHome: togglePathLinkHome,
   },
 });
 

@@ -9,6 +9,7 @@ import { CSSTransition } from "react-transition-group";
 import PlayingList from "../../components/BodyPlay/PlayingList";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
+import Header from "../../components/Header";
 interface IProps {}
 const Home: React.FC<IProps> = () => {
   const pathLinkNumber = useSelector(
@@ -17,6 +18,7 @@ const Home: React.FC<IProps> = () => {
 
   return (
     <div className="w-full h-full">
+      {/* <Header /> */}
       <Slides />
 
       <Slides3 />
