@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "../../components/Header";
 import PlayingList from "../../components/BodyPlay/PlayingList";
-const PlayPlaylistMusic = () => {
+interface IProps {}
+const PlayPlaylistMusic: React.FC<IProps> = () => {
   return (
     <div className="bg-black h-full">
       {/* <Header /> */}

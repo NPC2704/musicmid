@@ -90,13 +90,13 @@ function App() {
             let Layout = publicRoute.layout;
             let Page;
             if (publicRoute.path == "/") {
-              //    const pathName = currentPath.pathname;
+              // const pathName = currentPath.pathname;
 
               // const route = publicRoutes.find(
               //   (route) => route.path == pathName
               // );
-              //   Page = route?.component || Home;
-              Page = publicRoute.component || Khampha;
+              // Page = route?.component || Home;
+              Page = publicRoute.component || Home;
             } else {
               Page = publicRoute.component;
             }

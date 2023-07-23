@@ -2,7 +2,8 @@ import React from "react";
 import Header from "../../components/Header";
 import BodyKP from "../../components/BodyKhampha/BodyKP";
 import Home from "../Home/Home";
-const Khampha = () => {
+interface IProps {}
+const Khampha: React.FC<IProps> = () => {
   return (
     <div className="bg-black h-full">
       {/* <Header /> */}

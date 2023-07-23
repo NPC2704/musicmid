@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
@@ -17,7 +17,9 @@ import { updateartisMusic } from "../../redux/toggleArtis";
 import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
 import getTime from "../../utils/getTime";
 import { CloudDownloadOutlined } from "@ant-design/icons";
-const PlayingMusic = () => {
+import { Skeleton } from "antd";
+interface IProps {}
+const PlayingMusic: React.FC<IProps> = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const userId = params.id;
@@ -60,7 +62,9 @@ const PlayingMusic = () => {
   // const pathLinkRender = useSelector(
   //   (state: RootState) => state.togglePathLinkRender.pathLinkRender
   // );
-  const imgMuic = useSelector((state: RootState) => state.toggleImg.imgMusic);
+  const imgMusicRedux = useSelector(
+    (state: RootState) => state.toggleImg.imgMusic
+  );
   useEffect(() => {
     linkHistory.push(location.pathname);
     localStorage.setItem("linkHistory", JSON.stringify(linkHistory));
@@ -207,7 +211,6 @@ const PlayingMusic = () => {
 
     return "";
   };
-  console.log(currentTimeRedux);
   const [lyricText, setLyricText] = useState("");
   const [lyricText2, setLyricText2] = useState("");
   const formatTimeDelay = (timeInSeconds: any) => {
@@ -252,6 +255,10 @@ const PlayingMusic = () => {
     formatTimeDelay(currentTimeRedux);
     formatTime(currentTimeRedux);
   }, [currentTimeRedux]);
+  const [isLoadings, setIsloading] = useState<boolean>(true);
+  const setLoading = useCallback((type: boolean) => {
+    setIsloading(type);
+  }, []);
   return (
     <motion.div
       initial={{ y: "100%" }}
@@ -259,6 +266,9 @@ const PlayingMusic = () => {
       exit={{ y: "-100%" }}
       transition={{ duration: 0.8 }}
     >
+      {/* {isLoadings ? (
+        <Skeleton />
+      ) : ( */}
       <>
         <div className="w-full h-130 bg-transparent flex items-end">
           <div className="w-full h-110  flex justify-around">
@@ -270,7 +280,7 @@ const PlayingMusic = () => {
               </h1>
               <div className="flex justify-center items-center mt-10">
                 <img
-                  src={imgMuic}
+                  src={imgMusicRedux}
                   alt=""
                   className="w-80 h-80 rotating-image rounded-full"
                 />
@@ -305,7 +315,7 @@ const PlayingMusic = () => {
                           dispatch(updatecurrentTrackIndex(index));
                           setCurrentTrackIndex(index);
                           setTitleMusic(data1?.[index]?.title);
-                          setImgMusic(data1?.[index]?.thumbnail);
+
                           setIdMusic(data1?.[index]?.encodeId);
                         }}
                       >
@@ -313,6 +323,7 @@ const PlayingMusic = () => {
                           <Link
                             to={`/playlist/${userId}/${idMusic}`}
                             onClick={() => {
+                              setImgMusic(data1?.[index]?.thumbnail);
                               dispatch(
                                 updateartisMusic(
                                   data1?.[index]?.artists?.[0]?.name
@@ -336,6 +347,7 @@ const PlayingMusic = () => {
                           <Link
                             to={`/playlist/${userId}/${idMusic}`}
                             onClick={() => {
+                              setImgMusic(data1?.[index]?.thumbnail);
                               dispatch(
                                 updateartisMusic(
                                   data1?.[index]?.artists?.[0]?.name

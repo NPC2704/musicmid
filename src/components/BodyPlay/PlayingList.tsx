@@ -42,7 +42,9 @@ export default function PlayingList() {
   const idMusic11 = useSelector(
     (state: RootState) => state.toggelIDdMusic.iddMusic
   );
-
+  const imgMusicRedux = useSelector(
+    (state: RootState) => state.toggleImg.imgMusic
+  );
   const history = useNavigate();
   const location = useLocation();
   const storedLinkHistory = localStorage.getItem("linkHistory");
@@ -206,7 +208,24 @@ export default function PlayingList() {
               >
                 <div className="flex items-center">
                   <div className="h-9 w-9 mr-4 relative cursor-pointer">
-                    <Link to={`/playlist/${userId}/${idMusic}`}>
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      onClick={() => {
+                        dispatch(updateimgMusic(data1?.[index]?.thumbnail));
+                        dispatch(updatetitleMusic(data1?.[index]?.title));
+                        {
+                          data1?.[index]?.artists.map(
+                            (item: any, indexx: any) => {
+                              dispatch(
+                                updateartisMusic(
+                                  data1?.[index]?.artists?.[indexx]?.name
+                                )
+                              );
+                            }
+                          );
+                        }
+                      }}
+                    >
                       {" "}
                       <img
                         loading="lazy"
@@ -246,52 +265,6 @@ export default function PlayingList() {
               </div>
             </div>
           ))}
-          {/*  <div className="w-110 h-110 bg-transparent overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md">
-          <table className="table-auto w-full  mb-1">
-            <tbody>
-              {data1.map((item, index) => (
-                <tr
-                  className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
-                  key={index}
-                  onMouseOver={() => {
-                    toggle();
-
-                    dispatch(updatecurrentTrackIndex(index));
-                    setCurrentTrackIndex(index);
-                    setIdMusic(data1?.[index]?.encodeId);
-                  }}
-                >
-                  <td className="w-1/10 text-center ">
-                    <Link to={`/playlist/${userId}/${idMusic}`}>
-                      {" "}
-                      <img
-                        src={data1?.[index]?.thumbnail}
-                        alt=""
-                        className="h-8 w-8 ml-2"
-                      />{" "}
-                    </Link>
-                  </td>
-                  <Link to={`/playlist/${userId}/${idMusic}`}>
-                    <td className="w-1/10">{data1?.[index]?.title}</td>{" "}
-                  </Link>{" "}
-                  <td className="w-1/10 text-center">
-                    <Link
-                      to={`/playlist/${userId}/${idMusic}`}
-                      className="link"
-                    >
-                      <a
-                        href={datalink}
-                        download="song.mp3"
-                        className="text-blue-500"
-                      >
-                        <CloudDownloadOutlined />
-                      </a>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
         </div>
       </div>
     </div>
