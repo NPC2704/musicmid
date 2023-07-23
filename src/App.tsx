@@ -75,8 +75,10 @@ import { publicRoutes } from "./routes";
 import Home from "./pages/Home/Home";
 import { useAppSelector } from "./app/hooks";
 import routesConfig from "./configs/routes";
+import Khampha from "./pages/Khampha/Khampha";
 function App() {
   const currentPath = useAppSelector((state) => state.routes?.pay?.currentPath);
+  console.log(currentPath);
   return (
     <>
       <div className="">
@@ -87,13 +89,14 @@ function App() {
           {publicRoutes.map((publicRoute, index) => {
             let Layout = publicRoute.layout;
             let Page;
-            if (publicRoute.path == "/playlist/:id/:idmusic") {
-              // const pathName = currentPath.pathname;
+            if (publicRoute.path == "/") {
+              //    const pathName = currentPath.pathname;
 
               // const route = publicRoutes.find(
               //   (route) => route.path == pathName
               // );
-              Page = publicRoute.component || Home;
+              //   Page = route?.component || Home;
+              Page = publicRoute.component || Khampha;
             } else {
               Page = publicRoute.component;
             }

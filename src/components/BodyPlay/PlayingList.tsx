@@ -15,6 +15,7 @@ import { updatesendLink } from "../../redux/toggleSendLink";
 import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
+import getTime from "../../utils/getTime";
 import "./Play.css";
 
 export default function PlayingList() {
@@ -70,17 +71,22 @@ export default function PlayingList() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0); // Thêm state để lưu index của bài hát hiện tại
   const params = useParams();
   const userId = params.id;
-
+  const [totalMusic, setTotalMusic] = useState("");
+  const [totalDuration, setTotalDuration] = useState(0);
+  const [sortDescription, setSortDescription] = useState("");
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/api/get/playlist/info?id=${userId}`
       );
       setData(response?.data?.data?.data?.song?.items);
-      //  setData(response?.data?.data?.data?.sections?.[0]?.items);
+      setTotalMusic(response?.data?.data?.data?.song?.total);
+      setTotalDuration(response?.data?.data?.data?.song?.totalDuration);
       setDatatitle(response?.data?.data?.data?.title);
+      setSortDescription(response?.data?.data?.data?.sortDescription);
       setImgMusic(response?.data?.data?.data?.thumbnail);
       console.log(response?.data?.data?.data?.thumbnail);
+      console.log(response?.data?.data?.data?.song?.items?.[0]?.artists);
       setIsDataLoaded(true);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -149,217 +155,143 @@ export default function PlayingList() {
   };
   useEffect(() => {
     if (isPlaying) {
-      //  dispatch(updateLink(datalink));
-      //  console.log("Link 1");
       dispatch(updatedata1Redux(data1));
       dispatch(updatesendLink(false));
     }
   }, [isPlaying, datalink]);
-  const [tableTitle, setTableTitle] = useState(true);
-  // time lyric
-  const convertMsToSeconds = (timeInMs: any) => {
-    return timeInMs / 10000;
-  };
-  const [showLyric, setShowLyric] = useState(false);
 
-  const formatTimeEarly = (timeInSeconds: any) => {
-    // Tính thời gian hiện tại tính bằng mili-giây
-    const timeInMs = timeInSeconds * 1000;
-    // Kiểm tra từng câu lyric trong mảng datalyric
-    for (let i = 0; i < datalyric.length; i++) {
-      const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
-
-      const endTimeInMs =
-        datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
-
-      // Nếu thời gian hiện tại nằm trong khoảng thời gian của câu lyric hiện tại
-      if (timeInMs >= startTimeInMs - 2000 && timeInMs <= endTimeInMs + 2000) {
-        const wordsArray = datalyric[i]?.words?.map((item: any) => item.data);
-        // Nối các từ thành chuỗi lyric và trả về
-        return wordsArray.join(" ");
-      }
-    }
-
-    return "";
-  };
-
-  const [lyricText, setLyricText] = useState("");
-  const [lyricText2, setLyricText2] = useState("");
-  const formatTimeDelay = (timeInSeconds: any) => {
-    const timeInMs = timeInSeconds * 1000;
-    let foundLyric = ""; // Biến để lưu trữ lyric nếu tìm thấy
-
-    for (let i = 0; i < datalyric.length; i++) {
-      const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
-      const endTimeInMs =
-        datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
-      if (timeInMs + 2500 >= startTimeInMs && timeInMs + 2500 <= endTimeInMs) {
-        const wordsArray = datalyric[i]?.words?.map((item: any) => item.data);
-        foundLyric = wordsArray.join(" ");
-        break; // Tìm thấy lyric thích hợp, thoát khỏi vòng lặp
-      }
-    }
-
-    if (foundLyric !== "") {
-      setLyricText(foundLyric);
-    }
-  };
-
-  const formatTime = (timeInSeconds: any) => {
-    const timeInMs = timeInSeconds * 1000;
-    let foundLyric = "";
-    for (let i = 0; i < datalyric.length; i++) {
-      const startTimeInMs = datalyric[i]?.words?.[0]?.startTime;
-      const endTimeInMs =
-        datalyric[i]?.words?.[datalyric[i]?.words.length - 1]?.endTime;
-      if (timeInMs >= startTimeInMs - 1000 && timeInMs <= endTimeInMs - 800) {
-        const wordsArray = datalyric[i]?.words?.map((item: any) => item.data);
-        foundLyric = wordsArray.join(" ");
-        break;
-      }
-    }
-    if (foundLyric !== "") {
-      setLyricText2(foundLyric);
-    }
-  };
-  useEffect(() => {
-    formatTimeDelay(currentTimeRedux);
-    formatTime(currentTimeRedux);
-  }, [currentTimeRedux]);
   return (
     <div className="w-full h-130 bg-transparent flex items-end">
-      <div className="w-full h-110  flex justify-around">
-        <div>
-          {" "}
-          <h1 className="text-white font-semibold text-2xl">
-            <span className="text-[#9ca3af]">Tên bài hát:</span> {datatitle}
-          </h1>
-          <div className="flex justify-center items-center mt-10">
-            <img
-              src={imgMusic}
-              alt=""
-              className="w-80 h-80 rotating-image rounded-full"
-            />
+      <div className="w-full h-110  ">
+        <div className="flex  w-121 mx-auto">
+          <div>
+            <div className="h-64 w-64 rounded">
+              <img
+                className="h-full w-full rounded"
+                alt="playlist-thumbnail"
+                src={imgMusic}
+              />
+            </div>
+          </div>
+          <div className="ml-9">
+            <div className="py-5">
+              <h1 className="text-white font-semibold text-4xl">{datatitle}</h1>
+            </div>
+            <div className="text-[#dee1e6]">
+              <div className="">
+                <div className="py-1">Danh sách phát • Music</div>
+                <div className="py-1">
+                  {`${totalMusic} song • 
+            ${totalDuration ? getTime.caculateTime(totalDuration) : ""}`}
+                </div>
+              </div>
+              <div className="mt-3 text-sm">{sortDescription}</div>
+            </div>
           </div>
         </div>
-        <div className="w-110 h-110 bg-transparent overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md">
-          <div className="w-full h-8 bg-black flex justify-around">
-            <p
-              className="text-white text-center cursor-pointer"
-              onClick={() => setTableTitle(true)}
+        <div className="mt-0 mt-12">
+          {data1.map((item, index) => (
+            <div
+              className={`group song-playlist-item-player-${data1?.[index]?.encodeId} border-b border-neutral-900 h-14 px-2 flex items-center justify-between text-white w-121 mx-auto`}
             >
-              List Music
-            </p>
-            <p
-              className="text-white cursor-pointer"
-              onClick={() => setTableTitle(false)}
-            >
-              Lyric
-            </p>
-          </div>
-          {tableTitle === true ? (
-            <table className="table-auto w-full  mb-1">
-              <thead className="bg-transparent h-12 text-gray-500 hover:bg-slate-600 bg-slate-600 text-white">
-                <tr>
-                  <th className="w-1/10">#</th>
-                  <th className="w-1/10">Tên bài hát</th>
+              <div
+                className="flex items-center overflow-hidden mr-4 w-72"
+                onMouseOver={() => {
+                  toggle();
 
-                  <th className="w-1/10">
-                    <i className="fa fa-download"></i>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data1.map((item, index) => (
-                  <tr
-                    className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
-                    key={index}
-                    onMouseOver={() => {
-                      toggle();
-                      // dispatch(
-                      //   updateartisMusic(data1?.[index]?.artists?.[0]?.name)
-                      // );
-                      // dispatch(updateimgMusic(data1?.[index]?.thumbnail));
-                      // dispatch(updatetitleMusic(data1?.[index]?.title));
-                      dispatch(updatecurrentTrackIndex(index));
-                      setCurrentTrackIndex(index);
-                      setIdMusic(data1?.[index]?.encodeId);
-                    }}
-                  >
-                    <td className="w-1/10 text-center ">
-                      <Link to={`/playlist/${userId}/${idMusic}`}>
-                        {" "}
-                        <img
-                          src={data1?.[index]?.thumbnail}
-                          alt=""
-                          className="h-8 w-8 ml-2"
-                        />{" "}
-                      </Link>
-                    </td>
+                  dispatch(updatecurrentTrackIndex(index));
+                  setCurrentTrackIndex(index);
+                  setIdMusic(data1?.[index]?.encodeId);
+                }}
+              >
+                <div className="flex items-center">
+                  <div className="h-9 w-9 mr-4 relative cursor-pointer">
                     <Link to={`/playlist/${userId}/${idMusic}`}>
-                      <td className="w-1/10">{data1?.[index]?.title}</td>{" "}
-                    </Link>{" "}
-                    <td className="w-1/10 text-center">
-                      <Link
-                        to={`/playlist/${userId}/${idMusic}`}
-                        className="link"
-                      >
-                        <a
-                          href={datalink}
-                          download="song.mp3"
-                          className="text-blue-500"
-                        >
-                          <CloudDownloadOutlined />
-                        </a>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="w-full h-100 mb-1  flex justify-center">
-              <div className=" w-100 h-100 mt-3  flex justify-center items-center  border-2 border-solid border-2 rounded-md">
-                <div className="">
-                  <div className="flex justify-center items-center">
-                    <p
-                      className={`text-[#d9d9db] text-center ${
-                        showLyric
-                          ? "opacity-0 translate-y-5"
-                          : "opacity-100 translate-y-0"
-                      } transition-opacity transition-transform duration-900 ease-in-out mb-5 pb-3`}
-                    >
-                      {formatTimeEarly(currentTimeRedux)}
-                    </p>
+                      {" "}
+                      <img
+                        loading="lazy"
+                        src={data1?.[index]?.thumbnail}
+                        alt="song-thumbnail"
+                        className="rounded-sm h-full object-cover"
+                      />{" "}
+                    </Link>
+                    {/* <InfoThumb isFocus={isFocus} isPlaying={isPlaying} /> */}
                   </div>
 
-                  <div className="flex justify-center items-center">
-                    <p
-                      className={`text-[#d9d9db] text-center ${
-                        showLyric
-                          ? "opacity-0 translate-y-5"
-                          : "opacity-100 translate-y-0"
-                      } transition-opacity transition-transform text-2xl text-white duration-900 ease-in-out mb-5 pb-3`}
-                    >
-                      {lyricText2}
-                    </p>
+                  <div>
+                    <Link to={`/playlist/${userId}/${idMusic}`}>
+                      <div className="font-semibold whitespace-nowrap cursor-pointer">
+                        <div>{data1?.[index]?.title}</div>
+                      </div>
+                    </Link>
                   </div>
-
-                  <div className="flex justify-center items-center">
-                    <p
-                      className={`text-[#d9d9db] text-center ${
-                        showLyric
-                          ? "opacity-0 translate-y-5"
-                          : "opacity-100 translate-y-0"
-                      } transition-opacity transition-transform duration-900 ease-in-out mb-5 pb-3`}
-                    >
-                      {lyricText}
+                </div>
+              </div>
+              <div className="w-32">
+                <div className="text-whiteT1 text-sm flex items-center whitespace-nowrap ">
+                  {data1?.[index]?.artists.map((item: any, indexx: any) => (
+                    <p className="text-white">
+                      {data1?.[index]?.artists?.[indexx]?.name}
+                      {","}
                     </p>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <div className="text-whiteT1 flex items-center">
+                  <div className="text-sm ">
+                    {getTime.caculateTimeFM(data1?.[index]?.duration)}
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          ))}
+          {/*  <div className="w-110 h-110 bg-transparent overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md">
+          <table className="table-auto w-full  mb-1">
+            <tbody>
+              {data1.map((item, index) => (
+                <tr
+                  className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
+                  key={index}
+                  onMouseOver={() => {
+                    toggle();
+
+                    dispatch(updatecurrentTrackIndex(index));
+                    setCurrentTrackIndex(index);
+                    setIdMusic(data1?.[index]?.encodeId);
+                  }}
+                >
+                  <td className="w-1/10 text-center ">
+                    <Link to={`/playlist/${userId}/${idMusic}`}>
+                      {" "}
+                      <img
+                        src={data1?.[index]?.thumbnail}
+                        alt=""
+                        className="h-8 w-8 ml-2"
+                      />{" "}
+                    </Link>
+                  </td>
+                  <Link to={`/playlist/${userId}/${idMusic}`}>
+                    <td className="w-1/10">{data1?.[index]?.title}</td>{" "}
+                  </Link>{" "}
+                  <td className="w-1/10 text-center">
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      className="link"
+                    >
+                      <a
+                        href={datalink}
+                        download="song.mp3"
+                        className="text-blue-500"
+                      >
+                        <CloudDownloadOutlined />
+                      </a>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table> */}
         </div>
       </div>
     </div>

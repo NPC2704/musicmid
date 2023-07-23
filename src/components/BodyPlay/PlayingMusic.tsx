@@ -15,7 +15,7 @@ import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateiddMusic } from "../../redux/toggelIDMusic";
 import { updateartisMusic } from "../../redux/toggleArtis";
 import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
-
+import getTime from "../../utils/getTime";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 const PlayingMusic = () => {
   const dispatch = useDispatch();
@@ -69,16 +69,6 @@ const PlayingMusic = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [idMusic, setIdMusic] = useState("");
-  // const fetchData1 = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${idMusic}`
-  //     );
-  //     setDatalink(response?.data?.data?.data?.[128]);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
   useEffect(() => {
     // Fetch data and update state
@@ -144,6 +134,7 @@ const PlayingMusic = () => {
   const currentTimeRedux = useSelector(
     (state: RootState) => state.toggleCurrentTime.currentTime
   );
+  console.log(currentTimeRedux);
   useEffect(() => {
     // Kiểm tra nếu component đã được mount lần đầu tiên, không cần thực hiện các tác vụ trong này
     if (isInitialMount.current) {
@@ -216,7 +207,7 @@ const PlayingMusic = () => {
 
     return "";
   };
-
+  console.log(currentTimeRedux);
   const [lyricText, setLyricText] = useState("");
   const [lyricText2, setLyricText2] = useState("");
   const formatTimeDelay = (timeInSeconds: any) => {
@@ -256,10 +247,7 @@ const PlayingMusic = () => {
       setLyricText2(foundLyric);
     }
   };
-  const toggle = () => {
-    setIsPlaying(true);
-    dispatch(updatesendLink(true));
-  };
+
   useEffect(() => {
     formatTimeDelay(currentTimeRedux);
     formatTime(currentTimeRedux);
@@ -305,23 +293,14 @@ const PlayingMusic = () => {
               </div>
               {tableTitle === true ? (
                 <table className="table-auto w-full  mb-1">
-                  <thead className="bg-transparent h-12 text-gray-500 hover:bg-slate-600 bg-slate-600 text-white">
-                    <tr>
-                      <th className="w-1/10">#</th>
-                      <th className="w-1/10">Tên bài hát</th>
-
-                      <th className="w-1/10">
-                        <i className="fa fa-download"></i>
-                      </th>
-                    </tr>
-                  </thead>
                   <tbody>
                     {data1.map((item, index) => (
                       <tr
                         className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
                         key={index}
                         onMouseOver={() => {
-                          toggle();
+                          setIsPlaying(true);
+                          dispatch(updatesendLink(true));
 
                           dispatch(updatecurrentTrackIndex(index));
                           setCurrentTrackIndex(index);
@@ -356,6 +335,25 @@ const PlayingMusic = () => {
                             }}
                           >
                             {data1?.[index]?.title}
+                          </Link>
+                        </td>{" "}
+                        <td className="w-1/10">
+                          {" "}
+                          <Link
+                            to={`/playlist/${userId}/${idMusic}`}
+                            onClick={() => {
+                              dispatch(
+                                updateartisMusic(
+                                  data1?.[index]?.artists?.[0]?.name
+                                )
+                              );
+                              dispatch(
+                                updateimgMusic(data1?.[index]?.thumbnail)
+                              );
+                              dispatch(updatetitleMusic(data1?.[index]?.title));
+                            }}
+                          >
+                            {getTime.caculateTimeFM(data1?.[index]?.duration)}
                           </Link>
                         </td>{" "}
                         <td className="w-1/10 text-center">

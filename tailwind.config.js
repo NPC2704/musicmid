@@ -21,6 +21,8 @@ module.exports = {
         100: "30rem",
         110: "40rem",
         120: "70rem",
+        121: "80rem",
+        78: "15rem",
       },
       screens: {
         tablet: "640px",

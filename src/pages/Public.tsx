@@ -92,13 +92,16 @@ const Public: React.FC<IProps> = ({ children }) => {
       const currentTimeInSeconds = Math.floor(audio.currentTime);
       setCurrentTime(currentTimeInSeconds);
       dispatch(updatecurrentTime(currentTimeInSeconds));
+
+      console.log(currentTimeRedux);
     }
   };
-  const [isShuffle, setIsShuffle] = useState(false);
+
   const handleReplayClick = () => {
     audioPlayerRef.current.audio.current.currentTime = 0;
     audioPlayerRef.current.audio.current.play();
   };
+  const [isShuffle, setIsShuffle] = useState(false);
   const handleShuffleClick = () => {
     setIsShuffle((prev) => !prev);
   };
@@ -120,20 +123,6 @@ const Public: React.FC<IProps> = ({ children }) => {
       dispatch(updatepathLink(window.location.pathname));
     }
   };
-  const navigate = useNavigate();
-
-  // const route = useAppSelector((state) => state.routes.pay);
-  // const isShowInfo = useAppSelector((state) => state.player.isShoaInfo);
-  // const songId = useAppSelector((state) => state.player.songId);
-  // const handleToggleShowInfo = () => {
-  //   isShowInfo
-  //     ? navigate(
-  //         route?.currentPath?.pathname
-  //           ? `${route?.currentPath?.pathname}` + `${route.currentPath.search}`
-  //           : "/"
-  //       )
-  //     : navigate(createPlayerHref(songId));
-  // };
 
   return (
     <div>
@@ -141,13 +130,10 @@ const Public: React.FC<IProps> = ({ children }) => {
 
       {/* <Outlet /> */}
       <>{children}</>
+
       <AudioPlayer
         ref={audioPlayerRef}
-        className={`${
-          link === ""
-            ? "player-music hidden"
-            : "player-music fixed bottom-0 left-0 z-50 hidden"
-        }`}
+        className="player-music fixed bottom-0 left-0 z-50 hidden"
         src={link}
         layout="stacked-reverse"
         showSkipControls={true}
@@ -172,8 +158,7 @@ const Public: React.FC<IProps> = ({ children }) => {
           <div className="flex absolute z-10">
             <button
               onClick={() => {
-                toggle1();
-                handleAudioClick();
+                handleReplayClick();
                 //  handleToggleShowInfo();
               }}
               className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
