@@ -310,7 +310,20 @@ const PlayingMusic = () => {
                         }}
                       >
                         <td className="w-1/10 text-center ">
-                          <Link to={`/playlist/${userId}/${idMusic}`}>
+                          <Link
+                            to={`/playlist/${userId}/${idMusic}`}
+                            onClick={() => {
+                              dispatch(
+                                updateartisMusic(
+                                  data1?.[index]?.artists?.[0]?.name
+                                )
+                              );
+                              dispatch(
+                                updateimgMusic(data1?.[index]?.thumbnail)
+                              );
+                              dispatch(updatetitleMusic(data1?.[index]?.title));
+                            }}
+                          >
                             <img
                               src={data1?.[index]?.thumbnail}
                               alt=""
@@ -339,20 +352,7 @@ const PlayingMusic = () => {
                         </td>{" "}
                         <td className="w-1/10">
                           {" "}
-                          <Link
-                            to={`/playlist/${userId}/${idMusic}`}
-                            onClick={() => {
-                              dispatch(
-                                updateartisMusic(
-                                  data1?.[index]?.artists?.[0]?.name
-                                )
-                              );
-                              dispatch(
-                                updateimgMusic(data1?.[index]?.thumbnail)
-                              );
-                              dispatch(updatetitleMusic(data1?.[index]?.title));
-                            }}
-                          >
+                          <Link to={`/playlist/${userId}/${idMusic}`}>
                             {getTime.caculateTimeFM(data1?.[index]?.duration)}
                           </Link>
                         </td>{" "}
