@@ -321,7 +321,7 @@ const PlayingMusic = () => {
                 <img
                   src={imgMusicRedux}
                   alt=""
-                  className="w-100 h-100 relative blur-sm z-1"
+                  className="w-100 h-100 relative blur-sm z-1 brightness-75"
                 />
                 <img
                   src={imgMusicRedux}
