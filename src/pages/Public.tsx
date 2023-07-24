@@ -71,7 +71,6 @@ const Public: React.FC<IProps> = ({ children }) => {
   const pathLinkNumber = useSelector(
     (state: RootState) => state.togglePathLinkNumber.pathLinknumber
   );
-  console.log(currentTrackIndex);
   const handleClickPre = () => {
     const previousIndex = currentTrackIndex - 1;
     if (previousIndex >= 0) {
@@ -90,7 +89,6 @@ const Public: React.FC<IProps> = ({ children }) => {
       dispatch(updatecurrentTrackIndex(previousIndex));
     }
   };
-  console.log(link);
   // Lấy thời gian hiện tại từ AudioPlayer
   const audioPlayerRef = useRef<any>(null);
   const [currentTime, setCurrentTime] = useState(0);
