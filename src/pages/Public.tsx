@@ -21,8 +21,16 @@ import Home from "./Home/Home";
 import "./public.css";
 import PlayingMusic from "../components/BodyPlay/PlayingMusic";
 import Khampha from "./Khampha/Khampha";
-import { createPlayerHref } from "../utils/createHref";
 import { useAppSelector } from "../app/hooks";
+import { ISongInfo } from "../types/item";
+import { createPlayerHref } from "../utils/createHref";
+import {
+  CiShuffle,
+  CiRedo,
+  CiCircleChevUp,
+  CiCircleChevDown,
+} from "react-icons/ci";
+
 interface IProps {
   children: ReactNode;
 }
@@ -34,9 +42,6 @@ const Public: React.FC<IProps> = ({ children }) => {
   const pathlink2 = useSelector(
     (state: RootState) => state.togglePathLink2.pathLink2
   );
-  // const pathlinkHome = useSelector(
-  //   (state: RootState) => state.togglePathLinkRender.pathLinkHome
-  // );
 
   const currentTimeRedux = useSelector(
     (state: RootState) => state.toggleCurrentTime.currentTime
@@ -57,21 +62,35 @@ const Public: React.FC<IProps> = ({ children }) => {
   );
   const handleClickNext = () => {
     const nextIndex = currentTrackIndex + 1;
-    if (nextIndex < data1.length) {
+    console.log(nextIndex);
+    console.log(data1.length);
+    if (nextIndex < 100) {
       dispatch(updatecurrentTrackIndex(nextIndex));
     }
   };
   const pathLinkNumber = useSelector(
     (state: RootState) => state.togglePathLinkNumber.pathLinknumber
   );
-
+  console.log(currentTrackIndex);
   const handleClickPre = () => {
     const previousIndex = currentTrackIndex - 1;
     if (previousIndex >= 0) {
       dispatch(updatecurrentTrackIndex(previousIndex));
     }
   };
-
+  const getRandomNumberInRange = (min: any, max: any) => {
+    return Math.random() * (max - min) + min;
+  };
+  const handleRandom = () => {
+    const randomNumber = getRandomNumberInRange(-3, 10);
+    const roundedNumber = Math.round(randomNumber);
+    console.log(roundedNumber);
+    const previousIndex = currentTrackIndex + roundedNumber;
+    if (previousIndex >= 0 || previousIndex < 100 || previousIndex <= 0) {
+      dispatch(updatecurrentTrackIndex(previousIndex));
+    }
+  };
+  console.log(link);
   // Lấy thời gian hiện tại từ AudioPlayer
   const audioPlayerRef = useRef<any>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -92,8 +111,6 @@ const Public: React.FC<IProps> = ({ children }) => {
       const currentTimeInSeconds = Math.floor(audio.currentTime);
       setCurrentTime(currentTimeInSeconds);
       dispatch(updatecurrentTime(currentTimeInSeconds));
-
-      console.log(currentTimeRedux);
     }
   };
 
@@ -107,6 +124,7 @@ const Public: React.FC<IProps> = ({ children }) => {
   };
 
   const handleAudioClick = () => {
+    setDownUp(!downup);
     if (window.location.pathname.split("/")[1] === "playlist") {
       history(pathlink);
     } else {
@@ -123,7 +141,29 @@ const Public: React.FC<IProps> = ({ children }) => {
       dispatch(updatepathLink(window.location.pathname));
     }
   };
+  ///
+  // const navigate = useNavigate();
+  // usePlaylistFw();
+  // const isShowInfo = useAppSelector((state) => state.player.isShoaInfo);
+  // const isShow = useAppSelector((state) => state.player.isShow);
+  // const songId = useAppSelector((state) => state.player.songId);
+  // const route = useAppSelector((state) => state.routes.pay);
 
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [song, setSong] = useState<ISongInfo>({});
+
+  // const handleToggleShowInfo = () => {
+  //   isShowInfo
+  //     ? navigate(
+  //         route?.currentPath?.pathname
+  //           ? `${route?.currentPath?.pathname}` + `${route.currentPath.search}`
+  //           : "/"
+  //       )
+  //     : navigate("/kham-pha");
+  // };
+
+  ///
+  const [downup, setDownUp] = useState(true);
   return (
     <div>
       <Header />
@@ -142,7 +182,7 @@ const Public: React.FC<IProps> = ({ children }) => {
         onClickPrevious={handleClickPre}
         customAdditionalControls={[
           <div
-            className="flex items-center justify-center w-62 absolute top-3 right-28"
+            className="flex items-center justify-center w-62 absolute top-4 right-28 transition ease-in-out delay-150"
             key="music-controls"
           >
             <p
@@ -152,7 +192,20 @@ const Public: React.FC<IProps> = ({ children }) => {
               }}
               className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
             >
-              <UpCircleTwoTone />
+              {downup === true ? <CiCircleChevDown /> : <CiCircleChevUp />}
+            </p>
+          </div>,
+          <div
+            className="flex items-center justify-center w-62 absolute top-4 right-36"
+            key="music-controls"
+          >
+            <p
+              onClick={() => {
+                handleRandom();
+              }}
+              className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
+            >
+              <CiShuffle />
             </p>
           </div>,
           <div className="flex absolute z-10">
@@ -163,10 +216,14 @@ const Public: React.FC<IProps> = ({ children }) => {
               }}
               className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
             >
-              <InteractionTwoTone />
+              <CiRedo />
             </button>
             <div className="flex">
-              <img src={imgMuic} alt="" className="h-10 w-10" />
+              <img
+                src={imgMuic}
+                alt=""
+                className="h-10 w-10 rotating-image rounded-full"
+              />
               <div className="block items-center ml-4">
                 {" "}
                 <div>

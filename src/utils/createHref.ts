@@ -1,10 +1,7 @@
 export const createPlayListHref = (playlistId: string | number) => {
-  return `/playlistmusic/?id=${playlistId}`;
-};
+  return `/playlist?id=${playlistId}`
+}
 
-export const createPlayerHref = (
-  songID: string,
-  playlistId: string | number
-) => {
-  return `/playlist/?id=${playlistId}/?idmusic=${songID}`;
-};
+export const createPlayerHref = (songID: string) => {
+  return `/player?id=${songID}`
+}

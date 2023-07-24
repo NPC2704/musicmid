@@ -34,6 +34,10 @@ module.exports = {
         desktop: "1280px",
         // => @media (min-width: 1280px) { ... }
       },
+      zIndex: {
+        1: "1",
+        2: "2",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

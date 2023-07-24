@@ -14,6 +14,7 @@ import { AppProvider2, AppContext } from "../../Context/AppContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
+import { Avatar, List, Skeleton, Switch } from "antd";
 import "./SlidePaner.css";
 const BodySlide = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const BodySlide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { link1, setLink } = useContext(AppContext);
   const [dataChild, setDataChild] = useState(0);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -30,6 +31,7 @@ const BodySlide = () => {
       );
       setData(response.data?.data?.data?.items?.[11]?.items || []);
       setDatatitle(response.data?.data?.data?.items?.[11]?.title);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -76,8 +78,24 @@ const BodySlide = () => {
       },
     ],
   };
-
-  return (
+  const whiteSkeletonStyle = {
+    backgroundColor: "#242526",
+    color: "#18191a",
+    height: "40%",
+    width: "40%",
+    marginLeft: "10px",
+    borderRadius: "10px",
+  };
+  return isLoading ? (
+    <div className="w-full h-100 flex justify-center items-center ">
+      {" "}
+      <Skeleton active style={whiteSkeletonStyle} />
+      <Skeleton active style={whiteSkeletonStyle} />
+      <Skeleton active style={whiteSkeletonStyle} />
+      <Skeleton active style={whiteSkeletonStyle} />
+      <Skeleton active style={whiteSkeletonStyle} />
+    </div>
+  ) : (
     <div className="w-full h-100">
       <div className="w-full h-20 flex items-center justify-start">
         <h1 className="text-white text-4xl font-bold">{datatitle}</h1>
@@ -90,18 +108,34 @@ const BodySlide = () => {
               className="w-52 h-80 bg-black rounded-lg mx-10 gap-1 space-x-1"
               key={index}
             >
-              <div className="flex justify-center relative group cursor-pointer">
-                {" "}
-                <img src={item?.thumbnail} alt="" className="rounded-lg" />{" "}
-                <div className="bg-transparent absolute bottom-3 right-14 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
-                  <Link
-                    to={`/playlistmusic/${item?.encodeId}`}
-                    onClick={toggle}
-                  >
-                    <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-white transition-all" />{" "}
-                  </Link>
+              {isLoading ? (
+                <div className="flex justify-center relative group cursor-pointer">
+                  {" "}
+                  <Skeleton active style={whiteSkeletonStyle} />
+                  <Skeleton active style={whiteSkeletonStyle} />
+                  <Skeleton active style={whiteSkeletonStyle} />
+                  <Skeleton active style={whiteSkeletonStyle} />
+                  <Skeleton active style={whiteSkeletonStyle} />
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center relative group cursor-pointer">
+                  {" "}
+                  <img
+                    src={item?.thumbnail}
+                    alt=""
+                    className="rounded-lg"
+                  />{" "}
+                  <div className="bg-transparent absolute bottom-3 right-14 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
+                    <Link
+                      to={`/playlistmusic/${item?.encodeId}`}
+                      onClick={toggle}
+                    >
+                      <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-white transition-all" />{" "}
+                    </Link>
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-center h-14 mb-5">
                 {" "}
                 <div className="flex items-center">

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import Header from "../../components/Header";
 interface IProps {}
-const Home: React.FC<IProps> = () => {
+const Home = () => {
   const pathLinkNumber = useSelector(
     (state: RootState) => state.togglePathLinkNumber.pathLinknumber
   );

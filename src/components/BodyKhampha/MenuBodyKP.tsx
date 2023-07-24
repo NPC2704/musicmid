@@ -4,12 +4,14 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateNumber } from "../../redux/toggleSlice";
+import { Avatar, List, Skeleton, Switch } from "antd";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { Link } from "react-router-dom";
 const MenuBodyKP = () => {
   const dispatch = useDispatch();
 
   const [data1, setData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [datatitle, setDatatitle] = useState("");
   const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
   const [dataChild, setDataChild] = useState(0);
@@ -20,6 +22,7 @@ const MenuBodyKP = () => {
       );
       setData(response.data?.data?.data?.items?.[13]?.items || []);
       setDatatitle(response.data?.data?.data?.items?.[13]?.title);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -31,6 +34,14 @@ const MenuBodyKP = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const whiteSkeletonStyle = {
+    backgroundColor: "#242526",
+    color: "#18191a",
+    height: "40%",
+    width: "40%",
+    marginLeft: "10px",
+    borderRadius: "10px",
+  };
   return (
     <div className="w-full h-full">
       <div className="w-full h-20 flex items-center justify-start">
@@ -50,27 +61,39 @@ const MenuBodyKP = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col flex-wrap  w-full h-80">
-          {data1.map((item: any, index) => (
-            <Link
-              to={`/playlist/${item?.encodeId}`}
-              onClick={() => {
-                toggle();
-                setDataChild(index);
-              }}
-            >
+        {isLoading ? (
+          <div className="w-full h-100   ">
+            {" "}
+            <div className="w-full h-60 flex justify-center  ">
               {" "}
-              <div
-                className={`h-16 w-66  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121]  cursor-pointer`}
-                onMouseOver={() => setDataChild(index)}
+              <Skeleton active style={whiteSkeletonStyle} />
+              <Skeleton active style={whiteSkeletonStyle} />
+              <Skeleton active style={whiteSkeletonStyle} />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col flex-wrap  w-full h-80">
+            {data1.map((item: any, index) => (
+              <Link
+                to={`/playlist/${item?.encodeId}`}
+                onClick={() => {
+                  toggle();
+                  setDataChild(index);
+                }}
               >
-                <div className="ml-4 ">
-                  <p className="text-white text-sm">{data1?.[index].title}</p>
+                {" "}
+                <div
+                  className={`h-16 w-66  mr-4 mt-2 flex items-center bg-[rgba(255,255,255,0.15)] border-l-4  border-${randomColor} border-solid rounded hover:bg-[#212121]  cursor-pointer`}
+                  onMouseOver={() => setDataChild(index)}
+                >
+                  <div className="ml-4 ">
+                    <p className="text-white text-sm">{data1?.[index].title}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

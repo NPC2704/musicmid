@@ -15,7 +15,9 @@ import { updatesendLink } from "../../redux/toggleSendLink";
 import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
-import getTime from "../../utils/getTime";
+import getTime from "../../utils/convertTime";
+import Box from "@mui/material/Box";
+import { Avatar, List, Skeleton, Switch } from "antd";
 import "./Play.css";
 
 export default function PlayingList() {
@@ -54,8 +56,6 @@ export default function PlayingList() {
     linkHistory.push(location.pathname);
     localStorage.setItem("linkHistory", JSON.stringify(linkHistory));
     setPreviousPathname(location.pathname);
-
-    //  console.log("Bi Reload 4");
   }, [location]);
 
   const [data1, setData] = useState<any[]>([]);
@@ -65,6 +65,7 @@ export default function PlayingList() {
   const [idMusic, setIdMusic] = useState("");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [imgMusic, setImgMusic] = useState(
     "https://yt3.googleusercontent.com/nOwpUI4-9dJLMVZjxUbsghJ-8qBRsGZWthz4cXSSNjuSsBFLw7Zq4iH2awp-Hk3m4milTxAQng=s900-c-k-c0x00ffffff-no-rj"
   );
@@ -81,15 +82,15 @@ export default function PlayingList() {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/api/get/playlist/info?id=${userId}`
       );
+
       setData(response?.data?.data?.data?.song?.items);
       setTotalMusic(response?.data?.data?.data?.song?.total);
       setTotalDuration(response?.data?.data?.data?.song?.totalDuration);
       setDatatitle(response?.data?.data?.data?.title);
       setSortDescription(response?.data?.data?.data?.sortDescription);
       setImgMusic(response?.data?.data?.data?.thumbnail);
-      console.log(response?.data?.data?.data?.thumbnail);
-      console.log(response?.data?.data?.data?.song?.items?.[0]?.artists);
       setIsDataLoaded(true);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -101,6 +102,7 @@ export default function PlayingList() {
         `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${idMusic}`
       );
       setDatalink(response?.data?.data?.data?.[128]);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -118,7 +120,6 @@ export default function PlayingList() {
   }, [isDataLoaded]);
   useEffect(() => {
     fetchData1();
-    console.log(currentTimeRedux);
   }, [idMusic]);
 
   useEffect(() => {
@@ -131,7 +132,6 @@ export default function PlayingList() {
   const fetchDataLyric = async () => {
     const storedIdmusic = localStorage.getItem("idmusic");
     try {
-      console.log(idMusic11);
       let response;
       if (idMusic !== "") {
         response = await axios.get(
@@ -161,8 +161,18 @@ export default function PlayingList() {
       dispatch(updatesendLink(false));
     }
   }, [isPlaying, datalink]);
-
-  return (
+  const whiteSkeletonStyle = {
+    backgroundColor: "#242526",
+    color: "#18191a",
+    height: "600px",
+    width: "600px",
+    borderRadius: "10px",
+  };
+  return isLoading ? (
+    <div className="w-full h-full py-5 flex justify-center items-center ">
+      <Skeleton active style={whiteSkeletonStyle} />
+    </div>
+  ) : (
     <div className="w-full h-130 bg-transparent flex items-end">
       <div className="w-full h-110  ">
         <div className="flex  w-121 mx-auto">
@@ -238,7 +248,24 @@ export default function PlayingList() {
                   </div>
 
                   <div>
-                    <Link to={`/playlist/${userId}/${idMusic}`}>
+                    <Link
+                      to={`/playlist/${userId}/${idMusic}`}
+                      onClick={() => {
+                        dispatch(updateimgMusic(data1?.[index]?.thumbnail));
+                        dispatch(updatetitleMusic(data1?.[index]?.title));
+                        {
+                          data1?.[index]?.artists.map(
+                            (item: any, indexx: any) => {
+                              dispatch(
+                                updateartisMusic(
+                                  data1?.[index]?.artists?.[indexx]?.name
+                                )
+                              );
+                            }
+                          );
+                        }
+                      }}
+                    >
                       <div className="font-semibold whitespace-nowrap cursor-pointer">
                         <div>{data1?.[index]?.title}</div>
                       </div>
