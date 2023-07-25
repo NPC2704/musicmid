@@ -56,7 +56,7 @@ export default function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{ user }}>
       //{" "}
-      {isLoading ? <Spin style={{ position: "fixed", inset: 0 }} /> : children}
+      {/* {isLoading ? <Spin style={{ position: "fixed", inset: 0 }} /> : children} */}
       {children}
     </AuthContext.Provider>
   );

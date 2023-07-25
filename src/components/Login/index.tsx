@@ -7,6 +7,7 @@ import { AppContext } from "../../Context/AppProvider";
 import img from "../../assets/logo.jpg";
 import { Link } from "react-router-dom";
 import bgImg from "../../assets/landing.jpg";
+
 const { Title } = Typography;
 
 const fbProvider = new firebase.auth.FacebookAuthProvider();

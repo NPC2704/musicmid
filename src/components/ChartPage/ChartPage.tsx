@@ -3,6 +3,7 @@ import { Line } from "react-chartjs-3";
 import Logo from "../../assets/logo.jpg";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import getTime from "../../utils/convertTime";
 import "./ChartLine.css";
 const chartStyle = {
   width: "1000px",
@@ -110,44 +111,60 @@ const ChartPage: React.FC = () => {
         <div className="chart-container mx-auto" style={chartStyle}>
           <Line data={data} />
         </div>
-        <div className=" w-100 h-auto block mt-10">
-          {data0.slice(0, showCount).map((item, index) => (
-            <div
-              className="bg-[#745887] w-80 h-20 mb-3 mx-auto flex rounded-md"
-              key={index}
-            >
-              <div className="h-full w-10 flex justify-center items-center">
+        <div className="w-full h-auto flex">
+          {" "}
+          <div className=" w-100 h-auto block mt-10 ">
+            {data0.slice(0, showCount).map((item, index) => (
+              <div
+                className={`group  border-b border-neutral-900 h-14 px-2 flex items-center justify-between text-white w-121 mx-auto`}
+                key={index}
+              >
                 <p className="text-3xl font-medium text-[#4bc0c0]">
                   {index + 1}
                 </p>
-              </div>
-              <div className="h-full w-10 flex justify-center items-center">
-                <img
-                  src={data0?.[index]?.thumbnail}
-                  alt=""
-                  className="rounded h-14 w-12"
-                />
-              </div>
-              <div className="flex items-center justify-center ml-3">
-                <div className="block text-white font-normal">
-                  <div className="flex justify-start">
-                    <p>{data0?.[index]?.title}</p>
+
+                <div className="flex items-center overflow-hidden mr-4 w-72">
+                  <div className="flex items-center">
+                    <div className="h-9 w-9 mr-4 relative cursor-pointer">
+                      {" "}
+                      <img
+                        loading="lazy"
+                        src={data0?.[index]?.thumbnail}
+                        alt="song-thumbnail"
+                        className="rounded-sm h-full object-cover"
+                      />{" "}
+                    </div>
+
+                    <div>
+                      <div className="font-semibold whitespace-nowrap cursor-pointer">
+                        <div>{data0?.[index]?.title}</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-start">
+                </div>
+                <div className="w-32">
+                  <div className="text-whiteT1 text-sm flex items-center whitespace-nowrap ">
                     <p>{data0?.[index]?.artistsNames}</p>
                   </div>
                 </div>
+                <div className="flex justify-between">
+                  <div className="text-whiteT1 flex items-center">
+                    <div className="text-sm ">
+                      {getTime.caculateTimeFM(data0?.[index]?.duration)}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-          {showCount < data0.length && (
-            <div
-              className="mx-auto h-8 w-32 border-solid border-2 flex justify-center items-center rounded-full text-white cursor-pointer hover:bg-[#b366da]"
-              onClick={handleShowMore}
-            >
-              <p>Xem top 100</p>
-            </div>
-          )}
+            ))}
+            {showCount < data0.length && (
+              <div
+                className="mx-auto h-8 w-32 border-solid border-2 flex justify-center items-center rounded-full text-white cursor-pointer hover:bg-[#b366da]"
+                onClick={handleShowMore}
+              >
+                <p>Xem top 100</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
