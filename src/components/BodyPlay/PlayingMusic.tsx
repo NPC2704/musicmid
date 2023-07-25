@@ -440,114 +440,205 @@ const PlayingMusic = () => {
                           {...provided.droppableProps}
                         >
                           <tbody>
-                            {data1.map((item, index) => (
-                              <Draggable
-                                key={data1?.[index]?.encodeId}
-                                draggableId={data1?.[index]?.encodeId}
-                                index={index}
-                              >
-                                {(provided) => (
-                                  <tr
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
-                                    onMouseOver={() => {
-                                      setIsPlaying(true);
-                                      dispatch(updatesendLink(true));
-
-                                      setCurrentTrackIndex(index);
-                                      setTitleMusic(data1?.[index]?.title);
-
-                                      setIdMusic(data1?.[index]?.encodeId);
-                                    }}
-                                  >
-                                    <td className="w-1/10 text-center">
-                                      <Link
-                                        to={`/playlist/${userId}/${idMusic}`}
-                                        onClick={() => {
-                                          dispatch(
-                                            updatecurrentTrackIndex(index)
-                                          );
-                                          setImgMusic(
-                                            data1?.[index]?.thumbnail
-                                          );
-                                          dispatch(
-                                            updateartisMusic(
-                                              data1?.[index]?.artists?.[0]?.name
-                                            )
-                                          );
-                                          dispatch(
-                                            updateimgMusic(
+                            {data1.map((item, index) =>
+                              idmusic === data1?.[index]?.encodeId ? (
+                                <Draggable
+                                  key={data1?.[index]?.encodeId}
+                                  draggableId={data1?.[index]?.encodeId}
+                                  index={index}
+                                >
+                                  {(provided) => (
+                                    <tr
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      className="bg-[#b7e1e4] h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
+                                      onMouseOver={() => {
+                                        setIsPlaying(true);
+                                        dispatch(updatesendLink(true));
+                                        setCurrentTrackIndex(index);
+                                        setTitleMusic(data1?.[index]?.title);
+                                        setIdMusic(data1?.[index]?.encodeId);
+                                      }}
+                                    >
+                                      <td className="w-1/10 text-center">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                          onClick={() => {
+                                            dispatch(
+                                              updatecurrentTrackIndex(index)
+                                            );
+                                            setImgMusic(
                                               data1?.[index]?.thumbnail
-                                            )
-                                          );
-                                          dispatch(
-                                            updatetitleMusic(
-                                              data1?.[index]?.title
-                                            )
-                                          );
-                                        }}
-                                      >
-                                        <img
-                                          src={data1?.[index]?.thumbnail}
-                                          alt=""
-                                          className="h-8 w-8 ml-2"
-                                        />
-                                      </Link>
-                                    </td>
-                                    <td className="w-1/10">
-                                      <Link
-                                        to={`/playlist/${userId}/${idMusic}`}
-                                        onClick={() => {
-                                          dispatch(
-                                            updatecurrentTrackIndex(index)
-                                          );
-                                          setImgMusic(
-                                            data1?.[index]?.thumbnail
-                                          );
-                                          dispatch(
-                                            updateartisMusic(
-                                              data1?.[index]?.artists?.[0]?.name
-                                            )
-                                          );
-                                          dispatch(
-                                            updateimgMusic(
+                                            );
+                                            dispatch(
+                                              updateartisMusic(
+                                                data1?.[index]?.artists?.[0]
+                                                  ?.name
+                                              )
+                                            );
+                                            dispatch(
+                                              updateimgMusic(
+                                                data1?.[index]?.thumbnail
+                                              )
+                                            );
+                                            dispatch(
+                                              updatetitleMusic(
+                                                data1?.[index]?.title
+                                              )
+                                            );
+                                          }}
+                                        >
+                                          <img
+                                            src={data1?.[index]?.thumbnail}
+                                            alt=""
+                                            className="h-8 w-8 ml-2"
+                                          />
+                                        </Link>
+                                      </td>
+                                      <td className="w-1/10">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                          onClick={() => {
+                                            dispatch(
+                                              updatecurrentTrackIndex(index)
+                                            );
+                                            setImgMusic(
                                               data1?.[index]?.thumbnail
-                                            )
-                                          );
-                                          dispatch(
-                                            updatetitleMusic(
-                                              data1?.[index]?.title
-                                            )
-                                          );
-                                        }}
-                                      >
-                                        {data1?.[index]?.title}
-                                      </Link>
-                                    </td>
-                                    <td className="w-1/10">
-                                      <Link
-                                        to={`/playlist/${userId}/${idMusic}`}
-                                      >
-                                        {getTime.caculateTimeFM(
-                                          data1?.[index]?.duration
-                                        )}
-                                      </Link>
-                                    </td>
-                                    {/* <td className="w-1/10 text-center">
-                                      <a
-                                        href={datalink}
-                                        download="song.mp3"
-                                        className="text-blue-500"
-                                      >
-                                        <CloudDownloadOutlined />
-                                      </a>
-                                    </td> */}
-                                  </tr>
-                                )}
-                              </Draggable>
-                            ))}
+                                            );
+                                            dispatch(
+                                              updateartisMusic(
+                                                data1?.[index]?.artists?.[0]
+                                                  ?.name
+                                              )
+                                            );
+                                            dispatch(
+                                              updateimgMusic(
+                                                data1?.[index]?.thumbnail
+                                              )
+                                            );
+                                            dispatch(
+                                              updatetitleMusic(
+                                                data1?.[index]?.title
+                                              )
+                                            );
+                                          }}
+                                        >
+                                          {data1?.[index]?.title}
+                                        </Link>
+                                      </td>
+                                      <td className="w-1/10">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                        >
+                                          {getTime.caculateTimeFM(
+                                            data1?.[index]?.duration
+                                          )}
+                                        </Link>
+                                      </td>
+                                    </tr>
+                                  )}
+                                </Draggable>
+                              ) : (
+                                <Draggable
+                                  key={data1?.[index]?.encodeId}
+                                  draggableId={data1?.[index]?.encodeId}
+                                  index={index}
+                                >
+                                  {(provided) => (
+                                    <tr
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      className="bg-transparent h-12 text-gray-500 hover:bg-[#1d1d1d] bg-slate-600 text-white"
+                                      onMouseOver={() => {
+                                        setIsPlaying(true);
+                                        dispatch(updatesendLink(true));
+                                        setCurrentTrackIndex(index);
+                                        setTitleMusic(data1?.[index]?.title);
+                                        setIdMusic(data1?.[index]?.encodeId);
+                                      }}
+                                    >
+                                      <td className="w-1/10 text-center">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                          onClick={() => {
+                                            dispatch(
+                                              updatecurrentTrackIndex(index)
+                                            );
+                                            setImgMusic(
+                                              data1?.[index]?.thumbnail
+                                            );
+                                            dispatch(
+                                              updateartisMusic(
+                                                data1?.[index]?.artists?.[0]
+                                                  ?.name
+                                              )
+                                            );
+                                            dispatch(
+                                              updateimgMusic(
+                                                data1?.[index]?.thumbnail
+                                              )
+                                            );
+                                            dispatch(
+                                              updatetitleMusic(
+                                                data1?.[index]?.title
+                                              )
+                                            );
+                                          }}
+                                        >
+                                          <img
+                                            src={data1?.[index]?.thumbnail}
+                                            alt=""
+                                            className="h-8 w-8 ml-2"
+                                          />
+                                        </Link>
+                                      </td>
+                                      <td className="w-1/10">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                          onClick={() => {
+                                            dispatch(
+                                              updatecurrentTrackIndex(index)
+                                            );
+                                            setImgMusic(
+                                              data1?.[index]?.thumbnail
+                                            );
+                                            dispatch(
+                                              updateartisMusic(
+                                                data1?.[index]?.artists?.[0]
+                                                  ?.name
+                                              )
+                                            );
+                                            dispatch(
+                                              updateimgMusic(
+                                                data1?.[index]?.thumbnail
+                                              )
+                                            );
+                                            dispatch(
+                                              updatetitleMusic(
+                                                data1?.[index]?.title
+                                              )
+                                            );
+                                          }}
+                                        >
+                                          {data1?.[index]?.title}
+                                        </Link>
+                                      </td>
+                                      <td className="w-1/10">
+                                        <Link
+                                          to={`/playlist/${userId}/${idMusic}`}
+                                        >
+                                          {getTime.caculateTimeFM(
+                                            data1?.[index]?.duration
+                                          )}
+                                        </Link>
+                                      </td>
+                                    </tr>
+                                  )}
+                                </Draggable>
+                              )
+                            )}
                           </tbody>
                         </table>
                       )}
