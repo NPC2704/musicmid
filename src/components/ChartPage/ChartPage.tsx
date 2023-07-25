@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Line } from "react-chartjs-3";
+import { useDispatch, useSelector } from "react-redux";
 import Logo from "../../assets/logo.jpg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import getTime from "../../utils/convertTime";
 import "./ChartLine.css";
+import { updateNumber } from "../../redux/toggleSlice";
+import { updateNumber1 } from "../../redux/toggleSlice1";
+import { updateNumber2 } from "../../redux/toggleSlice2";
 const chartStyle = {
   width: "1000px",
   height: "400px",
@@ -18,6 +22,7 @@ const paragraphStyle = {
   fontWeight: "bold",
 };
 const ChartPage: React.FC = () => {
+  const dispatch = useDispatch();
   const [showCount, setShowCount] = useState(3);
   const handleShowMore = () => {
     setShowCount((prevCount) => prevCount + 10);
@@ -30,6 +35,9 @@ const ChartPage: React.FC = () => {
   const [titleMusic1, setTitleMusic1] = useState("");
   const [titleMusic2, setTitleMusic2] = useState("");
   const [titleMusic3, setTitleMusic3] = useState("");
+  const [dataChild, setDataChild] = useState(1);
+  const [datatitle, setDatatitle] = useState("");
+  const [title, setTitle] = useState("all");
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -56,6 +64,7 @@ const ChartPage: React.FC = () => {
       setTitleMusic1(response.data?.data?.data?.items?.[9]?.items?.[0]?.title);
       setTitleMusic2(response.data?.data?.data?.items?.[9]?.items?.[1]?.title);
       setTitleMusic3(response.data?.data?.data?.items?.[9]?.items?.[2]?.title);
+      //    setDatatitle(response.data?.data?.data?.items?.[2]?.title);
       console.log(response.data?.data?.data?.items?.[9]);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -101,8 +110,13 @@ const ChartPage: React.FC = () => {
     ],
   };
 
+  const toggle = () => {
+    dispatch(updateNumber(2));
+    dispatch(updateNumber2(title));
+    dispatch(updateNumber1(dataChild));
+  };
   return (
-    <div className="w-full h-auto bg-[#221a2d] mx-auto rounded-md px-3 pt-9">
+    <div className="w-full h-auto bg-[#221a2d] mx-auto rounded-md px-3 pt-9 ">
       {" "}
       <div className="w-full h-4 ">
         <p style={paragraphStyle}>#Music Chart</p>
@@ -111,9 +125,9 @@ const ChartPage: React.FC = () => {
         <div className="chart-container mx-auto" style={chartStyle}>
           <Line data={data} />
         </div>
-        <div className="w-full h-auto flex">
+        <div className="w-full h-auto flex ">
           {" "}
-          <div className=" w-100 h-auto block mt-10 ">
+          <div className=" w-100 h-auto block mt-10 mb-10">
             {data0.slice(0, showCount).map((item, index) => (
               <div
                 className={`group  border-b border-neutral-900 h-14 px-2 flex items-center justify-between text-white w-121 mx-auto`}
@@ -127,12 +141,20 @@ const ChartPage: React.FC = () => {
                   <div className="flex items-center">
                     <div className="h-9 w-9 mr-4 relative cursor-pointer">
                       {" "}
-                      <img
-                        loading="lazy"
-                        src={data0?.[index]?.thumbnail}
-                        alt="song-thumbnail"
-                        className="rounded-sm h-full object-cover"
-                      />{" "}
+                      <Link
+                        to={`/play/${item?.encodeId}`}
+                        onClick={() => {
+                          toggle();
+                        }}
+                      >
+                        {" "}
+                        <img
+                          loading="lazy"
+                          src={data0?.[index]?.thumbnail}
+                          alt="song-thumbnail"
+                          className="rounded-sm h-full object-cover"
+                        />
+                      </Link>
                     </div>
 
                     <div>

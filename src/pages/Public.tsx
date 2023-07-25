@@ -24,6 +24,8 @@ import Khampha from "./Khampha/Khampha";
 import { useAppSelector } from "../app/hooks";
 import { ISongInfo } from "../types/item";
 import { createPlayerHref } from "../utils/createHref";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   CiShuffle,
   CiRedo,
@@ -162,13 +164,7 @@ const Public: React.FC<IProps> = ({ children }) => {
     <div>
       <Header />
       <>{children}</>
-      {link !== "" ? (
-        <div className="text-black w-10 h-40 absolute z-30 top-5 right-2">
-          Phat nhac thanh cong
-        </div>
-      ) : (
-        <div></div>
-      )}
+
       <AudioPlayer
         ref={audioPlayerRef}
         className="player-music fixed bottom-0 left-0 z-50 hidden"
@@ -209,30 +205,6 @@ const Public: React.FC<IProps> = ({ children }) => {
             </p>
           </div>,
           <div className="flex absolute z-10">
-            <button
-              onClick={() => {
-                handleReplayClick();
-                //  handleToggleShowInfo();
-              }}
-              className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
-            >
-              <CiRedo />
-            </button>
-            <div className="flex">
-              <img
-                src={imgMuic}
-                alt=""
-                className="h-10 w-10 rotating-image rounded-full"
-              />
-              <div className="block items-center ml-4">
-                {" "}
-                <div>
-                  {" "}
-                  <p className="text-white">{titleMusicRedux}</p>
-                </div>
-                <p className="text-white mt-1">( {artisMusicRedux} )</p>
-              </div>
-            </div>
             {autoPlay == true ? (
               <div className="flex items-center">
                 {" "}
@@ -273,6 +245,30 @@ const Public: React.FC<IProps> = ({ children }) => {
                 </button>
               </div>
             )}
+            {/* <button
+              onClick={() => {
+                handleReplayClick();
+                //  handleToggleShowInfo();
+              }}
+              className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
+            >
+              <CiRedo />
+            </button> */}
+            <div className="flex">
+              <img
+                src={imgMuic}
+                alt=""
+                className="h-10 w-10 rotating-image rounded-full"
+              />
+              <div className="block items-center ml-4">
+                {" "}
+                <div>
+                  {" "}
+                  <p className="text-white">{titleMusicRedux}</p>
+                </div>
+                <p className="text-white mt-1">( {artisMusicRedux} )</p>
+              </div>
+            </div>
           </div>,
         ]}
       ></AudioPlayer>

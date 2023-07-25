@@ -8,6 +8,7 @@ import { updateNumber2 } from "../../redux/toggleSlice2";
 import { RootState } from "../../redux/store";
 import { updateLink } from "../../redux/toggleLink";
 import { Link } from "react-router-dom";
+
 const BodySlide2 = () => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { Avatar, List, Skeleton, Switch } from "antd";
+import { BiPlay } from "react-icons/bi";
 import "./SlidePaner.css";
 const BodySlide = () => {
   const dispatch = useDispatch();
@@ -125,12 +126,14 @@ const BodySlide = () => {
                     alt=""
                     className="rounded-lg"
                   />{" "}
-                  <div className="bg-transparent absolute bottom-3 right-14 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
+                  <div className="bg-[#linear-gradient(rgba(0,0,0,0.502),rgba(0,0,0,0.000),rgba(0,0,0,0.000))] absolute bottom-3 right-14 w-fit h-fit z-10  justify-center items-center hidden group-hover:flex">
                     <Link
                       to={`/playlistmusic/${item?.encodeId}`}
                       onClick={toggle}
                     >
-                      <PlayCircleOutlined className="text-[#3e4140] font-medium text-3xl	hover:scale-125 hover:text-white transition-all" />{" "}
+                      <div className="rounded-full hover:scale-125 bg-[#020202] p-1 hover:scale-125 flex items-center justify-center">
+                        <BiPlay className="text-[#3e4140] font-medium text-3xl	 hover:text-white transition-all m-auto" />
+                      </div>
                     </Link>
                   </div>
                 </div>
