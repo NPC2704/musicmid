@@ -30,7 +30,7 @@ import {
   CiCircleChevUp,
   CiCircleChevDown,
 } from "react-icons/ci";
-
+import { FaExchangeAlt } from "react-icons/fa";
 interface IProps {
   children: ReactNode;
 }
@@ -145,11 +145,30 @@ const Public: React.FC<IProps> = ({ children }) => {
   const [downup, setDownUp] = useState(true);
   const [autoPlay, setAutoPlay] = useState(false);
 
+  function handleEnd() {
+    // Tăng chỉ số của bài hát hiện tại để chuyển sang bài hát tiếp theo
+
+    if (autoPlay == false) {
+      console.log("Sw");
+      handleClickNext();
+    } else {
+      audioPlayerRef.current.audio.current.currentTime = 0;
+      audioPlayerRef.current.audio.current.play();
+    }
+    // Nếu đã phát hết danh sách bài hát, có thể thiết lập lại chỉ số về 0 để quay lại bài đầu tiên
+    // Hoặc bạn có thể thiết lập autoPlay thành false để dừng phát khi hết danh sách bài hát
+  }
   return (
     <div>
       <Header />
       <>{children}</>
-
+      {link !== "" ? (
+        <div className="text-black w-10 h-40 absolute z-30 top-5 right-2">
+          Phat nhac thanh cong
+        </div>
+      ) : (
+        <div></div>
+      )}
       <AudioPlayer
         ref={audioPlayerRef}
         className="player-music fixed bottom-0 left-0 z-50 hidden"
@@ -159,6 +178,7 @@ const Public: React.FC<IProps> = ({ children }) => {
         showJumpControls={false}
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPre}
+        onEnded={handleEnd}
         autoPlay={autoPlay} // Tự động phát nhạc khi hết bài
         customAdditionalControls={[
           <div
@@ -223,20 +243,7 @@ const Public: React.FC<IProps> = ({ children }) => {
                   onClick={() => setAutoPlay(false)}
                 >
                   {/* Hiển thị trạng thái tự động phát/tắt tự động phát khi hết bài */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
-                    width="1em"
-                    height="1em"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2V7z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
+                  <FaExchangeAlt />
                 </button>
               </div>
             ) : (
@@ -245,7 +252,9 @@ const Public: React.FC<IProps> = ({ children }) => {
                   aria-label="Enable loop"
                   className="rhap_button-clear rhap_repeat-button ml-2 text-[#1b44b7]"
                   type="button"
-                  onClick={() => setAutoPlay(true)}
+                  onClick={() => {
+                    setAutoPlay(true);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -191,6 +191,10 @@ const PlayingMusic = () => {
         `https://apisolfive.app.tranviet.site/api/get/playlist/info?id=${userId}`
       );
       setData(response?.data?.data?.data?.song?.items);
+      // setImgMusic(
+      //   response?.data?.data?.data?.song?.items?.[currentTrackIndex]?.thumbnail
+      // );
+      // setTitleMusic( response?.data?.data?.data?.song?.items?.[currentTrackIndex]?.title)
       setNumberNext(1);
       setIsDataLoaded(true);
       setIsLoading(false);
