@@ -75,7 +75,7 @@ const MenuBodyKP = () => {
           <div className="flex flex-col flex-wrap  w-full h-80">
             {data1.map((item: any, index) => (
               <Link
-                to={`/playlist/${item?.encodeId}`}
+                to={`/playlistmusic/${item?.encodeId}`}
                 onClick={() => {
                   toggle();
                   setDataChild(index);

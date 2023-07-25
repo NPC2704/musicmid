@@ -123,6 +123,7 @@ const Public: React.FC<IProps> = ({ children }) => {
 
   const handleAudioClick = () => {
     setDownUp(!downup);
+
     if (window.location.pathname.split("/")[1] === "playlist") {
       history(pathlink);
     } else {
@@ -139,34 +140,14 @@ const Public: React.FC<IProps> = ({ children }) => {
       dispatch(updatepathLink(window.location.pathname));
     }
   };
-  ///
-  // const navigate = useNavigate();
-  // usePlaylistFw();
-  // const isShowInfo = useAppSelector((state) => state.player.isShoaInfo);
-  // const isShow = useAppSelector((state) => state.player.isShow);
-  // const songId = useAppSelector((state) => state.player.songId);
-  // const route = useAppSelector((state) => state.routes.pay);
-
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [song, setSong] = useState<ISongInfo>({});
-
-  // const handleToggleShowInfo = () => {
-  //   isShowInfo
-  //     ? navigate(
-  //         route?.currentPath?.pathname
-  //           ? `${route?.currentPath?.pathname}` + `${route.currentPath.search}`
-  //           : "/"
-  //       )
-  //     : navigate("/kham-pha");
-  // };
 
   ///
   const [downup, setDownUp] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(false);
+
   return (
     <div>
       <Header />
-
-      {/* <Outlet /> */}
       <>{children}</>
 
       <AudioPlayer
@@ -178,6 +159,7 @@ const Public: React.FC<IProps> = ({ children }) => {
         showJumpControls={false}
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPre}
+        autoPlay={autoPlay} // Tự động phát nhạc khi hết bài
         customAdditionalControls={[
           <div
             className="flex items-center justify-center w-62 absolute top-4 right-28 transition ease-in-out delay-150"
@@ -231,6 +213,57 @@ const Public: React.FC<IProps> = ({ children }) => {
                 <p className="text-white mt-1">( {artisMusicRedux} )</p>
               </div>
             </div>
+            {autoPlay == true ? (
+              <div className="flex items-center">
+                {" "}
+                <button
+                  aria-label="Disable loop"
+                  className="rhap_button-clear rhap_repeat-button ml-2"
+                  type="button"
+                  onClick={() => setAutoPlay(false)}
+                >
+                  {/* Hiển thị trạng thái tự động phát/tắt tự động phát khi hết bài */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    width="1em"
+                    height="1em"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2V7z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <button
+                  aria-label="Enable loop"
+                  className="rhap_button-clear rhap_repeat-button ml-2 text-[#1b44b7]"
+                  type="button"
+                  onClick={() => setAutoPlay(true)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    width="1em"
+                    height="1em"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M2 5.27L3.28 4L20 20.72L18.73 22l-3-3H7v3l-4-4l4-4v3h6.73L7 10.27V11H5V8.27l-3-3M17 13h2v4.18l-2-2V13m0-8V2l4 4l-4 4V7H8.82l-2-2H17z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>,
         ]}
       ></AudioPlayer>

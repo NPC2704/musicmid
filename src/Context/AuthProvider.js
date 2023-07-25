@@ -21,30 +21,30 @@ export default function AuthProvider({ children }) {
           uid,
           photoURL,
         });
-        setIsLoading(false);
-        if (isMountedRef.current == true) {
-          setTimeout(() => {
-            navigate("/kham-pha", { replace: true });
-            navigate("/play/:id", { replace: true });
-            navigate("/playlist/:id", { replace: true });
-            navigate("/playlist1/:id", { replace: true });
-            navigate("/musicchart", { replace: true });
-            navigate("/", { replace: true });
-          }, 0);
-          navigate("/login", { replace: true });
-        }
+        // setIsLoading(false);
+        // if (isMountedRef.current == true) {
+        //   setTimeout(() => {
+        //     navigate("/kham-pha", { replace: true });
+        //     navigate("/play/:id", { replace: true });
+        //     navigate("/playlist/:id", { replace: true });
+        //     navigate("/playlist1/:id", { replace: true });
+        //     navigate("/musicchart", { replace: true });
+        //     navigate("/", { replace: true });
+        //   }, 0);
+        //   navigate("/login", { replace: true });
+        // }
 
         return;
       }
 
       // reset user info
       setUser({});
-      setIsLoading(false);
-      if (isMountedRef.current) {
-        setTimeout(() => {
-          navigate("/login", { replace: true });
-        }, 0);
-      }
+      //  setIsLoading(false);
+      // if (isMountedRef.current) {
+      //   setTimeout(() => {
+      //     navigate("/login", { replace: true });
+      //   }, 0);
+      // }
     });
 
     return () => {
@@ -55,7 +55,9 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ user }}>
+      //{" "}
       {isLoading ? <Spin style={{ position: "fixed", inset: 0 }} /> : children}
+      {children}
     </AuthContext.Provider>
   );
 }

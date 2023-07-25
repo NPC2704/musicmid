@@ -11,6 +11,9 @@ import PlayPlaylistMusic from "../pages/PlayPlaylistMusic/PlayPlaylistMusic";
 import Public from "../pages/Public";
 import PlayingMusic from "../components/BodyPlay/PlayingMusic";
 import Player from "../pages/Player";
+import ChartPage from "../components/ChartPage/ChartPage";
+import Playing from "../components/BodyPlay/Playing";
+
 // Vào được khi chưa đăng nhập
 const publicRoutes = [
   {
@@ -37,6 +40,24 @@ const publicRoutes = [
     layout: Public,
     sidebar: null,
   },
+  {
+    path: "/musicchart",
+    component: ChartPage,
+    layout: Public,
+    sidebar: null,
+  },
+  {
+    path: "/play/:idmusic",
+    component: Playing,
+    layout: Public,
+    sidebar: null,
+  },
+  // {
+  //   path: "/login",
+  //   component: Login,
+  //   layout: Public,
+  //   sidebar: null,
+  // },
 ];
 
 // Cần đăng nhập mới có thể vào được routes

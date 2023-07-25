@@ -9,7 +9,6 @@ import { RootState } from "../../redux/store";
 import { updateLink } from "../../redux/toggleLink";
 import { useDispatch } from "react-redux";
 export default function Playing() {
-  const { link1 } = useContext(AppContext);
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
   const number2 = useSelector((state: RootState) => state.toggle2.number2);
@@ -22,8 +21,8 @@ export default function Playing() {
   const [dataImg, setDataImg] = useState("");
   const [datalink, setDatalink] = useState("");
   const params = useParams();
-  const userId = params.id;
-
+  const userId = params.idmusic;
+  console.log(userId);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -47,12 +46,14 @@ export default function Playing() {
     }
   };
   const fetchData1 = async () => {
+    console.log(userId);
     try {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/api/get/song/sound?id=${userId}`
       );
+
       setDatalink(response?.data?.data?.data?.[128]);
-      // console.log(response?.data?.data?.data?.[128]);
+      console.log(response?.data?.data?.data?.[128]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -66,6 +67,7 @@ export default function Playing() {
     fetchData();
   }, []);
   useEffect(() => {
+    console.log(datalink);
     dispatch(updateLink(datalink));
     // console.log(datalink);
   }, [datalink]);

@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  memo,
+} from "react";
 import axios from "axios";
 import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
@@ -158,6 +165,7 @@ const PlayingMusic = () => {
   };
   const [showLyric, setShowLyric] = useState(false);
   const [datalyric, setDataLyric] = useState<any[]>([]);
+  console.log("sq");
   const fetchDataLyric = async () => {
     const storedIdmusic = localStorage.getItem("idmusic");
     try {
@@ -244,7 +252,6 @@ const PlayingMusic = () => {
 
     return "";
   };
-  console.log(currentTrackIndexRedux);
   const [lyricText, setLyricText] = useState("");
   const [lyricText2, setLyricText2] = useState("");
   const formatTimeDelay = (timeInSeconds: any) => {
@@ -299,22 +306,29 @@ const PlayingMusic = () => {
   const setLoading = useCallback((type: boolean) => {
     setIsloading(type);
   }, []);
-  const onDragEnd = (result: any, data1: any, setData: any) => {
-    console.log(result);
-    const destinationIndex = result.destination.index;
+  // const onDragEnd = (result: any, data1: any, setData: any) => {
+  //   console.log(result);
+  //   const destinationIndex = result.destination.index;
+  //   const sourceIndex = result.source.index;
+  //   const updatedData = [...data1];
+  //   const [removed] = updatedData.splice(sourceIndex, 1);
+  //   updatedData.splice(destinationIndex, 0, removed);
+
+  //   setData(updatedData);
+  // };
+  const onDragEnd = (result: any, data: any, setData: any) => {
+    if (!result.destination) return; // Kéo thả ngoài khu vực hợp lệ
+
     const sourceIndex = result.source.index;
-    const updatedData = [...data1];
-    const [removed] = updatedData.splice(sourceIndex, 1);
-    updatedData.splice(destinationIndex, 0, removed);
+    const destinationIndex = result.destination.index;
 
-    setData(updatedData);
-    // if (!result.destination) return; // Kéo thả ngoài khu vực hợp lệ
-    // const items = Array.from(data);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
-    // setData(items);
+    // Tạo một bản sao mới của mảng dữ liệu
+    const newData = Array.from(data);
+    const [movedItem] = newData.splice(sourceIndex, 1);
+    newData.splice(destinationIndex, 0, movedItem);
+
+    setData(newData);
   };
-
   return (
     <motion.div
       initial={{ y: "100%" }}
@@ -368,7 +382,7 @@ const PlayingMusic = () => {
                     <div className="  w-32 h-full ">
                       {" "}
                       <p
-                        className="text-white text-center cursor-pointer font-bold"
+                        className="text-[#4f4f4f] text-center cursor-pointer font-bold"
                         onClick={() => setTableTitle(0)}
                       >
                         TIẾP THEO
@@ -387,7 +401,7 @@ const PlayingMusic = () => {
                   ) : (
                     <div className="  w-32 h-full ">
                       <p
-                        className="text-white text-center cursor-pointer font-bold"
+                        className="text-[#4f4f4f] text-center cursor-pointer font-bold"
                         onClick={() => setTableTitle(1)}
                       >
                         LỜI NHẠC
@@ -406,7 +420,7 @@ const PlayingMusic = () => {
                   ) : (
                     <div className="  w-32 h-full ">
                       <p
-                        className="text-white text-center cursor-pointer font-bold"
+                        className="text-[#4f4f4f] text-center cursor-pointer font-bold"
                         onClick={() => setTableTitle(2)}
                       >
                         LIÊN QUAN
@@ -521,7 +535,7 @@ const PlayingMusic = () => {
                                         )}
                                       </Link>
                                     </td>
-                                    <td className="w-1/10 text-center">
+                                    {/* <td className="w-1/10 text-center">
                                       <a
                                         href={datalink}
                                         download="song.mp3"
@@ -529,7 +543,7 @@ const PlayingMusic = () => {
                                       >
                                         <CloudDownloadOutlined />
                                       </a>
-                                    </td>
+                                    </td> */}
                                   </tr>
                                 )}
                               </Draggable>
@@ -653,7 +667,7 @@ const PlayingMusic = () => {
                               {getTime.caculateTimeFM(data1?.[index]?.duration)}
                             </Link>
                           </td>{" "}
-                          <td className="w-1/10 text-center">
+                          {/* <td className="w-1/10 text-center">
                             <a
                               href={datalink}
                               download="song.mp3"
@@ -661,7 +675,7 @@ const PlayingMusic = () => {
                             >
                               <CloudDownloadOutlined />
                             </a>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
@@ -676,4 +690,4 @@ const PlayingMusic = () => {
   );
 };
 
-export default PlayingMusic;
+export default memo(PlayingMusic);

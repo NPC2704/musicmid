@@ -20,10 +20,10 @@ import logoVN from "../assets/vi.png";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, Space } from "antd";
 const Header = () => {
-  // const {
-  //   user: { displayName, photoURL },
-  // } = React.useContext(AuthContext);
-  // const { clearState } = React.useContext(AppContext);
+  const {
+    user: { displayName, photoURL },
+  } = React.useContext(AuthContext);
+  const { clearState } = React.useContext(AppContext);
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (lang: string) => {
@@ -120,7 +120,7 @@ const Header = () => {
               </option>
             </select>
           </div>
-          {/* {photoURL == undefined ? (
+          {photoURL == undefined ? (
             <UserOutlined className="w-10 h-4 text-white" />
           ) : (
             <img
@@ -130,7 +130,7 @@ const Header = () => {
             />
           )}
           {photoURL == undefined ? (
-            <Link to="/login" className="w-10 h-4 text-white">
+            <Link to="/login" className="w-10 h-4 text-white flex items-center">
               {t("header.login")}
             </Link>
           ) : (
@@ -142,7 +142,7 @@ const Header = () => {
                 auth.signOut();
               }}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>

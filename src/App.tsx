@@ -13,46 +13,47 @@ import Home from "./pages/Home/Home";
 import { useAppSelector } from "./app/hooks";
 import routesConfig from "./configs/routes";
 import Khampha from "./pages/Khampha/Khampha";
+import Login from "./components/Login";
 function App() {
   const currentPath = useAppSelector((state) => state.routes?.pay?.currentPath);
   return (
     <>
       <div className="">
-        {/* <AuthProvider>
-          <AppProvider> */}
+        <AuthProvider>
+          <AppProvider>
+            <Routes>
+              {publicRoutes.map((publicRoute, index) => {
+                let Layout = publicRoute.layout;
+                let Page;
+                if (publicRoute.path == "/") {
+                  // const pathName = currentPath.pathname;
 
-        <Routes>
-          {publicRoutes.map((publicRoute, index) => {
-            let Layout = publicRoute.layout;
-            let Page;
-            if (publicRoute.path == "/") {
-              // const pathName = currentPath.pathname;
-
-              // const route = publicRoutes.find(
-              //   (route) => route.path == pathName
-              // );
-              // Page = route?.component || Home;
-              Page = publicRoute.component || Khampha;
-            } else {
-              Page = publicRoute.component;
-            }
-            return (
-              <Route>
-                <Route
-                  key={index}
-                  path={publicRoute.path}
-                  element={
-                    <Layout>
-                      <Page />
-                    </Layout>
-                  }
-                />
-              </Route>
-            );
-          })}
-        </Routes>
-        {/* </AppProvider>
-        </AuthProvider> */}
+                  // const route = publicRoutes.find(
+                  //   (route) => route.path == pathName
+                  // );
+                  // Page = route?.component || Home;
+                  Page = publicRoute.component || Khampha;
+                } else {
+                  Page = publicRoute.component;
+                }
+                return (
+                  <Route>
+                    <Route
+                      key={index}
+                      path={publicRoute.path}
+                      element={
+                        <Layout>
+                          <Page />
+                        </Layout>
+                      }
+                    />
+                    <Route path="/login" element={<Login />} />
+                  </Route>
+                );
+              })}
+            </Routes>
+          </AppProvider>
+        </AuthProvider>
       </div>
     </>
   );
