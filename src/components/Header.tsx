@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dataComponents from "../data/dataComponents";
 import {
   ControlOutlined,
@@ -30,9 +30,9 @@ const Header = () => {
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
   };
-
+  const [dataSearch, setDataSearch] = useState("");
   return (
-    <div className="fixed top-0 left-0 z-10 w-full h-12 bg-black">
+    <div className="fixed top-0 left-0 z-10 w-full h-12 bg-black ">
       <div className="h-full w-full flex justify-between items-center	">
         <div className="ml-2 flex items-center">
           <Link to="/">
@@ -96,16 +96,20 @@ const Header = () => {
           <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit hidden sm:flex">
             <input
               type="text"
+              onChange={(e) => {
+                setDataSearch(e.target.value);
+              }}
               placeholder={t("header.search")}
               className="py-1 px-4 bg-transparent text-white focus:outline-none focus:outline focus:outline-offset-2 focus:outline-1 flex-grow"
             />
-            <button className="bg-black hover:bg-[white] hover:text-black text-white py-1 px-4 flex justify-center items-center ">
-              <SearchOutlined />
-            </button>
+            <Link to={`/search?id=${dataSearch}`}>
+              {" "}
+              <button className="bg-black hover:bg-[white] hover:text-black text-white py-1 px-4 flex justify-center items-center ">
+                <SearchOutlined />
+              </button>
+            </Link>
           </div>
-          <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-solid border-spacing-1 border-inherit block sm:hidden">
-            <SearchOutlined className="text-white" />
-          </div>
+
           <div className="ml-2 ">
             <select
               className="text-white bg-transparent cursor-pointer outline-0"

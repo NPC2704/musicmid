@@ -31,9 +31,6 @@ export default function Login() {
       });
     }
   };
-  // const handleLogin = () => {
-  //   auth.signInWithPopup(fbProvider);
-  // };
   auth.onAuthStateChanged((user) => {
     console.log({ user });
   });

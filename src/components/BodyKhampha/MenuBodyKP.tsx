@@ -18,7 +18,7 @@ const MenuBodyKP = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[13]?.items || []);
       setDatatitle(response.data?.data?.data?.items?.[13]?.title);

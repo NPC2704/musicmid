@@ -41,10 +41,10 @@ const ChartPage: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       const response1 = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/charthome"
+        "https://apisolfive.app.tranviet.site/v2/api/get/charthome"
       );
 
       setData0(response1?.data?.data?.data?.RTChart?.items || []);

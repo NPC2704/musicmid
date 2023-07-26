@@ -31,6 +31,8 @@ import {
   CiRedo,
   CiCircleChevUp,
   CiCircleChevDown,
+  CiRepeat,
+  CiTurnR1,
 } from "react-icons/ci";
 import { FaExchangeAlt } from "react-icons/fa";
 interface IProps {
@@ -145,23 +147,23 @@ const Public: React.FC<IProps> = ({ children }) => {
 
   ///
   const [downup, setDownUp] = useState(true);
-  const [autoPlay, setAutoPlay] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(0);
 
   function handleEnd() {
     // Tăng chỉ số của bài hát hiện tại để chuyển sang bài hát tiếp theo
 
-    if (autoPlay == false) {
-      console.log("Sw");
-      handleClickNext();
-    } else {
+    if (autoPlay == 0) {
       audioPlayerRef.current.audio.current.currentTime = 0;
       audioPlayerRef.current.audio.current.play();
+    } else if (autoPlay == 1) {
+      handleClickNext();
+    } else if (autoPlay == 2) {
+      handleRandom();
     }
-    // Nếu đã phát hết danh sách bài hát, có thể thiết lập lại chỉ số về 0 để quay lại bài đầu tiên
-    // Hoặc bạn có thể thiết lập autoPlay thành false để dừng phát khi hết danh sách bài hát
   }
   return (
     <div>
+      {/* <div className="w-full h-full bg-gradient-to-r from-teal-900 via-cyan-950 to-sky-900 absolute top-0 left-0 -z-20"></div> */}
       <Header />
       <>{children}</>
 
@@ -175,7 +177,7 @@ const Public: React.FC<IProps> = ({ children }) => {
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPre}
         onEnded={handleEnd}
-        autoPlay={autoPlay} // Tự động phát nhạc khi hết bài
+        // autoPlay={autoPlay} // Tự động phát nhạc khi hết bài
         customAdditionalControls={[
           <div
             className="flex items-center justify-center w-62 absolute top-4 right-28 transition ease-in-out delay-150"
@@ -191,69 +193,45 @@ const Public: React.FC<IProps> = ({ children }) => {
               {downup === true ? <CiCircleChevDown /> : <CiCircleChevUp />}
             </p>
           </div>,
-          <div
-            className="flex items-center justify-center w-62 absolute top-4 right-36"
-            key="music-controls"
-          >
-            <p
-              onClick={() => {
-                handleRandom();
-              }}
-              className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
-            >
-              <CiShuffle />
-            </p>
-          </div>,
+
           <div className="flex absolute z-10">
-            {autoPlay == true ? (
+            {autoPlay === 0 ? (
               <div className="flex items-center">
-                {" "}
                 <button
                   aria-label="Disable loop"
-                  className="rhap_button-clear rhap_repeat-button ml-2"
                   type="button"
-                  onClick={() => setAutoPlay(false)}
+                  className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
+                  onClick={() => setAutoPlay(1)}
                 >
                   {/* Hiển thị trạng thái tự động phát/tắt tự động phát khi hết bài */}
-                  <FaExchangeAlt />
+                  <CiRepeat />
+                </button>
+              </div>
+            ) : autoPlay === 1 ? (
+              <div className="flex items-center">
+                <button
+                  aria-label="Enable loop"
+                  type="button"
+                  className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
+                  onClick={() => {
+                    setAutoPlay(2);
+                  }}
+                >
+                  <CiTurnR1 />
                 </button>
               </div>
             ) : (
               <div className="flex items-center">
-                <button
-                  aria-label="Enable loop"
-                  className="rhap_button-clear rhap_repeat-button ml-2 text-[#1b44b7]"
-                  type="button"
+                <p
                   onClick={() => {
-                    setAutoPlay(true);
+                    setAutoPlay(0);
                   }}
+                  className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
-                    width="1em"
-                    height="1em"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M2 5.27L3.28 4L20 20.72L18.73 22l-3-3H7v3l-4-4l4-4v3h6.73L7 10.27V11H5V8.27l-3-3M17 13h2v4.18l-2-2V13m0-8V2l4 4l-4 4V7H8.82l-2-2H17z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </button>
+                  <CiShuffle />
+                </p>
               </div>
             )}
-            {/* <button
-              onClick={() => {
-                handleReplayClick();
-                //  handleToggleShowInfo();
-              }}
-              className="cursor-pointer font-normal mr-3 text-2xl text-blue-500 hover:text-blue-700 transition-colors"
-            >
-              <CiRedo />
-            </button> */}
             <div className="flex">
               <img
                 src={imgMuic}

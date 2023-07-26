@@ -28,7 +28,7 @@ const BodySlide = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[11]?.items || []);
       setDatatitle(response.data?.data?.data?.items?.[11]?.title);
@@ -106,7 +106,7 @@ const BodySlide = () => {
           {data1.map((item: any, index) => (
             <div
               onMouseOver={() => setDataChild(index)}
-              className="w-52 h-80 bg-black rounded-lg mx-10 gap-1 space-x-1"
+              className="w-52 h-80 bg-transparent rounded-lg mx-10 gap-1 space-x-1"
               key={index}
             >
               {isLoading ? (

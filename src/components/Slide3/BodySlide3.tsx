@@ -13,7 +13,7 @@ const BodySlide3 = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[3]?.items || []);
       // console.log(response.data?.data?.data?.items?.[3]?.items);

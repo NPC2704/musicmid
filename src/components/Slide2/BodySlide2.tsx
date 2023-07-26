@@ -7,6 +7,9 @@ import { updateNumber1 } from "../../redux/toggleSlice1";
 import { updateNumber2 } from "../../redux/toggleSlice2";
 import { RootState } from "../../redux/store";
 import { updateLink } from "../../redux/toggleLink";
+import { updateimgMusic } from "../../redux/toggleImg";
+import { updatetitleMusic } from "../../redux/toggleTitle";
+import { updateartisMusic } from "../../redux/toggleArtis";
 import { Link } from "react-router-dom";
 
 const BodySlide2 = () => {
@@ -21,9 +24,10 @@ const BodySlide2 = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[2]?.items[title] || []);
+      console.log(response.data?.data?.data?.items?.[2]?.items[title]);
       // console.log(response.data?.data?.data?.items?.[2]?.items[title]);
       // console.log(response.data?.data?.data?.items[2]?.items?.vPop);
       // console.log(response.data?.data?.data?.items[2]?.items?.others);
@@ -93,7 +97,12 @@ const BodySlide2 = () => {
           <div
             className="h-16 w-60 mb-4 ml-16 flex items-center"
             key={index}
-            onMouseOver={() => setDataChild(index)}
+            onMouseOver={() => {
+              setDataChild(index);
+              dispatch(updateimgMusic(item?.thumbnail));
+              dispatch(updatetitleMusic(item?.title));
+              dispatch(updateartisMusic(item?.artistsNames));
+            }}
           >
             <Link
               to={`/play/${item?.encodeId}`}

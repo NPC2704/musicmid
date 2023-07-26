@@ -28,7 +28,7 @@ const ChartLine: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
+        "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData0(response.data?.data?.data?.items?.[9]?.items || []);
       setData1(response.data?.data?.data?.items?.[9]?.chart?.times || []);

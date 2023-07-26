@@ -7,6 +7,7 @@ import React, {
   memo,
 } from "react";
 import axios from "axios";
+import { CiHeart } from "react-icons/ci";
 import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useLocation, Link } from "react-router-dom";
@@ -541,6 +542,14 @@ const PlayingMusic = () => {
                                         )}
                                       </Link>
                                     </td>
+                                    <td className="w-1/10 text-center">
+                                      <a
+                                        href={datalink}
+                                        className="text-blue-500"
+                                      >
+                                        <CiHeart />
+                                      </a>
+                                    </td>
                                   </tr>
                                 )}
                               </Draggable>
@@ -664,15 +673,11 @@ const PlayingMusic = () => {
                               {getTime.caculateTimeFM(data1?.[index]?.duration)}
                             </Link>
                           </td>{" "}
-                          {/* <td className="w-1/10 text-center">
-                            <a
-                              href={datalink}
-                              download="song.mp3"
-                              className="text-blue-500"
-                            >
-                              <CloudDownloadOutlined />
+                          <td className="w-1/10 text-center">
+                            <a href={datalink} className="text-blue-500">
+                              <CiHeart />
                             </a>
-                          </td> */}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
