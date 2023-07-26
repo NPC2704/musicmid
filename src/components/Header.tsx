@@ -20,6 +20,9 @@ import logoVN from "../assets/vi.png";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, Space } from "antd";
 import LogoMusic from "../assets/LogoMusic.png";
+import { GoogleLogout, useGoogleLogin } from "react-google-login";
+const clientId =
+  "60783848892-451bnh6u5i95b3spgkqlot33rhrte5ji.apps.googleusercontent.com";
 const Header = () => {
   const {
     user: { displayName, photoURL },
@@ -133,20 +136,27 @@ const Header = () => {
               className="w-10 h-10 rounded-full ml-4"
             />
           )}
-          {photoURL == undefined ? (
+          {/* {photoURL == undefined ? (
             <Link to="/login" className="w-10 h-4 text-white flex items-center">
               {t("header.login")}
             </Link>
-          ) : (
-            <LogoutOutlined
-              className="w-10 h-4 text-white"
-              onClick={() => {
-                // clear state in App Provider when logout
-                clearState();
-                auth.signOut();
-              }}
-            />
-          )}
+          ) : ( */}
+          {/* // <LogoutOutlined
+            //   className="w-10 h-4 text-white"
+            //   onClick={() => {
+            //     // clear state in App Provider when logout
+            //     clearState();
+            //     auth.signOut();
+            //   }}
+            // /> */}
+          <GoogleLogout
+            clientId={clientId}
+            buttonText="Logout"
+            onLogoutSuccess={() => {
+              console.log("Logout thanh cong");
+            }}
+          />
+          {/* )} */}
         </div>
       </div>
     </div>
