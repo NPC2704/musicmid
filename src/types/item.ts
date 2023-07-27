@@ -59,3 +59,19 @@ export interface ISongMP3 {
   128?: string;
   320?: string;
 }
+//
+export interface IPlayListItem {
+  thumbnailM: string;
+  title: string;
+  artists: IArtists[];
+  encodeId: string;
+}
+export interface IPlayListArr {
+  items: IPlayListItem[];
+  sectionType?: string;
+}
+export interface IUserData {
+  name?: string;
+  email?: string;
+  picture?: string;
+}

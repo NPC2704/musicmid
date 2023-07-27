@@ -16,6 +16,7 @@ module.exports = {
         138: "45rem",
         140: "55rem",
         41: "11rem",
+        7: "1.5rem",
       },
       width: {
         100: "30rem",
@@ -23,6 +24,7 @@ module.exports = {
         120: "70rem",
         121: "80rem",
         78: "15rem",
+        7: "1.5rem",
       },
       screens: {
         tablet: "640px",

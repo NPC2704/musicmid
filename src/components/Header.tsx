@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dataComponents from "../data/dataComponents";
 import {
   ControlOutlined,
@@ -21,18 +21,40 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, Space } from "antd";
 import LogoMusic from "../assets/LogoMusic.png";
 import { GoogleLogout, useGoogleLogin } from "react-google-login";
-const clientId =
-  "60783848892-451bnh6u5i95b3spgkqlot33rhrte5ji.apps.googleusercontent.com";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../redux/store";
+import Logo from "../assets/logo.jpg";
+import { toggleSidebar } from "../redux/uiSlice";
+import { googleLogout } from "@react-oauth/google";
+import { setLoginModalShow } from "../redux/uiSlice";
 const Header = () => {
-  const {
-    user: { displayName, photoURL },
-  } = React.useContext(AuthContext);
-  const { clearState } = React.useContext(AppContext);
+  const dispatch = useDispatch();
+  const isExpand = useSelector(
+    (state: RootState) => state?.uiSlice?.sidebarExpand
+  );
+  const isLogin = useSelector((state: RootState) => state?.userSlice?.isLogin);
+  const isUser = useSelector(
+    (state: RootState) => state?.uiSlice?.isLoginModalShow
+  );
+  console.log(isUser);
+  const handleToggleSidebar = () => {
+    dispatch(toggleSidebar(!isExpand));
+  };
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
   };
+  const clearToken = () => {
+    localStorage.removeItem("token"); // Nếu dùng Local Storage
+  };
+  const handleLogoutClick = () => {
+    // Gọi hàm googleLogout để đăng xuất khỏi tài khoản Google
+    clearToken();
+    window.location.reload();
+  };
+
+  const [uiLog, setuiLog] = useState(true);
   const [dataSearch, setDataSearch] = useState("");
   return (
     <div className="fixed top-0 left-0 z-10 w-full h-12 bg-black ">
@@ -127,36 +149,46 @@ const Header = () => {
               </option>
             </select>
           </div>
-          {photoURL == undefined ? (
-            <UserOutlined className="w-10 h-4 text-white" />
-          ) : (
-            <img
-              src={photoURL}
-              alt=""
-              className="w-10 h-10 rounded-full ml-4"
-            />
-          )}
-          {/* {photoURL == undefined ? (
-            <Link to="/login" className="w-10 h-4 text-white flex items-center">
-              {t("header.login")}
-            </Link>
-          ) : ( */}
-          {/* // <LogoutOutlined
-            //   className="w-10 h-4 text-white"
-            //   onClick={() => {
-            //     // clear state in App Provider when logout
-            //     clearState();
-            //     auth.signOut();
-            //   }}
-            // /> */}
-          <GoogleLogout
-            clientId={clientId}
-            buttonText="Logout"
-            onLogoutSuccess={() => {
-              console.log("Logout thanh cong");
-            }}
-          />
-          {/* )} */}
+
+          <div
+            className={`w-20 px-24 relative z-10 flex flex-col items-center ${
+              isExpand ? "ml-sidebar-width-expand" : "ml-sidebar-width-narrow"
+            }`}
+          >
+            <div className=" w-20 flex items-center justify-between">
+              {isLogin ? (
+                <div>
+                  <img
+                    src={Logo}
+                    alt=""
+                    className="w-10 h-10 rounded-full ml-4 cursor-pointer"
+                    onClick={() => setuiLog(!uiLog)}
+                  />
+                  {uiLog === false ? (
+                    <div className="w-16 h-8 absolute z-10 flex justify-center items-center border-solid border-inherit border-2 rounded-md mt-2">
+                      <p className="text-white" onClick={handleLogoutClick}>
+                        Logout
+                      </p>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <button
+                    className="h-8 bg-white text-black w-28 rounded-2xl hover:bg-black hover:text-white hover:border-solid hover:border-inherit  hover:border-2	duration-500"
+                    onClick={() => {
+                      handleToggleSidebar();
+                      dispatch(setLoginModalShow(true));
+                    }}
+                  >
+                    Đăng nhập
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

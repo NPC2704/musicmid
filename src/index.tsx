@@ -8,15 +8,19 @@ import reduxConfig from "./redux";
 import i18n from "./i18n";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 // const { store, persistor } = reduxConfig();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
+  <GoogleOAuthProvider clientId="60783848892-451bnh6u5i95b3spgkqlot33rhrte5ji.apps.googleusercontent.com">
+    {" "}
+    <Provider store={store}>
+      {/* <BrowserRouter> */}
       <App />
-    </BrowserRouter>
-  </Provider>
+      {/* </BrowserRouter> */}
+    </Provider>
+  </GoogleOAuthProvider>
 );
 i18n.init();

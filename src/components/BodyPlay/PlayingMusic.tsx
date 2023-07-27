@@ -7,6 +7,7 @@ import React, {
   memo,
 } from "react";
 import axios from "axios";
+import { AiFillHeart } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { updateLink } from "../../redux/toggleLink";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
@@ -27,7 +28,7 @@ import { CloudDownloadOutlined } from "@ant-design/icons";
 import Box from "@mui/material/Box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Avatar, List, Skeleton, Switch } from "antd";
-
+import "./PlayingMusic.css";
 interface IProps {}
 const PlayingMusic = () => {
   const dispatch = useDispatch();
@@ -334,6 +335,11 @@ const PlayingMusic = () => {
 
     setData(newData);
   };
+  const [activeTymId, setActiveTymId] = useState(null);
+
+  const toggleTymColor = (id: any) => {
+    setActiveTymId((prevId) => (prevId === id ? null : id));
+  };
   return (
     <motion.div
       initial={{ y: "100%" }}
@@ -543,11 +549,20 @@ const PlayingMusic = () => {
                                       </Link>
                                     </td>
                                     <td className="w-1/10 text-center">
-                                      <a
-                                        href={datalink}
-                                        className="text-blue-500"
-                                      >
-                                        <CiHeart />
+                                      <a className="text-blue-500">
+                                        <AiFillHeart
+                                          className={`trai-tym w-7 h-7 rounded-full cursor-pointer ${
+                                            activeTymId ===
+                                            data1?.[index]?.encodeId
+                                              ? "text-red-500 animate-scale-and-shake"
+                                              : "text-white"
+                                          }`}
+                                          onClick={() =>
+                                            toggleTymColor(
+                                              data1?.[index]?.encodeId
+                                            )
+                                          }
+                                        />
                                       </a>
                                     </td>
                                   </tr>

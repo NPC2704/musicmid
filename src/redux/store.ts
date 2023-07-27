@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import toggleReducer from "./toggleSlice";
 import toggleReducer1 from "./toggleSlice1";
 import toggleReducer2 from "./toggleSlice2";
@@ -17,6 +17,8 @@ import toggleArtis from "./toggleArtis";
 import toggelIDdMusic from "./toggelIDMusic";
 import togglePathLinkRender from "./togglePathlink/togglePathLinkRender";
 import togglePathLinkHome from "./togglePathlink/togglePathLinkHome";
+import userSlice from "./userSlice";
+import uiSlice from "./uiSlice";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,
@@ -37,8 +39,16 @@ const store = configureStore({
     toggelIDdMusic: toggelIDdMusic,
     togglePathLinkRender: togglePathLinkRender,
     togglePathLinkHome: togglePathLinkHome,
+    userSlice: userSlice,
+    uiSlice: uiSlice,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
