@@ -1,44 +1,17 @@
-import { get, post } from "../utils/Token/request";
-import storage from "../utils/Token/storage";
-import getHeaderToken from "../utils/Token/getHeaderToken";
+import getToken from "../utils/Token/getToken";
+import axios from "axios";
 
-async function likeSong(body: object) {
-  const API_ = "https://apisolfive.app.tranviet.site/v2/user/song/like";
-  return post(
-    API_,
-    { ...body },
-    {
-      headers: {
-        ...getHeaderToken(),
-      },
-    }
-  ).then((data) => {
-    return data;
+export const get = async (path: string, params = {}, headers = {}) => {
+  const response = await axios.get(path, { params: params, headers: headers });
+  return response.data;
+};
+
+export const post = async (path: string, body = {}, options = {}) => {
+  const response = await axios.post(path, body, {
+    ...options,
   });
-}
-
-async function addToPlaylist(body: object) {
-  const API_ = "https://apisolfive.app.tranviet.site/v2/user/playlist/add/song";
-
-  const userInfo = await storage.getItem("userInfo");
-  const userId = userInfo?.user?.uid;
-
-  return post(API_, { ...body, userId }).then((data) => {
-    return data;
-  });
-}
-
-async function removeToPlaylist(body: object) {
-  const API_ =
-    "https://apisolfive.app.tranviet.site/v2/user/playlist/remove/song";
-
-  const userInfo = await storage.getItem("userInfo");
-  const userId = userInfo?.user?.uid;
-
-  return post(API_, { ...body, userId }).then((data) => {
-    return data;
-  });
-}
+  return response.data;
+};
 
 async function initData() {
   const API_ = "https://apisolfive.app.tranviet.site/v2/user/info/init";
@@ -47,10 +20,10 @@ async function initData() {
     API_,
     {},
     {
-      ...getHeaderToken(),
+      ...getToken(),
     }
   );
   return data;
 }
 
-export { likeSong, initData, addToPlaylist, removeToPlaylist };
+export { initData };

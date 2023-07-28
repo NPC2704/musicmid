@@ -16,6 +16,7 @@ const paragraphStyle = {
   fontSize: "3rem",
   fontWeight: "bold",
 };
+
 const ChartLine: React.FC = () => {
   const [data0, setData0] = useState<any[]>([]);
   const [data1, setData1] = useState<any[]>([]);

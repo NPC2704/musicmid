@@ -10,8 +10,8 @@ import {
   PauseCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { CiHeart } from "react-icons/ci";
 import logo from "../assets/logo.jpg";
-import { auth } from "../firebase/config";
 import { AuthContext } from "../Context/AuthProvider";
 import { AppContext } from "../Context/AppProvider";
 import { useTranslation } from "react-i18next"; // Import hook useTranslation
@@ -24,19 +24,20 @@ import { GoogleLogout, useGoogleLogin } from "react-google-login";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import Logo from "../assets/logo.jpg";
-import { toggleSidebar } from "../redux/uiSlice";
+import { toggleSidebar } from "../redux/toggelUI";
 import { googleLogout } from "@react-oauth/google";
-import { setLoginModalShow } from "../redux/uiSlice";
+import { setLoginModalShow } from "../redux/toggelUI";
 const Header = () => {
   const dispatch = useDispatch();
   const isExpand = useSelector(
     (state: RootState) => state?.uiSlice?.sidebarExpand
   );
   const isLogin = useSelector((state: RootState) => state?.userSlice?.isLogin);
+  const UserData = useSelector((state: RootState) => state?.userSlice?.data);
   const isUser = useSelector(
     (state: RootState) => state?.uiSlice?.isLoginModalShow
   );
-  console.log(isUser);
+
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar(!isExpand));
   };
@@ -159,16 +160,22 @@ const Header = () => {
               {isLogin ? (
                 <div>
                   <img
-                    src={Logo}
+                    src={UserData?.picture}
                     alt=""
                     className="w-10 h-10 rounded-full ml-4 cursor-pointer"
                     onClick={() => setuiLog(!uiLog)}
                   />
                   {uiLog === false ? (
-                    <div className="w-16 h-8 absolute z-10 flex justify-center items-center border-solid border-inherit border-2 rounded-md mt-2">
-                      <p className="text-white" onClick={handleLogoutClick}>
-                        Logout
-                      </p>
+                    <div className="w-32 h-auto absolute z-10 border-solid border-inherit border-2 rounded-md mt-2 py-4 px-2 flex flex-col items-center">
+                      <div className="w-32 h-1/2  rounded-t-md flex justify-center items-center text-white cursor-pointer ">
+                        <p onClick={handleLogoutClick}>Logout</p>
+                      </div>
+                      <Link to="/like" className="w-full">
+                        <div className="flex items-center mt-1 text-red-500 cursor-pointer h-1/2 hover:text-white">
+                          <CiHeart className="mr-1" />
+                          <p className="text-white">Like Song</p>
+                        </div>
+                      </Link>
                     </div>
                   ) : (
                     <></>

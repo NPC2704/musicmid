@@ -11,7 +11,6 @@ import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
 import { Link } from "react-router-dom";
-
 const BodySlide2 = () => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);

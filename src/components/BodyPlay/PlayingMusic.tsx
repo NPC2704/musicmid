@@ -6,6 +6,7 @@ import React, {
   useMemo,
   memo,
 } from "react";
+
 import axios from "axios";
 import { AiFillHeart } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
@@ -29,7 +30,9 @@ import Box from "@mui/material/Box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Avatar, List, Skeleton, Switch } from "antd";
 import "./PlayingMusic.css";
-interface IProps {}
+import getToken from "../../utils/Token/getToken";
+import getHeaderToken from "../../utils/Token/getToken";
+
 const PlayingMusic = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -66,6 +69,7 @@ const PlayingMusic = () => {
   const pathLinkNumber = useSelector(
     (state: RootState) => state.togglePathLinkNumber.pathLinknumber
   );
+
   // const pathlinkRender = useSelector(
   //   (state: RootState) => state.togglePathLinkRender.pathLinkRender
   // );
@@ -125,7 +129,28 @@ const PlayingMusic = () => {
 
     fetchData1();
   }, [idmusic]);
+  const [dataLike, setDataLike] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchData3 = async () => {
+      try {
+        const response = await axios.get(
+          `https://apisolfive.app.tranviet.site/v2/user/get/playlist/favorite`,
 
+          {
+            headers: {
+              ...getHeaderToken(),
+            },
+          }
+        );
+        setDataLike(response?.data?.data?.data?.song);
+        console.log(response?.data?.data?.data?.song);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData3();
+  }, [idmusic]);
   useEffect(() => {
     if (pathLinkNumber === 0) {
       if (datalink && pathlink2) {
@@ -167,7 +192,7 @@ const PlayingMusic = () => {
   };
   const [showLyric, setShowLyric] = useState(false);
   const [datalyric, setDataLyric] = useState<any[]>([]);
-  console.log("sq");
+
   const fetchDataLyric = async () => {
     const storedIdmusic = localStorage.getItem("idmusic");
     try {
@@ -238,6 +263,7 @@ const PlayingMusic = () => {
   useEffect(() => {
     fetchDataLyric();
   }, [idmusic]);
+
   const formatTimeEarly = (timeInSeconds: any) => {
     // Tính thời gian hiện tại tính bằng mili-giây
     const timeInMs = timeInSeconds * 1000;
@@ -339,6 +365,34 @@ const PlayingMusic = () => {
 
   const toggleTymColor = (id: any) => {
     setActiveTymId((prevId) => (prevId === id ? null : id));
+  };
+  const [likeSong, setLikeSong] = useState({
+    title: "",
+    thumbnailM: "",
+    artists: [],
+    duration: 0,
+    encodeId: "",
+    artistsNames: "",
+  });
+
+  const handleSubmid = () => {
+    likeSongMusic();
+  };
+
+  const likeSongMusic = async () => {
+    const API_ = "https://apisolfive.app.tranviet.site/v2/user/song/like";
+    console.log(likeSong, getToken);
+    return axios
+      .post(API_, likeSong, {
+        headers: {
+          ...getToken(),
+        },
+      })
+      .then((res) => {
+        console.log("TC");
+        return res;
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <motion.div
@@ -549,7 +603,21 @@ const PlayingMusic = () => {
                                       </Link>
                                     </td>
                                     <td className="w-1/10 text-center">
-                                      <a className="text-blue-500">
+                                      <a
+                                        className="text-blue-500"
+                                        onMouseOver={() => {
+                                          setLikeSong({
+                                            title: data1?.[index]?.title,
+                                            thumbnailM:
+                                              data1?.[index]?.thumbnailM,
+                                            artists: data1?.[index]?.artists,
+                                            duration: data1?.[index]?.duration, // Thêm thuộc tính duration (nếu có) để phù hợp với kiểu dữ liệu yêu cầu
+                                            encodeId: data1?.[index]?.encodeId, // Thêm thuộc tính encodeId (nếu có) để phù hợp với kiểu dữ liệu yêu cầu
+                                            artistsNames:
+                                              data1?.[index]?.artistsNames,
+                                          });
+                                        }}
+                                      >
                                         <AiFillHeart
                                           className={`trai-tym w-7 h-7 rounded-full cursor-pointer ${
                                             activeTymId ===
@@ -557,11 +625,15 @@ const PlayingMusic = () => {
                                               ? "text-red-500 animate-scale-and-shake"
                                               : "text-white"
                                           }`}
-                                          onClick={() =>
+                                          onClick={() => {
+                                            // Khi nhấp vào biểu tượng hình trái tim, hàm toggleTymColor sẽ được gọi với tham số data1?.[index]?.encodeId
                                             toggleTymColor(
                                               data1?.[index]?.encodeId
-                                            )
-                                          }
+                                            );
+
+                                            // Sau đó, hàm handleSubmid sẽ được gọi
+                                            handleSubmid();
+                                          }}
                                         />
                                       </a>
                                     </td>

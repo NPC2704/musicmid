@@ -1,40 +1,23 @@
 import React, { useEffect, useRef, useState, memo, ReactNode } from "react";
-import {
-  InteractionOutlined,
-  CaretUpOutlined,
-  InteractionTwoTone,
-  UpCircleTwoTone,
-} from "@ant-design/icons";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Outlet, useNavigate, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { updateLink } from "../redux/toggleLink";
 import { updatecurrentTrackIndex } from "../redux/togglecurrentTrackIndex";
 import { updatepathLink } from "../redux/togglePathlink/togglePathLink";
 import { updatepathLink2 } from "../redux/togglePathlink/togglePathLink2";
 import { updatecurrentTime } from "../redux/toggleCurrentTime";
 import Header from "../components/Header";
-import PlayingList from "../components/BodyPlay/PlayingList";
-import Home from "./Home/Home";
 import "./public.css";
-import PlayingMusic from "../components/BodyPlay/PlayingMusic";
-import Khampha from "./Khampha/Khampha";
-import { useAppSelector } from "../app/hooks";
-import { ISongInfo } from "../types/item";
-import { createPlayerHref } from "../utils/createHref";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   CiShuffle,
-  CiRedo,
   CiCircleChevUp,
   CiCircleChevDown,
   CiRepeat,
   CiTurnR1,
 } from "react-icons/ci";
-import { FaExchangeAlt } from "react-icons/fa";
 interface IProps {
   children: ReactNode;
 }

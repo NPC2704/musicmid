@@ -1,21 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../Context/AppContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateLink } from "../../redux/toggleLink";
 import { useDispatch } from "react-redux";
 import { color, motion } from "framer-motion";
-import { updateimgMusic } from "../../redux/toggleImg";
-import { updatetitleMusic } from "../../redux/toggleTitle";
-import { updateiddMusic } from "../../redux/toggelIDMusic";
-import { updateartisMusic } from "../../redux/toggleArtis";
+
 import { updatesendLink } from "../../redux/toggleSendLink";
-import { updatepathLinknumber } from "../../redux/togglePathLinkNumber";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import { Avatar, List, Skeleton, Switch } from "antd";
 import getTime from "../../utils/convertTime";
 import { CiHeart } from "react-icons/ci";

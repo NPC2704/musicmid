@@ -17,8 +17,9 @@ import toggleArtis from "./toggleArtis";
 import toggelIDdMusic from "./toggelIDMusic";
 import togglePathLinkRender from "./togglePathlink/togglePathLinkRender";
 import togglePathLinkHome from "./togglePathlink/togglePathLinkHome";
-import userSlice from "./userSlice";
-import uiSlice from "./uiSlice";
+import userSlice from "./toggerUser";
+
+import uiSlice from "./toggelUI";
 const store = configureStore({
   reducer: {
     toggle: toggleReducer,

@@ -1,10 +1,37 @@
 export interface IBanner {
   banner: string;
+  type: number;
+}
+
+export interface IUserData {
+  name?: string;
+  email?: string;
+  picture?: string;
 }
 
 export interface IArtists {
+  id: string;
   name: string;
   playlistId: string | number;
+  thumbnailM: string;
+  totalFollow: number;
+  alias: string;
+}
+export interface IArtistInfo {
+  biography?: string;
+  realname?: string;
+  birthday?: string;
+  national?: string;
+  sections?: IPlayListArr[];
+  thumbnailM?: string;
+  name?: string;
+  song?: ISongList;
+  playListInfo?: IPlayList;
+}
+
+export interface IPlayListArr {
+  items: IPlayListItem[];
+  sectionType?: string;
 }
 
 export interface ILyricWord {
@@ -17,6 +44,12 @@ export interface ILyric {
   words: ILyricWord[];
 }
 
+export interface ISearchRs {
+  songs?: ISong[];
+  playlists?: IPlayList[];
+  artists?: IArtists[];
+}
+
 export interface IPlayList {
   thumbnailM?: string;
   thumbnail?: string;
@@ -24,6 +57,15 @@ export interface IPlayList {
   artists?: IArtists[];
   song?: ISongList;
   sortDescription?: string;
+  sectionType?: string;
+  encodeId?: string;
+}
+
+export interface IPlayListItem {
+  thumbnailM: string;
+  title: string;
+  artists: IArtists[];
+  encodeId: string;
 }
 
 export interface ISong {
@@ -32,6 +74,17 @@ export interface ISong {
   artists: IArtists[];
   duration: number;
   encodeId: string;
+  artistsNames?: string;
+}
+
+export interface ISongInfo {
+  artists?: IArtists[];
+  artist?: IArtists;
+  artistsNames?: string;
+  duration?: number;
+  thumbnailM?: string;
+  title?: string;
+  encodeId?: string;
 }
 
 export interface ISongList {
@@ -47,31 +100,7 @@ export interface IPath {
   search?: string;
 }
 
-export interface ISongInfo {
-  artists?: IArtists[];
-  artistsNames?: string;
-  duration?: number;
-  thumbnailM?: string;
-  title?: string;
-}
-
 export interface ISongMP3 {
   128?: string;
   320?: string;
-}
-//
-export interface IPlayListItem {
-  thumbnailM: string;
-  title: string;
-  artists: IArtists[];
-  encodeId: string;
-}
-export interface IPlayListArr {
-  items: IPlayListItem[];
-  sectionType?: string;
-}
-export interface IUserData {
-  name?: string;
-  email?: string;
-  picture?: string;
 }

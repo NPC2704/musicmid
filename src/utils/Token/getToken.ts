@@ -14,7 +14,14 @@ const storage = {
   },
 };
 
-export default function () {
+export const getHeaderToken = () => {
   const token = storage.getItem("token") || "";
-  return token;
-}
+
+  return token
+    ? {
+        "authentication-token": `Bearer ${token}`,
+      }
+    : {};
+};
+
+export default getHeaderToken;

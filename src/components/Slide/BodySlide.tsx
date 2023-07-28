@@ -1,14 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-  PlayCircleOutlined,
-} from "@ant-design/icons";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Playing from "../BodyPlay/Playing";
 import { Link } from "react-router-dom";
 import { AppProvider2, AppContext } from "../../Context/AppContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,8 +37,6 @@ const BodySlide = () => {
     dispatch(updateNumber(11));
     dispatch(updateNumber1(dataChild));
   };
-  // console.log(dataChild);
-  // console.log(link1);
   useEffect(() => {
     fetchData();
   }, []);
@@ -53,7 +45,6 @@ const BodySlide = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    //  slidesToShow: data1.length >= 6 ? 5 : 5,
     slidesToShow: 5,
     responsive: [
       {
@@ -138,20 +129,16 @@ const BodySlide = () => {
                   </div>
                 </div>
               )}
-
               <div className="flex justify-center h-14 mb-5">
-                {" "}
                 <div className="flex items-center">
-                  {" "}
                   <div>
-                    {" "}
                     <div className="flex justify-start my-1 mx-2">
                       <div className="flex justify-start">
                         <p className="text-white">{item?.title}</p>{" "}
                       </div>
                     </div>
                   </div>
-                </div>{" "}
+                </div>
               </div>
             </div>
           ))}

@@ -1,8 +1,3 @@
-import routesConfig from "../configs/routes";
-
-//import Layout
-
-//import Pages
 import Home from "../pages/Home/Home";
 //import Login
 import Login from "../components/Login";
@@ -14,6 +9,7 @@ import Player from "../pages/Player";
 import ChartPage from "../components/ChartPage/ChartPage";
 import Playing from "../components/BodyPlay/Playing";
 import SearchPage from "../pages/SearchPage/SearchPage";
+import LikeSongPage from "../pages/LikeSong/LikeSongPage";
 // Vào được khi chưa đăng nhập
 const publicRoutes = [
   {
@@ -55,6 +51,12 @@ const publicRoutes = [
   {
     path: "/search",
     component: SearchPage,
+    layout: Public,
+    sidebar: null,
+  },
+  {
+    path: "/like",
+    component: LikeSongPage,
     layout: Public,
     sidebar: null,
   },
