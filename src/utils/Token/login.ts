@@ -1,10 +1,7 @@
-import { googleLoginService } from "../../services/loginService";
+import { googleLogin } from "../../services/loginService";
 import { setUser } from "./setUser";
-
 import { setLoginModalShow } from "../../redux/toggelUI";
 import initDataUser from "./DataUser";
-
-import { useGoogleOneTapLogin } from "@react-oauth/google";
 import store from "../../redux/store";
 import { setIsLogin } from "../../redux/toggerUser";
 const storage = {
@@ -24,7 +21,7 @@ const storage = {
 };
 
 export const handleLoginSuccessGG = (codeResponse: any) => {
-  googleLoginService(codeResponse).then((fb) => {
+  googleLogin(codeResponse).then((fb) => {
     const data = fb?.data;
     if (fb?.result == 1) {
       setUser({ isLogin: true, ...data });

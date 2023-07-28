@@ -1,26 +1,23 @@
 import getToken from "../utils/Token/getToken";
 import axios from "axios";
 
-export const get = async (path: string, params = {}, headers = {}) => {
-  const response = await axios.get(path, { params: params, headers: headers });
-  return response.data;
-};
-
-export const post = async (path: string, body = {}, options = {}) => {
-  const response = await axios.post(path, body, {
-    ...options,
-  });
-  return response.data;
-};
+async function requestData(path: string, params = {}, headers = {}) {
+  try {
+    const response = await axios.get(path, { params, headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Hoặc xử lý lỗi theo ý muốn của bạn
+    throw error; // Ném lỗi để cho phép các lớp gọi tiếp xử lý lỗi
+  }
+}
 
 async function initData() {
-  const API_ = "https://apisolfive.app.tranviet.site/v2/user/info/init";
-
-  const data = await get(
-    API_,
+  const data = await requestData(
+    "https://apisolfive.app.tranviet.site/v2/user/info/init",
     {},
     {
-      ...getToken(),
+      ...getToken(), // Giả sử bạn đã định nghĩa hàm getToken để lấy các thông tin header cần thiết
     }
   );
   return data;
