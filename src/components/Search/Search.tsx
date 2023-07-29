@@ -1,24 +1,17 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import "react-h5-audio-player/lib/styles.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+
 import { useDispatch } from "react-redux";
-import { updateLink } from "../../redux/toggleLink";
-import { updatecurrentTrackIndex } from "../../redux/togglecurrentTrackIndex";
-import { updatedata1Redux } from "../../redux/toggleData1";
-import { updatepathLink } from "../../redux/togglePathlink/togglePathLink";
+
 import { useLocation } from "react-router-dom";
-import { useParams, useNavigate, Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { updatesendLink } from "../../redux/toggleSendLink";
 import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
 import getTime from "../../utils/convertTime";
-import Box from "@mui/material/Box";
-import { Avatar, List, Skeleton, Switch } from "antd";
-import Logo from "../../assets/logo.jpg";
-import { use } from "i18next";
+import { Avatar, Skeleton } from "antd";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -37,8 +30,6 @@ const Search = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const nameSOng = queryParams.get("id");
-  // const nameSOng = params.name;
-
   const [dataSong, setDataSong] = useState<any[]>([]);
   const [dataArtists, setDataArtists] = useState<any[]>([]);
   const [dataPlayList, setDataPlayList] = useState<any[]>([]);
@@ -50,11 +41,11 @@ const Search = () => {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/v2/api/get/song/search?id=${nameSOng}`
       );
-      console.log(response?.data?.data?.data?.playlists);
+
       setDataSong(response?.data?.data?.data?.songs);
       setDataArtists(response?.data?.data?.data?.artists);
       setDataPlayList(response?.data?.data?.data?.playlists);
-      console.log(response?.data?.data?.data);
+
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -71,13 +62,10 @@ const Search = () => {
       const response = await axios.get(
         `https://apisolfive.app.tranviet.site/v2/api/get/playlist/info?id=${idMusicListBig}`
       );
-      console.log(response?.data?.data?.data);
-
       setIdMusicList(response?.data?.data?.data?.song?.items[0]?.encodeId);
       setIdMusicTitle(response?.data?.data?.data?.song?.items[0]?.title);
       setIdMusicImg(response?.data?.data?.data?.song?.items[0]?.thumbnail);
       setIdMusicArti(response?.data?.data?.data?.song?.items[0]?.artistsNames);
-      // setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -89,7 +77,7 @@ const Search = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    //  slidesToShow: data1.length >= 6 ? 5 : 5,
+
     slidesToShow: 5,
     responsive: [
       {
@@ -161,16 +149,7 @@ const Search = () => {
             <div
               className={`group song-playlist-item-player-${dataSong?.[index]?.encodeId} border-b border-neutral-900 h-14 px-2 flex items-center justify-between text-white w-121 mx-auto`}
             >
-              <div
-                className="flex items-center overflow-hidden mr-4 w-72"
-                // onMouseOver={() => {
-                //   toggle();
-
-                //   dispatch(updatecurrentTrackIndex(index));
-                //   setCurrentTrackIndex(index);
-                //   setIdMusic(dataSong?.[index]?.encodeId);
-                // }}
-              >
+              <div className="flex items-center overflow-hidden mr-4 w-72">
                 <div className="flex items-center">
                   <div className="h-9 w-9 mr-4 relative cursor-pointer">
                     <Link

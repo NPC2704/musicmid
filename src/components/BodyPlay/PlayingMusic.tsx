@@ -6,7 +6,6 @@ import React, {
   useMemo,
   memo,
 } from "react";
-
 import axios from "axios";
 import { AiFillHeart } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";

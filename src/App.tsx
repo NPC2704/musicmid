@@ -16,7 +16,7 @@ import { RingLoader } from "react-spinners"; // Import thanh loading từ react-
 import styled from "styled-components";
 import { gapi } from "gapi-script";
 import token from "./utils/Token/token";
-import initDataUser from "./utils/Token/DataUser";
+import DataUser from "./utils/Token/DataUser";
 const clientId =
   "60783848892-451bnh6u5i95b3spgkqlot33rhrte5ji.apps.googleusercontent.com";
 function App() {
@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    initDataUser();
+    DataUser();
   }, []);
   return (
     <>

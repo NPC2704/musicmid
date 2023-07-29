@@ -4,14 +4,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SlidePaner.css";
 import { Avatar, List, Skeleton, Switch } from "antd";
+import { API } from "../../LinkAPI";
 const SlidePaner = () => {
   const [data1, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/home"
-      );
+      const response = await axios.get(API.GET_DISCOVER_API);
       setData(response.data?.data?.data?.items?.[0]?.items || []);
       setIsLoading(false);
     } catch (error) {

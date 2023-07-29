@@ -4,28 +4,32 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import { AppProvider2, AppContext } from "../../Context/AppContext";
+
 import { useDispatch, useSelector } from "react-redux";
-import { updateNumber } from "../../redux/toggleSlice";
-import { updateNumber1 } from "../../redux/toggleSlice1";
+import { updateNumber } from "../redux/toggleSlice";
+import { updateNumber1 } from "../redux/toggleSlice1";
 import { Avatar, List, Skeleton, Switch } from "antd";
 import { BiPlay } from "react-icons/bi";
+import { API } from "../LinkAPI";
 import "./SlidePaner.css";
-const BodySlide = () => {
+const BodySlide = ({
+  numberBodySlide,
+  numberSlide,
+}: {
+  numberBodySlide: any;
+  numberSlide: any;
+}) => {
   const dispatch = useDispatch();
   const [data1, setData] = useState<any[]>([]);
   const [datatitle, setDatatitle] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { link1, setLink } = useContext(AppContext);
   const [dataChild, setDataChild] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/home"
-      );
-      setData(response.data?.data?.data?.items?.[11]?.items || []);
-      setDatatitle(response.data?.data?.data?.items?.[11]?.title);
+      const response = await axios.get(API.GET_DISCOVER_API);
+      setData(response.data?.data?.data?.items?.[numberBodySlide]?.items || []);
+      setDatatitle(response.data?.data?.data?.items?.[numberBodySlide]?.title);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -33,8 +37,7 @@ const BodySlide = () => {
   };
 
   const toggle = () => {
-    setLink(7);
-    dispatch(updateNumber(11));
+    dispatch(updateNumber(numberBodySlide));
     dispatch(updateNumber1(dataChild));
   };
   useEffect(() => {
@@ -45,7 +48,7 @@ const BodySlide = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: numberSlide,
     responsive: [
       {
         breakpoint: 1024,

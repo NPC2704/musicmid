@@ -1,5 +1,5 @@
 import HeaderSlide from "./HeaderSlide";
-import BodySlide from "./BodySlide";
+import BodySlide from "../BodySlide";
 import SlidePaner from "./SlidePaner";
 import { AppProvider2 } from "../../Context/AppContext";
 const Slides = () => {
@@ -9,7 +9,7 @@ const Slides = () => {
         <HeaderSlide />
         <SlidePaner />
         <AppProvider2>
-          <BodySlide />
+          <BodySlide numberBodySlide={11} numberSlide={5} />
         </AppProvider2>
       </div>
     </div>

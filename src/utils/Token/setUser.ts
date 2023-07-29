@@ -20,7 +20,7 @@ const storage = {
   },
 };
 
-interface ISetUSer {
+interface setUSer {
   isLogin: boolean;
   name: string;
   email: string;
@@ -28,7 +28,7 @@ interface ISetUSer {
   token?: string;
 }
 
-export const setUser = ({ isLogin, name, email, picture, token }: ISetUSer) => {
+export const setUser = ({ isLogin, name, email, picture, token }: setUSer) => {
   store.dispatch(setIsLogin(true));
 
   token && storage?.setItem("token", token);
@@ -40,31 +40,4 @@ export const setUser = ({ isLogin, name, email, picture, token }: ISetUSer) => {
       picture,
     })
   );
-};
-
-export const pushFvPlaylist = (encodeId: string) => {
-  const arr = [...(store?.getState()?.userSlice?.favoriteListID || [])];
-
-  if (!arr.includes(encodeId)) {
-    arr.push(encodeId);
-  }
-
-  setUserFavoriteListID(arr);
-};
-
-export const removeFvPlaylist = (encodeId: string) => {
-  const arr = [...(store?.getState()?.userSlice?.favoriteListID || [])];
-  console.log();
-  const index = arr.indexOf(encodeId);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-
-  setUserFavoriteListID(arr);
-};
-
-export const setUserFavoriteListID = (list: string[]) => {
-  if (typeof list == "object" && list?.length) {
-    store.dispatch(setFavoriteListID(list));
-  }
 };

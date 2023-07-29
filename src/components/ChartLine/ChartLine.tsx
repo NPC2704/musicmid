@@ -4,6 +4,7 @@ import Logo from "../../assets/logo.jpg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./ChartLine.css";
+import { API } from "../../LinkAPI";
 const chartStyle = {
   width: "800px",
   height: "400px",
@@ -28,9 +29,7 @@ const ChartLine: React.FC = () => {
   const [titleMusic3, setTitleMusic3] = useState("");
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/home"
-      );
+      const response = await axios.get(API.GET_DISCOVER_API);
       setData0(response.data?.data?.data?.items?.[9]?.items || []);
       setData1(response.data?.data?.data?.items?.[9]?.chart?.times || []);
       setData2(

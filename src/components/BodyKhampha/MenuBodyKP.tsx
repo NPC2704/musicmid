@@ -7,6 +7,7 @@ import { updateNumber } from "../../redux/toggleSlice";
 import { Avatar, List, Skeleton, Switch } from "antd";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { Link } from "react-router-dom";
+import { API } from "../../LinkAPI";
 const MenuBodyKP = () => {
   const dispatch = useDispatch();
 
@@ -17,9 +18,7 @@ const MenuBodyKP = () => {
   const [dataChild, setDataChild] = useState(0);
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/home"
-      );
+      const response = await axios.get(API.GET_DISCOVER_API);
       setData(response.data?.data?.data?.items?.[13]?.items || []);
       setDatatitle(response.data?.data?.data?.items?.[13]?.title);
       setIsLoading(false);

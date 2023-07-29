@@ -34,9 +34,6 @@ const Header = () => {
   );
   const isLogin = useSelector((state: RootState) => state?.userSlice?.isLogin);
   const UserData = useSelector((state: RootState) => state?.userSlice?.data);
-  const isUser = useSelector(
-    (state: RootState) => state?.uiSlice?.isLoginModalShow
-  );
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar(!isExpand));

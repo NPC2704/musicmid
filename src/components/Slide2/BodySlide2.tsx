@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/logo.jpg";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { updateNumber2 } from "../../redux/toggleSlice2";
 import { RootState } from "../../redux/store";
-import { updateLink } from "../../redux/toggleLink";
 import { updateimgMusic } from "../../redux/toggleImg";
 import { updatetitleMusic } from "../../redux/toggleTitle";
 import { updateartisMusic } from "../../redux/toggleArtis";
@@ -26,16 +24,11 @@ const BodySlide2 = () => {
         "https://apisolfive.app.tranviet.site/v2/api/get/home"
       );
       setData(response.data?.data?.data?.items?.[2]?.items[title] || []);
-      console.log(response.data?.data?.data?.items?.[2]?.items[title]);
-      // console.log(response.data?.data?.data?.items?.[2]?.items[title]);
-      // console.log(response.data?.data?.data?.items[2]?.items?.vPop);
-      // console.log(response.data?.data?.data?.items[2]?.items?.others);
       setDatatitle(response.data?.data?.data?.items?.[2]?.title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  //console.log(dataChild);
   const toggle = () => {
     dispatch(updateNumber(2));
     dispatch(updateNumber2(title));
@@ -47,7 +40,6 @@ const BodySlide2 = () => {
   useEffect(() => {
     fetchData();
   }, [title]);
-  // console.log(title);
   return (
     <div className="w-full h-100">
       <div className="w-full h-20 flex items-center justify-start">

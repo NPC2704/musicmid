@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IPlayListArr, IPlayListItem, IUserData } from "../types/item";
+// import { UserData } from "../types/item";
 import getToken from "../utils/Token/token";
 
 export interface IUserState {
   isLogin: boolean;
-  data?: IUserData;
-  playList?: IPlayListItem[];
+  data?: {
+    name?: string;
+    email?: string;
+    picture?: string;
+  };
+
   favoriteListID?: string[];
 }
 
@@ -21,7 +25,10 @@ export const userSlice = createSlice({
     setIsLogin: (state, actions: { payload: boolean }) => {
       state.isLogin = actions.payload;
     },
-    setUserData: (state, actions: { payload: IUserData }) => {
+    setUserData: (
+      state,
+      actions: { payload: { name?: string; email?: string; picture?: string } }
+    ) => {
       state.data = actions.payload;
     },
     setFavoriteListID: (state, actions: { payload: string[] }) => {

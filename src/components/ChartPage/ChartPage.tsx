@@ -9,6 +9,7 @@ import "./ChartLine.css";
 import { updateNumber } from "../../redux/toggleSlice";
 import { updateNumber1 } from "../../redux/toggleSlice1";
 import { updateNumber2 } from "../../redux/toggleSlice2";
+import { API } from "../../LinkAPI";
 const chartStyle = {
   width: "1000px",
   height: "400px",
@@ -40,12 +41,8 @@ const ChartPage: React.FC = () => {
   const [title, setTitle] = useState("all");
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/home"
-      );
-      const response1 = await axios.get(
-        "https://apisolfive.app.tranviet.site/v2/api/get/charthome"
-      );
+      const response = await axios.get(API.GET_DISCOVER_API);
+      const response1 = await axios.get(API.GET_HOME_CHART_API);
 
       setData0(response1?.data?.data?.data?.RTChart?.items || []);
       setData1(response.data?.data?.data?.items?.[9]?.chart?.times || []);

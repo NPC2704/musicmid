@@ -1,7 +1,7 @@
 import { googleLogin } from "../../services/loginService";
 import { setUser } from "./setUser";
 import { setLoginModalShow } from "../../redux/toggelUI";
-import initDataUser from "./DataUser";
+import DataUser from "./DataUser";
 import store from "../../redux/store";
 import { setIsLogin } from "../../redux/toggerUser";
 const storage = {
@@ -20,25 +20,19 @@ const storage = {
   },
 };
 
-export const handleLoginSuccessGG = (codeResponse: any) => {
-  googleLogin(codeResponse).then((fb) => {
-    const data = fb?.data;
-    if (fb?.result == 1) {
+export const handleLoginSuccessGG = (Response: any) => {
+  googleLogin(Response).then((res) => {
+    const data = res?.data;
+    if (res?.result == 1) {
       setUser({ isLogin: true, ...data });
-      initDataUser();
+      DataUser();
     } else {
     }
-    ui.hiddenLoginModal();
+    store?.dispatch(setLoginModalShow(false));
   });
 };
 
 export const handleLoginFalseGG = () => {
   storage.remove("token");
   store.dispatch(setIsLogin(false));
-};
-
-export const ui = {
-  hiddenLoginModal: function () {
-    store?.dispatch(setLoginModalShow(false));
-  },
 };

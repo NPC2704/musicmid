@@ -111,7 +111,10 @@ const Public: React.FC<IProps> = ({ children }) => {
   const handleAudioClick = () => {
     setDownUp(!downup);
 
-    if (window.location.pathname.split("/")[1] === "playlist") {
+    if (
+      window.location.pathname.split("/")[1] === "playlist" ||
+      window.location.pathname.split("/")[1] === "play"
+    ) {
       history(pathlink);
     } else {
       history(pathlink2);
@@ -121,7 +124,7 @@ const Public: React.FC<IProps> = ({ children }) => {
   const toggle1 = () => {
     const firstPath = window.location.pathname.split("/")[1];
 
-    if (firstPath === "playlist") {
+    if (firstPath === "playlist" || firstPath === "play") {
       dispatch(updatepathLink2(window.location.pathname));
     } else {
       dispatch(updatepathLink(window.location.pathname));

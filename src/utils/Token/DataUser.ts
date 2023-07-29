@@ -1,10 +1,9 @@
 import { setIsLogin } from "../../redux/toggerUser";
 import { initData } from "../../services/userServices";
-import { IPlayList } from "../../types/item";
 import getToken from "./token";
 import { handleLoginFalseGG, handleLoginSuccessGG } from "./login";
-import { setUser, setUserFavoriteListID } from "./setUser";
-
+// import { setUser, setUserFavoriteListID } from "./setUser";
+import { setUser } from "./setUser";
 const storage = {
   getItem: function (key: string) {
     const token: string | null = localStorage.getItem(`${key}`);
@@ -21,7 +20,7 @@ const storage = {
   },
 };
 
-const initDataUser = () => {
+const DataUser = () => {
   const token = getToken();
   if (!token) {
     handleLoginFalseGG();
@@ -40,4 +39,4 @@ const initDataUser = () => {
     }
   });
 };
-export default initDataUser;
+export default DataUser;

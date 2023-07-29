@@ -13,6 +13,7 @@ import { updatesendLink } from "../../redux/toggleSendLink";
 import { Avatar, List, Skeleton, Switch } from "antd";
 import getTime from "../../utils/convertTime";
 import { CiHeart } from "react-icons/ci";
+import { API } from "../../LinkAPI";
 export default function Playing() {
   const number = useSelector((state: RootState) => state.toggle.number);
   const number1 = useSelector((state: RootState) => state.toggle1.number1);
@@ -61,9 +62,7 @@ export default function Playing() {
   console.log(userId);
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://apisolfive.app.tranviet.site/api/get/home"
-      );
+      const response = await axios.get(API.GET_DISCOVER_API);
       setData(
         response.data?.data?.data?.items?.[number]?.items?.[number2]?.[number1]
           ?.artists || []

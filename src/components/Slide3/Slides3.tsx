@@ -5,7 +5,7 @@ const Slides3 = () => {
   return (
     <div className=" w-full h-100 bg-black">
       <div className="max-w-7xl h-full mx-auto">
-        <HeaderSlide3 />
+        {/* <HeaderSlide3 /> */}
         <BodySlide3 />
       </div>
     </div>
