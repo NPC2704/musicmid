@@ -1,46 +1,92 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      height: {
-        128: "40rem",
-        130: "43.7rem",
-        110: "37rem",
-        105: "33rem",
-        100: "30rem",
-        101: "40rem",
-        90: "25rem",
-        85: "22.5rem",
-        138: "45rem",
-        140: "55rem",
-        41: "11rem",
-        7: "1.5rem",
+      spacing: {
+        header: "64px",
+        playcard: "72px",
+        "header-search": "440px",
+        "sidebar-width-expand": "240px",
+        "sidebar-width-narrow": "72px",
       },
-      width: {
-        100: "30rem",
-        110: "40rem",
-        120: "70rem",
-        121: "80rem",
-        78: "15rem",
-        7: "1.5rem",
+      colors: {
+        "white-opacity-10": "#ffffff10",
+        "white-opacity-15": "#ffffff15",
+        "white-opacity-17": "#ffffff17",
+        "white-opacity-20": "#ffffff20",
+        "white-opacity-25": "#ffffff25",
+        "white-opacity-30": "#ffffff30",
+        "border-bottom-color": "#1d1d1d",
+        "main-bg": "#030303",
+        "from-body-bg-gradiant": "rgba(0,0,0,0.75)",
+        "from-body-bg-gradiant-l": "rgba(0,0,0,0.85)",
+        "from-body-bg-gradiant-l1": "rgba(0,0,0,0.35)",
+        "to-body-bg-gradiant": "#000000",
+        purple: "#6626f9",
+        turquoise: "#43bcff",
+        blue: "#5865fc",
+        blueL: "#3c92ff",
+        whiteT1: "#ffffffB3",
+        bdm: "#ffffff33",
+        whv: "#ffffff1a",
+        whv1: "#ffffff2a",
+        whv1nop: "#444444",
+        grayL: "#212121",
+        grayL2: "#353535",
       },
-      screens: {
-        tablet: "640px",
-        // => @media (min-width: 640px) { ... }
-
-        laptop: "1024px",
-        // => @media (min-width: 1024px) { ... }
-
-        desktop: "1280px",
-        // => @media (min-width: 1280px) { ... }
+      backgroundImage: {
+        "body-bg": "url('/static/assets/bg/body-bg.jpg')",
       },
-      zIndex: {
-        1: "1",
-        2: "2",
+      flex: {
+        a2: "2",
+        a3: "3",
+      },
+      transitionProperty: {
+        top: "top",
+        border: "border",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
+        fadeOut: {
+          "0%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0,
+          },
+        },
+        zomOutControlThumB: {
+          "0%": {
+            opacity: 1,
+            height: "80px",
+            width: "80px",
+            transform: "scale(1)",
+            // border: "1px solid rgba(255,255,255,0.4)",
+          },
+          "100%": {
+            opacity: 0,
+            height: "80px",
+            width: "80px",
+            transform: "scale(2)",
+            // border: "1px solid rgba(255,255,255,0.4)",
+          },
+        },
+      },
+      animation: {
+        zomOutControlThumB: "zomOutControlThumB 0.5s ease-in-out",
+        fadeIn: "fadeIn 0.3s ease-in-out",
+        fadeOut: "fadeOut 0.3s ease-in-out",
       },
     },
   },
-  plugins: [require("tailwind-scrollbar")],
-};
+
+  plugins: [],
+}

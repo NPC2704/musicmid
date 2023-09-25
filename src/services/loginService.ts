@@ -1,18 +1,13 @@
-import axios from "axios";
+import { get, post } from "../utils/request"
+import storage from "../utils/storage"
+import API from "./API"
 
-async function googleLogin(body = Object) {
-  try {
-    const response = await axios.post(
-      "https://apisolfive.app.tranviet.site/user/auth/google",
-      {
-        ...body,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    // Hoặc xử lý lỗi theo ý muốn của bạn
-    throw error; // Ném lỗi để cho phép các lớp gọi tiếp xử lý lỗi
-  }
+async function googleLoginService(body: object) {
+  const API_ = API.GOOGLE_AUTH_LOGIN
+
+  return post(API_, { ...body }).then((data) => {
+    return data
+  })
 }
-export { googleLogin };
+
+export { googleLoginService }

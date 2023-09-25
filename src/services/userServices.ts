@@ -1,26 +1,65 @@
-import getToken from "../utils/Token/getToken";
-import axios from "axios";
+import { get, post } from "../utils/request"
+import storage from "../utils/storage"
+import API from "./API"
+import getHeaderToken from "../utils/getHeaderToken"
 
-async function requestData(path: string, params = {}, headers = {}) {
-  try {
-    const response = await axios.get(path, { params, headers });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    // Hoặc xử lý lỗi theo ý muốn của bạn
-    throw error; // Ném lỗi để cho phép các lớp gọi tiếp xử lý lỗi
-  }
+async function likeSong(body: object) {
+  const API_ = API.LIKE_SONG
+  return post(
+    API_,
+    { ...body },
+    {
+      headers: {
+        ...getHeaderToken(),
+      },
+    },
+  ).then((data) => {
+    return data
+  })
+}
+
+async function addToPlaylist(body: object) {
+  const API_ = API.ADD_TO_PLAYLIST
+
+  return post(
+    API_,
+    { ...body },
+    {
+      headers: {
+        ...getHeaderToken(),
+      },
+    },
+  ).then((data) => {
+    return data
+  })
+}
+
+async function removeToPlaylist(body: object) {
+  const API_ = API.REMOVE_TO_PLAYLIST
+  return post(
+    API_,
+    { ...body },
+    {
+      headers: {
+        ...getHeaderToken(),
+      },
+    },
+  ).then((data) => {
+    return data
+  })
 }
 
 async function initData() {
-  const data = await requestData(
-    "https://apisolfive.app.tranviet.site/v2/user/info/init",
+  const API_ = API.INIT_DATA
+
+  const data = await get(
+    API_,
     {},
     {
-      ...getToken(), // Giả sử bạn đã định nghĩa hàm getToken để lấy các thông tin header cần thiết
-    }
-  );
-  return data;
+      ...getHeaderToken(),
+    },
+  )
+  return data
 }
 
-export { initData };
+export { likeSong, initData, addToPlaylist, removeToPlaylist }

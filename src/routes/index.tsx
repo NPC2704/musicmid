@@ -1,67 +1,62 @@
-import Home from "../pages/Home/Home";
-//import Login
-import Login from "../components/Login";
-import Khampha from "../pages/Khampha/Khampha";
-import PlayPlaylistMusic from "../pages/PlayPlaylistMusic/PlayPlaylistMusic";
-import Public from "../pages/Public";
-import PlayingMusic from "../components/BodyPlay/PlayingMusic";
-import Player from "../pages/Player";
-import ChartPage from "../components/ChartPage/ChartPage";
-import Playing from "../components/BodyPlay/Playing";
-import SearchPage from "../pages/SearchPage/SearchPage";
-import LikeSongPage from "../pages/LikeSong/LikeSongPage";
+import routesConfig from "../configs/routes"
+
+//import Layout
+import DefaultLayout from "../layouts/DefaultLayout"
+import ArtistsPage from "../pages/Artists"
+
+//import Pages
+import Home from "../pages/Home"
+import Library from "../pages/Library"
+import PlayList from "../pages/PlayList"
+import Player from "../pages/Player"
+import Search from "../pages/Search"
+
 // Vào được khi chưa đăng nhập
 const publicRoutes = [
   {
-    path: "/",
+    path: routesConfig.home,
     component: Home,
-    layout: Public,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/khampha",
-    component: Khampha,
-    layout: Public,
+    path: routesConfig.explore,
+    component: Home,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/playlistmusic/:id",
-    component: PlayPlaylistMusic,
-    layout: Public,
+    path: routesConfig.library,
+    component: Library,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/playlist/:id/:idmusic",
-    component: PlayingMusic,
-    layout: Public,
+    path: routesConfig.playlist,
+    component: PlayList,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/musicchart",
-    component: ChartPage,
-    layout: Public,
+    path: routesConfig.artist,
+    component: ArtistsPage,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/play/:idmusic",
-    component: Playing,
-    layout: Public,
+    path: routesConfig.search,
+    component: Search,
+    layout: DefaultLayout,
     sidebar: null,
   },
   {
-    path: "/search",
-    component: SearchPage,
-    layout: Public,
+    path: routesConfig.player,
+    component: Player,
+    layout: DefaultLayout,
     sidebar: null,
   },
-  {
-    path: "/like",
-    component: LikeSongPage,
-    layout: Public,
-    sidebar: null,
-  },
-];
+]
 
 // Cần đăng nhập mới có thể vào được routes
 
-export { publicRoutes };
+export { publicRoutes }

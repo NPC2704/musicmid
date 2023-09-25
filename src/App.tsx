@@ -1,79 +1,82 @@
-import "./App.css";
-import React, { Fragment, useMemo, useEffect, useState } from "react";
-import AuthProvider from "./Context/AuthProvider";
-import AppProvider from "./Context/AppProvider";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from "react-router-dom";
-import { publicRoutes } from "./routes";
-import Home from "./pages/Home/Home";
-import Khampha from "./pages/Khampha/Khampha";
-import Login from "./components/Login";
-import { RingLoader } from "react-spinners"; // Import thanh loading từ react-spinners
-import styled from "styled-components";
-import { gapi } from "gapi-script";
-import token from "./utils/Token/token";
-import DataUser from "./utils/Token/DataUser";
-const clientId =
-  "60783848892-451bnh6u5i95b3spgkqlot33rhrte5ji.apps.googleusercontent.com";
+import { Fragment, useCallback, useEffect, useState } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { publicRoutes } from "./routes"
+import useHistory from "./hooks/useHistory"
+import { useAppSelector } from "./app/hooks"
+import routesConfig from "./configs/routes"
+import Home from "./pages/Home"
+import { playSong } from "./utils/playSong"
+import "animate.css"
+import { PlayScreen } from "./components/PlayScreen"
+import toast, { Toaster } from "react-hot-toast"
+import MiniLays from "./components/PlayScreen/components/MiniLays"
+import initDataUser from "./utils/initData"
+import { useGoogleOneTapLogin } from "@react-oauth/google"
+import { handleLoginSuccessGG } from "./utils/login"
+import getToken from "./utils/getToken"
+import OneTabLogin from "./components/OneTapLogin"
+import { toastConfig } from "./components/Toast/toastConfig"
+
 function App() {
-  const [loading, setLoading] = useState(true); // State để kiểm soát trạng thái loading
+  const currentPath = useAppSelector((state) => state.routes?.pay?.currentPath)
 
   useEffect(() => {
-    // Giả lập một thời gian tải, bạn có thể thay đổi giá trị 2000 thành thời gian tải thực tế
-    setTimeout(() => {
-      setLoading(false); // Kết thúc trạng thái loading
-    }, 2000);
-  }, []);
+    initDataUser()
+    // console.log(document.body.clientWidth)
+  }, [])
 
-  useEffect(() => {
-    DataUser();
-  }, []);
-  return (
+  return document?.body?.clientWidth < 768 ? (
     <>
-      {loading ? (
-        <LoadingContainer>
-          <RingLoader color="#007bff" size={80} />{" "}
-        </LoadingContainer>
-      ) : (
-        <>
-          <Router>
-            <div className="App">
-              <Routes>
-                {publicRoutes.map((publicRoute, index) => {
-                  let Layout = publicRoute.layout;
-                  let Page;
-
-                  Page = publicRoute.component;
-
-                  return (
-                    <Route
-                      key={index}
-                      path={publicRoute.path}
-                      element={
-                        <Layout>
-                          <Page />
-                        </Layout>
-                      }
-                    />
-                  );
-                })}
-              </Routes>{" "}
-            </div>
-          </Router>
-          {!token() && <Login />}
-        </>
-      )}
+      <div className="h-[100vh] flex justify-center items-center">
+        Opp! This app not yet support mobile
+      </div>
     </>
-  );
+  ) : (
+    <>
+      {!getToken() && <OneTabLogin />}
+      <Router>
+        <div className="App">
+          <Routes>
+            {publicRoutes.map((publicRoute, index) => {
+              let Layout = publicRoute.layout
+              let Page
+              if (publicRoute.path == routesConfig?.player) {
+                const pathName = currentPath.pathname
+
+                const route = publicRoutes.find(
+                  (route) => route.path == pathName,
+                )
+                Page = route?.component || Home
+              } else {
+                Page = publicRoute.component
+              }
+
+              return (
+                <Route
+                  key={index}
+                  path={publicRoute.path}
+                  element={
+                    <Layout>
+                      <Page />
+                      <MiniLays />
+                    </Layout>
+                  }
+                />
+              )
+            })}
+          </Routes>
+        </div>
+      </Router>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={toastConfig}
+        containerStyle={{
+          top: 68,
+        }}
+      ></Toaster>
+    </>
+  )
 }
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-export default App;
+
+export default App
