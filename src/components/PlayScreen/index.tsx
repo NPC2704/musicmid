@@ -58,12 +58,12 @@ export const PlayScreen: React.FC<IProps> = memo(() => {
           document.title = store?.getState()?.player?.status?.isPlaying
             ? song?.title
               ? `${song?.title} - ${song?.artistsNames}`
-              : "Solfive"
-            : "Solfive"
+              : "Music NPC"
+            : "Music NPC"
 
           setMediaSession({
             artist: song?.artistsNames,
-            title: song?.title || "Solfive",
+            title: song?.title || "Music NPC",
             thumb: song?.thumbnailM,
           })
         } else {

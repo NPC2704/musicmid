@@ -1,7 +1,7 @@
 import { PopupPosition } from "reactjs-popup/dist/types"
 
 export const constant = {
-  appName: "Solfive Music",
+  appName: "Music NPC",
 }
 export const popoverPosition: PopupPosition[] = [
   "top left",

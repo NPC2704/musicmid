@@ -75,7 +75,7 @@ const PlayListBsInfo: React.FC<IProps> = ({ data }) => {
         </div>
         <div className="text-whiteT1">
           <div className="">
-            <div className="py-1">{t("playlist")} • Solfive</div>
+            <div className="py-1">{t("playlist")} • Music NPC</div>
             <div className="py-1">
               {`${data?.song?.total} ${t("song")} • 
             ${

@@ -48,11 +48,11 @@ export const player_ = {
     store?.dispatch(setStatus({ isPlaying: true }))
     document.title = song?.title
       ? `${song?.title} - ${song?.artistsNames}`
-      : "Solfive"
+      : "Music NPC"
   },
   pause: function () {
     store?.dispatch(setStatus({ isPlaying: false }))
-    document.title = "Solfive"
+    document.title = "Music NPC"
   },
   rewind: function (props: { to?: number; isScroll?: boolean }) {
     store?.dispatch(rewindSong(props))
